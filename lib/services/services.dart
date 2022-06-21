@@ -11,7 +11,9 @@ class Services {
 
   List<SingleChildWidget> providers() {
     return [
-      Provider<AuthServices>(create: (context) => AuthServices()),
+      ChangeNotifierProvider(
+        create: (context) => new AuthServices(),
+      ),
     ];
   }
 }
