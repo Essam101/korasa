@@ -77,13 +77,12 @@ class _SignFormState extends State<SignForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                await Provider.of<AuthServices>(context, listen: false).signIn(email: email, password: password).then((value) => {
-                      if (value != null)
-                        {
-                          KeyboardUtil.hideKeyboard(context),
-                          Navigator.pushNamed(context, LoginSuccessScreen.routeName),
-                        }
-                    });
+                await Provider.of<AuthServices>(context, listen: false).signIn(email: email, password: password);
+                var user = Provider.of<AuthServices>(context, listen: false).userCredential;
+                if (user != null) {
+                  KeyboardUtil.hideKeyboard(context);
+                  Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                }
               }
             },
           ),

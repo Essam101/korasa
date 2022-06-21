@@ -25,7 +25,7 @@ class SystemFeedBack {
     Fluttertoast.showToast(
         msg: "${massage}",
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.green,
         textColor: Colors.white,
@@ -36,7 +36,7 @@ class SystemFeedBack {
     Fluttertoast.showToast(
         msg: "${massage}",
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
@@ -47,7 +47,7 @@ class SystemFeedBack {
     Fluttertoast.showToast(
         msg: "${massage}",
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.yellow,
         textColor: Colors.white,

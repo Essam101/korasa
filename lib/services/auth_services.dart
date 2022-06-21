@@ -6,8 +6,9 @@ import 'package:shop/core/system_feedback.dart';
 import 'service_base.dart';
 
 class AuthServices extends ServiceBase {
-  Future<UserCredential> signIn({required String email, required String password}) async {
-    var userCredential;
+  UserCredential? userCredential;
+
+  signIn({required String email, required String password}) async {
     try {
       userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
@@ -17,11 +18,10 @@ class AuthServices extends ServiceBase {
         systemFeedBack.showAlert(alertType: AlertType.Error, massage: 'Wrong password provided for that user.');
       }
     }
-    return userCredential;
+    notifyListeners();
   }
 
-  Future<UserCredential> signUp({required String email, required String password}) async {
-    var userCredential;
+  signUp({required String email, required String password}) async {
     try {
       userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
@@ -34,7 +34,7 @@ class AuthServices extends ServiceBase {
     } catch (e) {
       print(e);
     }
-    return userCredential;
+    notifyListeners();
   }
 
   logOut() async {
