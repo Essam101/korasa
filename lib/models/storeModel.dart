@@ -23,8 +23,8 @@ class StoreModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "storeId": storeId == null ? null : storeId,
-        "Name": name == null ? null : name,
-        "status": status == null ? null : status,
+        "storeId": storeId,
+        "Name": name,
+        "status": status,
       };
 }

@@ -1,11 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/core/routes.dart';
-import 'package:shop/screens/profile/profile_screen.dart';
-import 'package:shop/screens/splash/splash_screen.dart';
 import 'package:shop/core/theme.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:shop/services/auth_services.dart';
+import 'package:shop/screens/splash/splash_screen.dart';
 import 'package:shop/services/services.dart';
 
 import 'firebase_options.dart';

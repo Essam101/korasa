@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:shop/core/enums.dart';
-import 'package:shop/core/system_feedback.dart';
 
 import 'service_base.dart';
 
@@ -41,6 +39,7 @@ class AuthServices extends ServiceBase {
     try {
       await FirebaseAuth.instance.signOut();
     } on FirebaseAuthException catch (e) {
+      print(e);
       systemFeedBack.showAlert(alertType: AlertType.Error, massage: 'The account already exists for that email.');
     } catch (e) {
       systemFeedBack.showAlert(alertType: AlertType.Error, massage: e.toString());
