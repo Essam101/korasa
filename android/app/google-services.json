@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "854993219916",
+    "project_id": "korasa-865f0",
+    "storage_bucket": "korasa-865f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854993219916:android:5e79df7683fe3bf0ec1fe9",
+        "android_client_info": {
+          "package_name": "com.example.shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854993219916-p0psaf14sc493drc2p2fctjs6gbtokeg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbuEymvqOZqhYfjnOjP65NzCowAfeE0l4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854993219916-p0psaf14sc493drc2p2fctjs6gbtokeg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
