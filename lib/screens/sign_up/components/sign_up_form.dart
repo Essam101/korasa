@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
 import 'package:shop/components/form_error.dart';
 import 'package:shop/screens/complete_profile/complete_profile_screen.dart';
+import 'package:shop/services/auth_services.dart';
 
 import '../../../core/constants.dart';
 import 'package:shop/core/size_config.dart';
@@ -14,9 +16,9 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
-  String? email;
-  String? password;
-  String? conform_password;
+  late String email;
+  late String password;
+  late String conform_password;
   bool remember = false;
   final List<String?> errors = [];
 
@@ -49,11 +51,15 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                await Provider.of<AuthServices>(context, listen: false).signUp(email: email, password: password);
+                var user = Provider.of<AuthServices>(context, listen: false).userCredential;
+                if (user != null) {
+                  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                }
               }
             },
           ),
@@ -65,7 +71,11 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildConformPassFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => conform_password = newValue,
+      onSaved: (newValue) {
+        if (newValue != null) {
+          conform_password = newValue;
+        }
+      },
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
@@ -98,7 +108,11 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
+      onSaved: (newValue) {
+        if (newValue != null) {
+          password = newValue;
+        }
+      },
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
@@ -131,7 +145,11 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      onSaved: (newValue) {
+        if (newValue != null) {
+          email = newValue;
+        }
+      },
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);
