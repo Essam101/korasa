@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/form_error.dart';
 import 'package:shop/core/keyboard.dart';
 import 'package:shop/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop/screens/login_success/login_success_screen.dart';
+import 'package:shop/services/auth_services.dart';
 
 import '../../../components/default_button.dart';
 import '../../../core/constants.dart';
@@ -16,8 +19,8 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
-  String? email;
-  String? password;
+  late String email = "essamsaleh101@gmail.com";
+  late String password = "123456@#";
   bool? remember = false;
   final List<String?> errors = [];
 
@@ -59,8 +62,7 @@ class _SignFormState extends State<SignForm> {
               Text("Remember me"),
               Spacer(),
               GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                    context, ForgotPasswordScreen.routeName),
+                onTap: () => Navigator.pushNamed(context, ForgotPasswordScreen.routeName),
                 child: Text(
                   "Forgot Password",
                   style: TextStyle(decoration: TextDecoration.underline),
@@ -72,12 +74,16 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                await Provider.of<AuthServices>(context, listen: false).signIn(email: email, password: password).then((value) => {
+                      if (value != null)
+                        {
+                          KeyboardUtil.hideKeyboard(context),
+                          Navigator.pushNamed(context, LoginSuccessScreen.routeName),
+                        }
+                    });
               }
             },
           ),
@@ -89,7 +95,9 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
+      onSaved: (newValue) {
+        if (newValue != null) password = newValue;
+      },
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
@@ -122,7 +130,9 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      onSaved: (newValue) {
+        if (newValue != null) email = newValue;
+      },
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);
