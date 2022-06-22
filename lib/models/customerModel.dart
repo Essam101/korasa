@@ -2,8 +2,14 @@
 //
 //     final customers = customersFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
+
+List<customerModel> customerModelFromJson(String str) =>
+    List<customerModel>.from(
+        json.decode(str).map((x) => customerModel.fromJson(x)));
+
+String customerModelToJson(List<customerModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class customerModel {
   customerModel({
@@ -16,19 +22,20 @@ class customerModel {
   final String name;
   final String storeId;
 
-  factory customerModel.fromRawJson(String str) => customerModel.fromJson(json.decode(str));
+  factory customerModel.fromRawJson(String str) =>
+      customerModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory customerModel.fromJson(Map<String, dynamic> json) => customerModel(
-    id: json["Id"],
-    name: json["name"],
-    storeId: json["StoreId"],
-  );
+        id: json["Id"],
+        name: json["name"],
+        storeId: json["StoreId"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "Id": id,
-    "name": name,
-    "StoreId": storeId,
-  };
+        "Id": id,
+        "name": name,
+        "StoreId": storeId,
+      };
 }

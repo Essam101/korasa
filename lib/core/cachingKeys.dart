@@ -16,4 +16,10 @@ class CachingKeys {
 
 
 
+
+  static const customer = "customer";
+  static const storeCustomers = "storeCustomers";
+
+
+
 }
