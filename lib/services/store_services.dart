@@ -9,7 +9,7 @@ import '../core/enums.dart';
 
 class StoreServices extends ServiceBase {
   StoreModel? storeModel;
-  List<StoreModel> storesModel = [];
+  List<StoreModel> storesModel = <StoreModel>[];
 
   var storeModelRef;
 
@@ -53,6 +53,7 @@ class StoreServices extends ServiceBase {
       movies.forEach((element) {
         storesModel.add(element.data());
       });
+      print("Essam");
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {

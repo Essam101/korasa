@@ -12,7 +12,7 @@ class StoreModel {
 
   late final String name;
 
-  late final StoreStatus status;
+  late final int status;
 
   factory StoreModel.fromRawJson(String str) => StoreModel.fromJson(json.decode(str));
 
