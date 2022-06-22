@@ -1,29 +1,46 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:shop/models/storeModel.dart';
 import 'package:shop/services/service_base.dart';
 
 import '../core/enums.dart';
 
 class StoreServices extends ServiceBase {
-  CollectionReference stores = FirebaseFirestore.instance.collection(FireStoreCollectionsNames.Store.name);
   StoreModel? storeModel;
+  var storeModelRef;
 
-  createStore(StoreModel storeModel) async {
-    return stores.add(storeModel.toJson()).then((value) {
-      systemFeedBack.showAlert(alertType: AlertType.Success, massage: "User Added");
-    }).catchError((error) {
-      systemFeedBack.showAlert(alertType: AlertType.Error, massage: "Failed to add user: $error");
-    });
+  StoreServices() {
+    storeModelRef = db.instance.collection(FireStoreCollectionsNames.Store.name).withConverter<StoreModel>(
+          fromFirestore: (snapshot, _) => StoreModel.fromJson(snapshot.data()!),
+          toFirestore: (store, _) => store.toJson(),
+        );
   }
 
-  getStore() async {
-    storeModel = FirebaseFirestore.instance
-        .collection(FireStoreCollectionsNames.Store.name)
-        .withConverter<StoreModel>(
-          fromFirestore: (snapshot, _) => StoreModel.fromJson(snapshot.data()!),
-          toFirestore: (movie, _) => movie.toJson(),
-        )
-        .where((s) => s == 1) as StoreModel?;
+  createStore(StoreModel storeModel) async {
+    try {
+      await storeModelRef.add(storeModel);
+      await getStore(storeId: storeModel.storeId);
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getStore({required int storeId}) async {
+    try {
+      QueryDocumentSnapshot<StoreModel> movies = await storeModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
+        return snapshot.docs.first;
+      });
+      storeModel = movies.data();
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+    notifyListeners();
   }
 }
 
