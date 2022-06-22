@@ -63,6 +63,8 @@ class StoreServices extends ServiceBase {
     try {
       await storeModelRef.add(storeModel);
       await getStore(storeId: storeModel.storeId);
+      storeLocal.deleteCachedStore();
+      storeLocal.deleteCachedStores();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
@@ -76,6 +78,8 @@ class StoreServices extends ServiceBase {
         return snapshot.docs.first;
       });
       storeModelRef.doc(store.id).update(storeModel.toJson());
+      storeLocal.deleteCachedStore();
+      storeLocal.deleteCachedStores();
       notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
@@ -90,6 +94,8 @@ class StoreServices extends ServiceBase {
         return snapshot.docs.first;
       });
       storeModelRef.doc(store.id).delete();
+      storeLocal.deleteCachedStore();
+      storeLocal.deleteCachedStores();
       notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);

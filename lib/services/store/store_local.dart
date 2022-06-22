@@ -35,4 +35,12 @@ class StoreLocal {
       return null;
     }
   }
+
+  deleteCachedStore() {
+    localStorage.remove(CachingKeys.store);
+  }
+
+  deleteCachedStores() {
+    localStorage.remove(CachingKeys.stores);
+  }
 }
