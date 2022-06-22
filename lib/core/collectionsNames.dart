@@ -1,3 +1,3 @@
 class CollectionsNames {
-  static const stores = "stores";
+  static const String stores = "stores";
 }
