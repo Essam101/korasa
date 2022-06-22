@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Provider.of<StoreServices>(context, listen: false).getStore(storeId: "10");
+    Provider.of<StoreServices>(context, listen: false).getStore(storeId: "1");
     // Provider.of<StoreServices>(context, listen: false).getStores();
     // Provider.of<StoreServices>(context, listen: false).createStore(new StoreModel(storeId: "1", name: "Essam", status: StoreStatus.Active.index));
     Provider.of<StoreServices>(context, listen: false)

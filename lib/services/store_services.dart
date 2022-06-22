@@ -37,12 +37,12 @@ class StoreServices extends ServiceBase {
         return snapshot.docs.first;
       });
       storeModel = store.data();
+      notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
       print(e);
     }
-    notifyListeners();
   }
 
   getStores() async {
@@ -53,12 +53,12 @@ class StoreServices extends ServiceBase {
       stores.forEach((element) {
         storesModel.add(new StoreModel(storeId: element.data().storeId, name: element.data().name, status: element.data().status));
       });
+      notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
       print(e);
     }
-    notifyListeners();
   }
 
   updateStore({required StoreModel storeModel}) async {
@@ -67,12 +67,12 @@ class StoreServices extends ServiceBase {
         return snapshot.docs.first;
       });
       storeModelRef.doc(store.id).update(storeModel.toJson());
+      notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
       print(e);
     }
-    notifyListeners();
   }
 
   deleteStore({required String storeId}) async {
@@ -81,11 +81,11 @@ class StoreServices extends ServiceBase {
         return snapshot.docs.first;
       });
       storeModelRef.doc(store.id).delete();
+      notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
       print(e);
     }
-    notifyListeners();
   }
 }
