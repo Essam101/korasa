@@ -33,10 +33,10 @@ class StoreServices extends ServiceBase {
 
   getStore({required String storeId}) async {
     try {
-      QueryDocumentSnapshot<StoreModel> movies = await storeModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
+      QueryDocumentSnapshot<StoreModel> store = await storeModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
         return snapshot.docs.first;
       });
-      storeModel = movies.data();
+      storeModel = store.data();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
@@ -47,13 +47,40 @@ class StoreServices extends ServiceBase {
 
   getStores() async {
     try {
-      List<QueryDocumentSnapshot<StoreModel>> movies = await storeModelRef.get().then((snapshot) {
+      List<QueryDocumentSnapshot<StoreModel>> stores = await storeModelRef.get().then((snapshot) {
         return snapshot.docs;
       });
-      movies.forEach((element) {
-        storesModel.add(element.data());
+      stores.forEach((element) {
+        storesModel.add(new StoreModel(storeId: element.data().storeId, name: element.data().name, status: element.data().status));
       });
-      print("Essam");
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+    notifyListeners();
+  }
+
+  updateStore({required StoreModel storeModel}) async {
+    try {
+      QueryDocumentSnapshot<StoreModel> store = await storeModelRef.where('storeId', isEqualTo: storeModel.storeId).get().then((snapshot) {
+        return snapshot.docs.first;
+      });
+      storeModelRef.doc(store.id).update(storeModel.toJson());
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+    notifyListeners();
+  }
+
+  deleteStore({required String storeId}) async {
+    try {
+      QueryDocumentSnapshot<StoreModel> store = await storeModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
+        return snapshot.docs.first;
+      });
+      storeModelRef.doc(store.id).delete();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
