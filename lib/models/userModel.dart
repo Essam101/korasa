@@ -5,8 +5,15 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-class Users {
-  Users({
+
+
+List<userModel> userModelFromJson(String str) => List<userModel>.from(json.decode(str).map((x) => userModel.fromJson(x)));
+
+String userModelToJson(List<userModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+
+class userModel {
+  userModel({
     required this.id,
     required this.name,
     required this.role,
@@ -18,11 +25,11 @@ class Users {
   late final roleType role;
   late final String storeId;
 
-  factory Users.fromRawJson(String str) => Users.fromJson(json.decode(str));
+  factory userModel.fromRawJson(String str) => userModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Users.fromJson(Map<String, dynamic> json) => Users(
+  factory userModel.fromJson(Map<String, dynamic> json) => userModel(
         id: json["Id"],
         name: json["name"],
         role: json["Role"],

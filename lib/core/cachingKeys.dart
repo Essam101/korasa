@@ -4,4 +4,16 @@ class CachingKeys {
   static String stores = "stores";
   static const store = "store";
   static const isLoggedIn = "isLoggedIn";
+
+
+
+
+
+  static const user = "user";
+  static const storeUsers = "storeUsers";
+  static const allUsers = "AllUsers";
+
+
+
+
 }
