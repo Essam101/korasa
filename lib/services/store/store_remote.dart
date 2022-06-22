@@ -30,7 +30,11 @@ class StoreRemote extends ServiceBase {
       List<QueryDocumentSnapshot<StoreModel>> stores = await storeModelRef.get().then((snapshot) {
         return snapshot.docs;
       });
-      return stores as List<StoreModel>;
+      List<StoreModel> _stores = [];
+      stores.forEach((element) {
+        _stores.add(new StoreModel(storeId: element.data().storeId, name: element.data().name, status: element.data().status));
+      });
+      return _stores;
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {

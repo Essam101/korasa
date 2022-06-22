@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get_storage/get_storage.dart';
 import 'package:shop/core/cachingKeys.dart';
 import 'package:shop/models/storeModel.dart';
@@ -5,8 +7,11 @@ import 'package:shop/models/storeModel.dart';
 class StoreLocal {
   GetStorage localStorage = new GetStorage();
 
-  Future<void> cacheStore(StoreModel cacheStore) {
-    return localStorage.write(CachingKeys.store, cacheStore.toJson());
+  Future<void>? cacheStore(StoreModel? cacheStore) {
+    if (cacheStore != null) {
+      return localStorage.write(CachingKeys.store, cacheStore.toJson());
+    }
+    return null;
   }
 
   Future<void> cacheStores(List<StoreModel> cacheStores) {
@@ -22,9 +27,9 @@ class StoreLocal {
     }
   }
 
-  Future<List<StoreModel>>? getCachedUsers() {
+  Future<List<StoreModel>>? getCachedStores() {
     final jsonStores = localStorage.read(CachingKeys.stores);
-    if (jsonStores != null) {
+    if (jsonStores != null && jsonStores.length != 0) {
       return Future.value(storeModelFromJson(jsonStores));
     } else {
       return null;

@@ -31,6 +31,7 @@ class StoreServices extends ServiceBase {
       } else {
         var store = await storeRemote.getStore(storeId: storeId);
         storeModel = store;
+        storeLocal.cacheStore(storeModel);
       }
       notifyListeners();
     } on FirebaseFirestore catch (e) {
@@ -42,12 +43,13 @@ class StoreServices extends ServiceBase {
 
   getStores() async {
     try {
-      var cachedStores = await storeLocal.getCachedUsers();
+      var cachedStores = await storeLocal.getCachedStores();
       if (cachedStores != null) {
         storesModel = cachedStores;
       } else {
         var stores = await storeRemote.getStores();
         storesModel = stores;
+        await storeLocal.cacheStores(storesModel);
       }
       notifyListeners();
     } on FirebaseFirestore catch (e) {

@@ -4,6 +4,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:shop/services/store_services.dart';
 
 import 'auth_services.dart';
+import 'store/store_services.dart';
 
 //                await Provider.of<AuthServices>(context, listen: false) ;
 class Services {
