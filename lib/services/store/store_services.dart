@@ -5,13 +5,14 @@ import 'package:get/get.dart';
 import 'package:shop/core/collectionsNames.dart';
 import 'package:shop/models/storeModel.dart';
 import 'package:shop/services/service_base.dart';
-
-import '../core/enums.dart';
+import 'package:shop/services/store/store_local.dart';
+import 'package:shop/services/store/store_remote.dart';
 
 class StoreServices extends ServiceBase {
   StoreModel? storeModel;
   List<StoreModel> storesModel = <StoreModel>[];
-
+  late StoreRemote storeRemote;
+  StoreLocal storeLocal = new StoreLocal();
   var storeModelRef;
 
   StoreServices() {
@@ -19,25 +20,18 @@ class StoreServices extends ServiceBase {
           fromFirestore: (snapshot, _) => StoreModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );
-  }
-
-  createStore(StoreModel storeModel) async {
-    try {
-      await storeModelRef.add(storeModel);
-      await getStore(storeId: storeModel.storeId);
-    } on FirebaseFirestore catch (e) {
-      print(e);
-    } catch (e) {
-      print(e);
-    }
+    storeRemote = new StoreRemote(storeModelRef);
   }
 
   getStore({required String storeId}) async {
     try {
-      QueryDocumentSnapshot<StoreModel> store = await storeModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
-        return snapshot.docs.first;
-      });
-      storeModel = store.data();
+      StoreModel? cachedStore = await storeLocal.getCachedStore();
+      if (cachedStore != null) {
+        storeModel = cachedStore;
+      } else {
+        var store = await storeRemote.getStore(storeId: storeId);
+        storeModel = store;
+      }
       notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
@@ -48,13 +42,25 @@ class StoreServices extends ServiceBase {
 
   getStores() async {
     try {
-      List<QueryDocumentSnapshot<StoreModel>> stores = await storeModelRef.get().then((snapshot) {
-        return snapshot.docs;
-      });
-      stores.forEach((element) {
-        storesModel.add(new StoreModel(storeId: element.data().storeId, name: element.data().name, status: element.data().status));
-      });
+      var cachedStores = await storeLocal.getCachedUsers();
+      if (cachedStores != null) {
+        storesModel = cachedStores;
+      } else {
+        var stores = await storeRemote.getStores();
+        storesModel = stores;
+      }
       notifyListeners();
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  createStore(StoreModel storeModel) async {
+    try {
+      await storeModelRef.add(storeModel);
+      await getStore(storeId: storeModel.storeId);
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
