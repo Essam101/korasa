@@ -9,6 +9,8 @@ import '../core/enums.dart';
 
 class StoreServices extends ServiceBase {
   StoreModel? storeModel;
+  List<StoreModel> storesModel = [];
+
   var storeModelRef;
 
   StoreServices() {
@@ -29,7 +31,7 @@ class StoreServices extends ServiceBase {
     }
   }
 
-  getStore({required int storeId}) async {
+  getStore({required String storeId}) async {
     try {
       QueryDocumentSnapshot<StoreModel> movies = await storeModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
         return snapshot.docs.first;
@@ -42,8 +44,20 @@ class StoreServices extends ServiceBase {
     }
     notifyListeners();
   }
+
+  getStores() async {
+    try {
+      List<QueryDocumentSnapshot<StoreModel>> movies = await storeModelRef.get().then((snapshot) {
+        return snapshot.docs;
+      });
+      movies.forEach((element) {
+        storesModel.add(element.data());
+      });
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+    notifyListeners();
+  }
 }
-
-
-
-
