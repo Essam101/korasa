@@ -10,7 +10,7 @@ class StoreLocal {
   }
 
   Future<void> cacheStores(List<StoreModel> cacheStores) {
-    return localStorage.write(CachingKeys.stores, {});
+    return localStorage.write(CachingKeys.stores, storeModelToJson(cacheStores));
   }
 
   Future<StoreModel>? getCachedStore() {
@@ -23,9 +23,9 @@ class StoreLocal {
   }
 
   Future<List<StoreModel>>? getCachedUsers() {
-    final jsonUsers = localStorage.read(CachingKeys.stores);
-    if (jsonUsers != null) {
-      return Future.value([]);
+    final jsonStores = localStorage.read(CachingKeys.stores);
+    if (jsonStores != null) {
+      return Future.value(storeModelFromJson(jsonStores));
     } else {
       return null;
     }
