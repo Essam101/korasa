@@ -7,10 +7,12 @@ class StoreModel {
     required this.status,
   });
 
-  late final int storeId;
+  /// store Id
+  late final String storeId;
 
   late final String name;
-  late final String status;
+
+  late final storeStatus status;
 
   factory StoreModel.fromRawJson(String str) => StoreModel.fromJson(json.decode(str));
 
@@ -27,4 +29,10 @@ class StoreModel {
         "Name": name,
         "status": status,
       };
+}
+
+
+enum storeStatus{
+  active,
+  deactivated
 }
