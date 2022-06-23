@@ -4,15 +4,12 @@
 
 import 'dart:convert';
 
-List<customerModel> customerModelFromJson(String str) =>
-    List<customerModel>.from(
-        json.decode(str).map((x) => customerModel.fromJson(x)));
+List<CustomerModel> customerModelFromJson(String str) => List<CustomerModel>.from(json.decode(str).map((x) => CustomerModel.fromJson(x)));
 
-String customerModelToJson(List<customerModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String customerModelToJson(List<CustomerModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class customerModel {
-  customerModel({
+class CustomerModel {
+  CustomerModel({
     required this.id,
     required this.name,
     required this.storeId,
@@ -22,12 +19,11 @@ class customerModel {
   final String name;
   final String storeId;
 
-  factory customerModel.fromRawJson(String str) =>
-      customerModel.fromJson(json.decode(str));
+  factory CustomerModel.fromRawJson(String str) => CustomerModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory customerModel.fromJson(Map<String, dynamic> json) => customerModel(
+  factory CustomerModel.fromJson(Map<String, dynamic> json) => CustomerModel(
         id: json["Id"],
         name: json["name"],
         storeId: json["StoreId"],

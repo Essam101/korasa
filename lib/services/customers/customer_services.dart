@@ -6,17 +6,15 @@ import 'package:shop/services/customers/customer_remote.dart';
 import 'package:shop/services/service_base.dart';
 
 class CustomerServices extends ServiceBase {
-  customerModel? customer_Model;
-  List<customerModel> customersModel = <customerModel>[];
+  CustomerModel? customer_Model;
+  List<CustomerModel> customersModel = <CustomerModel>[];
   late CustomerRemote customerRemote;
   CustomerLocal customerLocal = new CustomerLocal();
   var customerModelRef;
 
   CustomerServices() {
-    customerModelRef = db.instance
-        .collection(CollectionsNames.stores)
-        .withConverter<customerModel>(
-          fromFirestore: (snapshot, _) => customerModel.fromJson(snapshot.data()!),
+    customerModelRef = db.instance.collection(CollectionsNames.stores).withConverter<CustomerModel>(
+          fromFirestore: (snapshot, _) => CustomerModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );
     customerRemote = new CustomerRemote(customerModelRef);
@@ -24,7 +22,7 @@ class CustomerServices extends ServiceBase {
 
   getCustomer({required String customerId}) async {
     try {
-      customerModel? cachedUser = await customerLocal.getCashCustomer();
+      CustomerModel? cachedUser = await customerLocal.getCashCustomer();
       if (cachedUser != null) {
         customer_Model = cachedUser;
       } else {
@@ -58,8 +56,7 @@ class CustomerServices extends ServiceBase {
     }
   }
 
-
-  createCustomer(customerModel model) async {
+  createCustomer(CustomerModel model) async {
     try {
       await customerModelRef.add(model);
       await getCustomer(customerId: model.id);
@@ -72,12 +69,9 @@ class CustomerServices extends ServiceBase {
     }
   }
 
-  updateUser({required customerModel model}) async {
+  updateUser({required CustomerModel model}) async {
     try {
-      QueryDocumentSnapshot<customerModel> customer = await customerModelRef
-          .where('customer', isEqualTo: model.id)
-          .get()
-          .then((snapshot) {
+      QueryDocumentSnapshot<CustomerModel> customer = await customerModelRef.where('customer', isEqualTo: model.id).get().then((snapshot) {
         return snapshot.docs.first;
       });
       customerModelRef.doc(customer.id).update(model.toJson());
@@ -93,10 +87,7 @@ class CustomerServices extends ServiceBase {
 
   deleteUser({required String customerId}) async {
     try {
-      QueryDocumentSnapshot<customerModel> customer = await customerModelRef
-          .where('customerId', isEqualTo: customerId)
-          .get()
-          .then((snapshot) {
+      QueryDocumentSnapshot<CustomerModel> customer = await customerModelRef.where('customerId', isEqualTo: customerId).get().then((snapshot) {
         return snapshot.docs.first;
       });
       customerModelRef.doc(customer.id).delete();

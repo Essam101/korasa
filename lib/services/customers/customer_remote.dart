@@ -7,9 +7,9 @@ class CustomerRemote extends ServiceBase {
 
   CustomerRemote(this.customerModelRef);
 
-  Future<customerModel?> getCustomer({required String customerId}) async {
+  Future<CustomerModel?> getCustomer({required String customerId}) async {
     try {
-      QueryDocumentSnapshot<customerModel> user = await customerModelRef.where('customerId', isEqualTo: customerId).get().then((snapshot) {
+      QueryDocumentSnapshot<CustomerModel> user = await customerModelRef.where('customerId', isEqualTo: customerId).get().then((snapshot) {
         return snapshot.docs.first;
       });
       return user.data();
@@ -21,14 +21,14 @@ class CustomerRemote extends ServiceBase {
     return null;
   }
 
-  Future<List<customerModel>> getStoreCustomers({required String storeId } ) async {
+  Future<List<CustomerModel>> getStoreCustomers({required String storeId}) async {
     try {
-      List<QueryDocumentSnapshot<customerModel>> customers = await customerModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
+      List<QueryDocumentSnapshot<CustomerModel>> customers = await customerModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
         return snapshot.docs;
       });
-      List<customerModel> _customers = [];
+      List<CustomerModel> _customers = [];
       customers.forEach((element) {
-        _customers.add(new customerModel(id: element.data().id,name: element.data().name , storeId: element.data().storeId));
+        _customers.add(new CustomerModel(id: element.data().id, name: element.data().name, storeId: element.data().storeId));
       });
       return _customers;
     } on FirebaseFirestore catch (e) {
@@ -38,6 +38,4 @@ class CustomerRemote extends ServiceBase {
     }
     return [];
   }
-
-
 }
