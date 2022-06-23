@@ -21,5 +21,13 @@ class CachingKeys {
   static const storeCustomers = "storeCustomers";
 
 
+  static const order = "order";
+  static const customerOrders = "customerOrders";
+
+
+
+
+
+
 
 }

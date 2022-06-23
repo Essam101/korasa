@@ -5,6 +5,14 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
+
+List<orderModel> orderModelFromJson(String str) =>
+    List<orderModel>.from(
+        json.decode(str).map((x) => orderModel.fromJson(x)));
+
+String orderModelToJson(List<orderModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class orderModel {
   orderModel({
      required this.id,
@@ -17,7 +25,7 @@ class orderModel {
 
   final String id;
   final String productName;
-  final String creationDate;
+  final DateTime creationDate;
   final double amount;
   final bool isPaid;
   final String storeId;

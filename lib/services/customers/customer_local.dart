@@ -28,7 +28,7 @@ class CustomerLocal {
     }
   }
 
-  Future<List<customerModel>>? getCashStoreUsers() {
+  Future<List<customerModel>>? getCashStoreUCustomers() {
     final jsonCustomers = localStorage.read(CachingKeys.storeCustomers);
     if (jsonCustomers != null && jsonCustomers.length != 0) {
       return Future.value(customerModelFromJson(jsonCustomers));

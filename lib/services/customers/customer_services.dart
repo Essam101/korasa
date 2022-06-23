@@ -1,36 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/core/collectionsNames.dart';
-import 'package:shop/models/userModel.dart';
+import 'package:shop/models/customerModel.dart';
+import 'package:shop/services/customers/customer_local.dart';
+import 'package:shop/services/customers/customer_remote.dart';
 import 'package:shop/services/service_base.dart';
-import 'package:shop/services/users/user_local.dart';
-import 'package:shop/services/users/user_remote.dart';
 
 class CustomerServices extends ServiceBase {
-  userModel? user_Model;
-  List<userModel> usersModel = <userModel>[];
-  late UserRemote userRemote;
-  userLocal user_Local = new userLocal();
-  var userModelRef;
+  customerModel? customer_Model;
+  List<customerModel> customersModel = <customerModel>[];
+  late CustomerRemote customerRemote;
+  CustomerLocal customerLocal = new CustomerLocal();
+  var customerModelRef;
 
-  UserServices() {
-    userModelRef = db.instance
+  CustomerServices() {
+    customerModelRef = db.instance
         .collection(CollectionsNames.stores)
-        .withConverter<userModel>(
-          fromFirestore: (snapshot, _) => userModel.fromJson(snapshot.data()!),
+        .withConverter<customerModel>(
+          fromFirestore: (snapshot, _) => customerModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );
-    userRemote = new UserRemote(userModelRef);
+    customerRemote = new CustomerRemote(customerModelRef);
   }
 
-  getUser({required String userId}) async {
+  getCustomer({required String customerId}) async {
     try {
-      userModel? cachedUser = await user_Local.getCashUser();
+      customerModel? cachedUser = await customerLocal.getCashCustomer();
       if (cachedUser != null) {
-        user_Model = cachedUser;
+        customer_Model = cachedUser;
       } else {
-        var user = await userRemote.getUser(userId: userId);
-        user_Model = user;
-        user_Local.cachingUser(user_Model);
+        var user = await customerRemote.getCustomer(customerId: customerId);
+        customer_Model = user;
+        customerLocal.cachingCustomer(customer_Model);
       }
       notifyListeners();
     } on FirebaseFirestore catch (e) {
@@ -40,15 +40,15 @@ class CustomerServices extends ServiceBase {
     }
   }
 
-  getStoreUsers({required String storeId}) async {
+  getStoreCustomer({required String storeId}) async {
     try {
-      var cashStoreUsers = await user_Local.getCashStoreUsers();
-      if (cashStoreUsers != null) {
-        usersModel = cashStoreUsers;
+      var cashStoreCustomers = await customerLocal.getCashStoreUCustomers();
+      if (cashStoreCustomers != null) {
+        customersModel = cashStoreCustomers;
       } else {
-        var storeUsers = await userRemote.getStoreUsers(storeId: storeId);
-        usersModel = storeUsers;
-        await user_Local.cachingStoreUsers(usersModel);
+        var storeUsers = await customerRemote.getStoreCustomers(storeId: storeId);
+        customersModel = storeUsers;
+        await customerLocal.cachingStoreCustomers(customersModel);
       }
       notifyListeners();
     } on FirebaseFirestore catch (e) {
@@ -58,17 +58,13 @@ class CustomerServices extends ServiceBase {
     }
   }
 
-  getAllUsers() async {
+
+  createCustomer(customerModel model) async {
     try {
-      var cashAllUsers = await user_Local.getCashAllUsers();
-      if (cashAllUsers != null) {
-        usersModel = cashAllUsers;
-      } else {
-        var storeUsers = await userRemote.getAllUsers();
-        usersModel = storeUsers;
-        await user_Local.cachingAllUsers(usersModel);
-      }
-      notifyListeners();
+      await customerModelRef.add(model);
+      await getCustomer(customerId: model.id);
+      customerLocal.deleteCachedCustomer();
+      customerLocal.deleteCachedStoreCustomers();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
@@ -76,32 +72,17 @@ class CustomerServices extends ServiceBase {
     }
   }
 
-  createUser(userModel model) async {
+  updateUser({required customerModel model}) async {
     try {
-      await userModelRef.add(model);
-      await getUser(userId: model.id);
-      user_Local.deleteCachedUser();
-      user_Local.deleteCachedStoreUsers();
-      user_Local.deleteCachedAllUsers();
-    } on FirebaseFirestore catch (e) {
-      print(e);
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  updateUser({required userModel model}) async {
-    try {
-      QueryDocumentSnapshot<userModel> user = await userModelRef
-          .where('userId', isEqualTo: model.id)
+      QueryDocumentSnapshot<customerModel> customer = await customerModelRef
+          .where('customer', isEqualTo: model.id)
           .get()
           .then((snapshot) {
         return snapshot.docs.first;
       });
-      userModelRef.doc(user.id).update(model.toJson());
-      user_Local.deleteCachedUser();
-      user_Local.deleteCachedStoreUsers();
-      user_Local.deleteCachedAllUsers();
+      customerModelRef.doc(customer.id).update(model.toJson());
+      customerLocal.deleteCachedCustomer();
+      customerLocal.deleteCachedStoreCustomers();
       notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
@@ -110,18 +91,17 @@ class CustomerServices extends ServiceBase {
     }
   }
 
-  deleteUser({required String userId}) async {
+  deleteUser({required String customerId}) async {
     try {
-      QueryDocumentSnapshot<userModel> user = await userModelRef
-          .where('userId', isEqualTo: userId)
+      QueryDocumentSnapshot<customerModel> customer = await customerModelRef
+          .where('customerId', isEqualTo: customerId)
           .get()
           .then((snapshot) {
         return snapshot.docs.first;
       });
-      userModelRef.doc(user.id).delete();
-      user_Local.deleteCachedUser();
-      user_Local.deleteCachedStoreUsers();
-      user_Local.deleteCachedAllUsers();
+      customerModelRef.doc(customer.id).delete();
+      customerLocal.deleteCachedCustomer();
+      customerLocal.deleteCachedStoreCustomers();
       notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
