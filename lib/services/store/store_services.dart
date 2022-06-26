@@ -11,27 +11,28 @@ import 'package:shop/services/store/store_remote.dart';
 class StoreServices extends ServiceBase {
   StoreModel? storeModel;
   List<StoreModel> storesModel = <StoreModel>[];
-  late StoreRemote storeRemote;
-  StoreLocal storeLocal = new StoreLocal();
-  var storeModelRef;
+
+  late StoreRemote _storeRemote;
+  StoreLocal _storeLocal = new StoreLocal();
+  var _storeModelRef;
 
   StoreServices() {
-    storeModelRef = db.instance.collection(CollectionsNames.stores).withConverter<StoreModel>(
+    _storeModelRef = db.instance.collection(CollectionsNames.stores).withConverter<StoreModel>(
           fromFirestore: (snapshot, _) => StoreModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );
-    storeRemote = new StoreRemote(storeModelRef);
+    _storeRemote = new StoreRemote(_storeModelRef);
   }
 
   getStore({required String storeId}) async {
     try {
-      StoreModel? cachedStore = await storeLocal.getCachedStore();
+      StoreModel? cachedStore = await _storeLocal.getCachedStore();
       if (cachedStore != null) {
         storeModel = cachedStore;
       } else {
-        var store = await storeRemote.getStore(storeId: storeId);
+        var store = await _storeRemote.getStore(storeId: storeId);
         storeModel = store;
-        storeLocal.cacheStore(storeModel);
+        _storeLocal.cacheStore(storeModel);
       }
       notifyListeners();
     } on FirebaseFirestore catch (e) {
@@ -43,13 +44,13 @@ class StoreServices extends ServiceBase {
 
   getStores() async {
     try {
-      var cachedStores = await storeLocal.getCachedStores();
+      var cachedStores = await _storeLocal.getCachedStores();
       if (cachedStores != null) {
         storesModel = cachedStores;
       } else {
-        var stores = await storeRemote.getStores();
+        var stores = await _storeRemote.getStores();
         storesModel = stores;
-        await storeLocal.cacheStores(storesModel);
+        await _storeLocal.cacheStores(storesModel);
       }
       notifyListeners();
     } on FirebaseFirestore catch (e) {
@@ -61,10 +62,10 @@ class StoreServices extends ServiceBase {
 
   createStore(StoreModel storeModel) async {
     try {
-      await storeModelRef.add(storeModel);
+      await _storeModelRef.add(storeModel);
       await getStore(storeId: storeModel.storeId);
-      storeLocal.deleteCachedStore();
-      storeLocal.deleteCachedStores();
+      _storeLocal.deleteCachedStore();
+      _storeLocal.deleteCachedStores();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
@@ -74,12 +75,12 @@ class StoreServices extends ServiceBase {
 
   updateStore({required StoreModel storeModel}) async {
     try {
-      QueryDocumentSnapshot<StoreModel> store = await storeModelRef.where('storeId', isEqualTo: storeModel.storeId).get().then((snapshot) {
+      QueryDocumentSnapshot<StoreModel> store = await _storeModelRef.where('storeId', isEqualTo: storeModel.storeId).get().then((snapshot) {
         return snapshot.docs.first;
       });
-      storeModelRef.doc(store.id).update(storeModel.toJson());
-      storeLocal.deleteCachedStore();
-      storeLocal.deleteCachedStores();
+      _storeModelRef.doc(store.id).update(storeModel.toJson());
+      _storeLocal.deleteCachedStore();
+      _storeLocal.deleteCachedStores();
       notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
@@ -90,12 +91,12 @@ class StoreServices extends ServiceBase {
 
   deleteStore({required String storeId}) async {
     try {
-      QueryDocumentSnapshot<StoreModel> store = await storeModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
+      QueryDocumentSnapshot<StoreModel> store = await _storeModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
         return snapshot.docs.first;
       });
-      storeModelRef.doc(store.id).delete();
-      storeLocal.deleteCachedStore();
-      storeLocal.deleteCachedStores();
+      _storeModelRef.doc(store.id).delete();
+      _storeLocal.deleteCachedStore();
+      _storeLocal.deleteCachedStores();
       notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);

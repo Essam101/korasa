@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
 import 'package:shop/components/form_error.dart';
 import 'package:shop/core/size_config.dart';
+import 'package:shop/screens/home/home_screen.dart';
 import 'package:shop/screens/otp/otp_screen.dart';
+import 'package:shop/services/store/store_services.dart';
 
 import '../../../core/constants.dart';
 
@@ -51,9 +54,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, OtpScreen.routeName);
+                await Provider.of<StoreServices>(context, listen: false).Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
           ),
@@ -84,8 +87,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon:
-            CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
       ),
     );
   }
