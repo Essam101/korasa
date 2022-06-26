@@ -13,9 +13,9 @@ class StoreModel {
   });
 
   /// store Id
-  final String storeId;
-  final String name;
-  final String? description;
+  late final String storeId;
+  late final String name;
+  late final String? description;
   final StoreStatus status;
 
   factory StoreModel.fromRawJson(String str) => StoreModel.fromJson(json.decode(str));

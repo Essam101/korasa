@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
 import 'package:shop/components/form_error.dart';
+import 'package:shop/core/collectionsNames.dart';
+import 'package:shop/core/generateId.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/models/storeModel.dart';
 import 'package:shop/screens/home/home_screen.dart';
@@ -18,11 +20,15 @@ class CompleteProfileForm extends StatefulWidget {
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
+  late StoreModel storeModel;
 
-   String?  storeId;
-   String storeName = "";
-   String? description;
-  StoreStatus status = StoreStatus.Deactivated;
+  // String? storeId;
+  String storeName = "";
+
+  // String? description;
+  late StoreStatus status;
+
+  late StoreServices storeServices;
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -36,6 +42,17 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       setState(() {
         errors.remove(error);
       });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // this.storeName = "";
+    // this.status = StoreStatus.Deactivated;
+
+    storeServices = Provider.of<StoreServices>(context, listen: false);
   }
 
   @override
@@ -57,7 +74,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             text: "Create Store",
             press: () async {
               if (_formKey.currentState!.validate()) {
-                Provider.of<StoreServices>(context, listen: false).createStore(StoreModel(storeId: "storeId", name: storeName, status: status,description: description));
+                storeModel.storeId = CollectionsNames.stores.generateId();
+                storeServices.createStore(storeModel);
                 Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
@@ -124,7 +142,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildStoreDescriptionFormField() {
     return TextFormField(
-      onSaved: (newValue) => description = newValue,
+      onSaved: (newValue) {
+        storeModel.description = newValue;
+      },
       decoration: InputDecoration(
         labelText: "Store descriptions",
         hintText: "Enter your Store descriptions",
@@ -139,7 +159,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildStoreNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => storeName = newValue,
+      onSaved: (newValue) {
+        if (newValue != null && newValue != "") storeModel.name = newValue;
+      },
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
