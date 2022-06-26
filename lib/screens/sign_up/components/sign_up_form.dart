@@ -21,6 +21,13 @@ class _SignUpFormState extends State<SignUpForm> {
   late String conform_password;
   bool remember = false;
   final List<String?> errors = [];
+  late AuthServices authServices;
+
+  @override
+  void initState() {
+    super.initState();
+    authServices = Provider.of<AuthServices>(context, listen: false);
+  }
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -55,8 +62,8 @@ class _SignUpFormState extends State<SignUpForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
-                await Provider.of<AuthServices>(context, listen: false).signUp(email: email, password: password);
-                var user = Provider.of<AuthServices>(context, listen: false).userCredential;
+                await authServices.signUp(email: email, password: password);
+                var user = authServices.userCredential;
                 if (user != null) {
                   Navigator.pushNamed(context, CompleteProfileScreen.routeName);
                 }
