@@ -13,9 +13,7 @@ class OrderServices extends ServiceBase {
   var orderModelRef;
 
   OrderServices() {
-    orderModelRef = db.instance
-        .collection(CollectionsNames.stores)
-        .withConverter<orderModel>(
+    orderModelRef = db.instance.collection(CollectionsNames.stores).withConverter<orderModel>(
           fromFirestore: (snapshot, _) => orderModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );
@@ -58,12 +56,10 @@ class OrderServices extends ServiceBase {
     }
   }
 
-
-
   createOrder(orderModel model) async {
     try {
       await orderModelRef.add(model);
-      await getOrder(orderId: model.id);
+      await getOrder(orderId: model.userId);
       order_Local.deleteCachedOrder();
       order_Local.deleteCachedCustomerOrder();
     } on FirebaseFirestore catch (e) {
@@ -75,10 +71,7 @@ class OrderServices extends ServiceBase {
 
   updateOrder({required orderModel model}) async {
     try {
-      QueryDocumentSnapshot<orderModel> user = await orderModelRef
-          .where('userId', isEqualTo: model.id)
-          .get()
-          .then((snapshot) {
+      QueryDocumentSnapshot<orderModel> user = await orderModelRef.where('userId', isEqualTo: model.userId).get().then((snapshot) {
         return snapshot.docs.first;
       });
       orderModelRef.doc(user.id).update(model.toJson());
@@ -94,10 +87,7 @@ class OrderServices extends ServiceBase {
 
   deleteOrder({required String orderId}) async {
     try {
-      QueryDocumentSnapshot<orderModel> order = await orderModelRef
-          .where('orderId', isEqualTo: orderId)
-          .get()
-          .then((snapshot) {
+      QueryDocumentSnapshot<orderModel> order = await orderModelRef.where('orderId', isEqualTo: orderId).get().then((snapshot) {
         return snapshot.docs.first;
       });
       orderModelRef.doc(order.id).delete();

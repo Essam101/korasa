@@ -7,9 +7,9 @@ class UserRemote extends ServiceBase {
 
   UserRemote(this.userModelRef);
 
-  Future<userModel?> getUser({required String userId}) async {
+  Future<UserModel?> getUser({required String userId}) async {
     try {
-      QueryDocumentSnapshot<userModel> user = await userModelRef.where('userId', isEqualTo: userId).get().then((snapshot) {
+      QueryDocumentSnapshot<UserModel> user = await userModelRef.where('userId', isEqualTo: userId).get().then((snapshot) {
         return snapshot.docs.first;
       });
       return user.data();
@@ -21,14 +21,15 @@ class UserRemote extends ServiceBase {
     return null;
   }
 
-  Future<List<userModel>> getStoreUsers({required String storeId } ) async {
+  Future<List<UserModel>> getStoreUsers({required String storeId}) async {
     try {
-      List<QueryDocumentSnapshot<userModel>> stores = await userModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
+      List<QueryDocumentSnapshot<UserModel>> stores = await userModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {
         return snapshot.docs;
       });
-      List<userModel> _stores = [];
+      List<UserModel> _stores = [];
       stores.forEach((element) {
-        _stores.add(new userModel(id: element.data().id, name: element.data().name, role: element.data().role, storeId: element.data().storeId));
+        _stores
+            .add(new UserModel(userId: element.data().userId, name: element.data().name, role: element.data().role, storeId: element.data().storeId));
       });
       return _stores;
     } on FirebaseFirestore catch (e) {
@@ -39,15 +40,15 @@ class UserRemote extends ServiceBase {
     return [];
   }
 
-
-  Future<List<userModel>> getAllUsers() async {
+  Future<List<UserModel>> getAllUsers() async {
     try {
-      List<QueryDocumentSnapshot<userModel>> stores = await userModelRef.get().then((snapshot) {
+      List<QueryDocumentSnapshot<UserModel>> stores = await userModelRef.get().then((snapshot) {
         return snapshot.docs;
       });
-      List<userModel> _stores = [];
+      List<UserModel> _stores = [];
       stores.forEach((element) {
-        _stores.add(new userModel(id: element.data().id, name: element.data().name, role: element.data().role, storeId: element.data().storeId));
+        _stores
+            .add(new UserModel(userId: element.data().userId, name: element.data().name, role: element.data().role, storeId: element.data().storeId));
       });
       return _stores;
     } on FirebaseFirestore catch (e) {

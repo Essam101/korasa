@@ -59,7 +59,7 @@ class CustomerServices extends ServiceBase {
   createCustomer(CustomerModel model) async {
     try {
       await customerModelRef.add(model);
-      await getCustomer(customerId: model.id);
+      await getCustomer(customerId: model.customerId);
       customerLocal.deleteCachedCustomer();
       customerLocal.deleteCachedStoreCustomers();
     } on FirebaseFirestore catch (e) {
@@ -71,7 +71,7 @@ class CustomerServices extends ServiceBase {
 
   updateUser({required CustomerModel model}) async {
     try {
-      QueryDocumentSnapshot<CustomerModel> customer = await customerModelRef.where('customer', isEqualTo: model.id).get().then((snapshot) {
+      QueryDocumentSnapshot<CustomerModel> customer = await customerModelRef.where('customer', isEqualTo: model.customerId).get().then((snapshot) {
         return snapshot.docs.first;
       });
       customerModelRef.doc(customer.id).update(model.toJson());

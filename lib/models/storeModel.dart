@@ -9,14 +9,14 @@ class StoreModel {
     required this.storeId,
     required this.name,
     required this.status,
+    this.notes,
   });
 
   /// store Id
-  late final String storeId;
-
-  late final String name;
-
-  late final int status;
+  final String storeId;
+  final String name;
+  final String? notes;
+  final int status;
 
   factory StoreModel.fromRawJson(String str) => StoreModel.fromJson(json.decode(str));
 
@@ -24,13 +24,15 @@ class StoreModel {
 
   factory StoreModel.fromJson(Map<String, dynamic> json) => StoreModel(
         storeId: json["storeId"] == null ? null : json["storeId"],
-        name: json["Name"] == null ? null : json["Name"],
+        name: json["name"] == null ? null : json["name"],
+        notes: json["notes"] == null ? null : json["notes"],
         status: json["status"] == null ? null : json["status"],
       );
 
   Map<String, dynamic> toJson() => {
         "storeId": storeId,
-        "Name": name,
+        "name": name,
+        "notes": notes,
         "status": status,
       };
 }

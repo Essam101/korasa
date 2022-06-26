@@ -5,33 +5,31 @@ import 'package:shop/models/userModel.dart';
 class userLocal {
   GetStorage localStorage = new GetStorage();
 
-  Future<void>? cachingUser(userModel? model) {
+  Future<void>? cachingUser(UserModel? model) {
     if (model != null) {
       return localStorage.write(CachingKeys.user, model.toJson());
     }
     return null;
   }
 
-  Future<void> cachingStoreUsers(List<userModel> storeUsers) {
-    return localStorage.write(
-        CachingKeys.storeUsers, userModelToJson(storeUsers));
+  Future<void> cachingStoreUsers(List<UserModel> storeUsers) {
+    return localStorage.write(CachingKeys.storeUsers, userModelToJson(storeUsers));
   }
 
-  Future<void> cachingAllUsers(List<userModel> allUsers) {
-    return localStorage.write(
-        CachingKeys.storeUsers, userModelToJson(allUsers));
+  Future<void> cachingAllUsers(List<UserModel> allUsers) {
+    return localStorage.write(CachingKeys.storeUsers, userModelToJson(allUsers));
   }
 
-  Future<userModel>? getCashUser() {
+  Future<UserModel>? getCashUser() {
     final jsonUsers = localStorage.read(CachingKeys.user);
     if (jsonUsers != null) {
-      return Future.value(userModel.fromRawJson(jsonUsers));
+      return Future.value(UserModel.fromRawJson(jsonUsers));
     } else {
       return null;
     }
   }
 
-  Future<List<userModel>>? getCashStoreUsers() {
+  Future<List<UserModel>>? getCashStoreUsers() {
     final jsonStores = localStorage.read(CachingKeys.storeUsers);
     if (jsonStores != null && jsonStores.length != 0) {
       return Future.value(userModelFromJson(jsonStores));
@@ -40,7 +38,7 @@ class userLocal {
     }
   }
 
-  Future<List<userModel>>? getCashAllUsers() {
+  Future<List<UserModel>>? getCashAllUsers() {
     final jsonStores = localStorage.read(CachingKeys.allUsers);
     if (jsonStores != null && jsonStores.length != 0) {
       return Future.value(userModelFromJson(jsonStores));

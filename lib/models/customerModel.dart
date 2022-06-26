@@ -10,13 +10,15 @@ String customerModelToJson(List<CustomerModel> data) => json.encode(List<dynamic
 
 class CustomerModel {
   CustomerModel({
-    required this.id,
+    required this.customerId,
     required this.name,
+    required this.notes,
     required this.storeId,
   });
 
-  final String id;
+  final String customerId;
   final String name;
+  final String notes;
   final String storeId;
 
   factory CustomerModel.fromRawJson(String str) => CustomerModel.fromJson(json.decode(str));
@@ -24,14 +26,16 @@ class CustomerModel {
   String toRawJson() => json.encode(toJson());
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) => CustomerModel(
-        id: json["Id"],
+        customerId: json["customerId"],
         name: json["name"],
+        notes: json["notes"],
         storeId: json["StoreId"],
       );
 
   Map<String, dynamic> toJson() => {
-        "Id": id,
+        "customerId": customerId,
         "name": name,
+        "notes": notes,
         "StoreId": storeId,
       };
 }

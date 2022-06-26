@@ -22,14 +22,20 @@ class OrderRemote extends ServiceBase {
     return null;
   }
 
-  Future<List<orderModel>> getCustomerOrders({required String customerId } ) async {
+  Future<List<orderModel>> getCustomerOrders({required String customerId}) async {
     try {
       List<QueryDocumentSnapshot<orderModel>> customers = await orderModelRef.where('customerId', isEqualTo: customerId).get().then((snapshot) {
         return snapshot.docs;
       });
       List<orderModel> _orders = [];
       customers.forEach((element) {
-        _orders.add(new orderModel(id: element.data().id, productName: element.data().productName , creationDate: DateTime.now(), amount: element.data().amount, isPaid: element.data().isPaid, storeId: element.data().storeId));
+        _orders.add(new orderModel(
+            userId: element.data().userId,
+            productName: element.data().productName,
+            creationDate: DateTime.now(),
+            amount: element.data().amount,
+            isPaid: element.data().isPaid,
+            storeId: element.data().storeId));
       });
       return _orders;
     } on FirebaseFirestore catch (e) {
@@ -39,6 +45,4 @@ class OrderRemote extends ServiceBase {
     }
     return [];
   }
-
-
 }

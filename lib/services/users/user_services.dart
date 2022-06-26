@@ -6,17 +6,15 @@ import 'package:shop/services/users/user_local.dart';
 import 'package:shop/services/users/user_remote.dart';
 
 class UserServices extends ServiceBase {
-  userModel? user_Model;
-  List<userModel> usersModel = <userModel>[];
+  UserModel? user_Model;
+  List<UserModel> usersModel = <UserModel>[];
   late UserRemote userRemote;
   userLocal user_Local = new userLocal();
   var userModelRef;
 
   UserServices() {
-    userModelRef = db.instance
-        .collection(CollectionsNames.stores)
-        .withConverter<userModel>(
-          fromFirestore: (snapshot, _) => userModel.fromJson(snapshot.data()!),
+    userModelRef = db.instance.collection(CollectionsNames.stores).withConverter<UserModel>(
+          fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );
     userRemote = new UserRemote(userModelRef);
@@ -24,7 +22,7 @@ class UserServices extends ServiceBase {
 
   getUser({required String userId}) async {
     try {
-      userModel? cachedUser = await user_Local.getCashUser();
+      UserModel? cachedUser = await user_Local.getCashUser();
       if (cachedUser != null) {
         user_Model = cachedUser;
       } else {
@@ -76,10 +74,10 @@ class UserServices extends ServiceBase {
     }
   }
 
-  createUser(userModel model) async {
+  createUser(UserModel model) async {
     try {
       await userModelRef.add(model);
-      await getUser(userId: model.id);
+      await getUser(userId: model.userId);
       user_Local.deleteCachedUser();
       user_Local.deleteCachedStoreUsers();
       user_Local.deleteCachedAllUsers();
@@ -90,12 +88,9 @@ class UserServices extends ServiceBase {
     }
   }
 
-  updateUser({required userModel model}) async {
+  updateUser({required UserModel model}) async {
     try {
-      QueryDocumentSnapshot<userModel> user = await userModelRef
-          .where('userId', isEqualTo: model.id)
-          .get()
-          .then((snapshot) {
+      QueryDocumentSnapshot<UserModel> user = await userModelRef.where('userId', isEqualTo: model.userId).get().then((snapshot) {
         return snapshot.docs.first;
       });
       userModelRef.doc(user.id).update(model.toJson());
@@ -112,10 +107,7 @@ class UserServices extends ServiceBase {
 
   deleteUser({required String userId}) async {
     try {
-      QueryDocumentSnapshot<userModel> user = await userModelRef
-          .where('userId', isEqualTo: userId)
-          .get()
-          .then((snapshot) {
+      QueryDocumentSnapshot<UserModel> user = await userModelRef.where('userId', isEqualTo: userId).get().then((snapshot) {
         return snapshot.docs.first;
       });
       userModelRef.doc(user.id).delete();

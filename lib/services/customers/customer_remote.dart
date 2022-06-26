@@ -28,7 +28,7 @@ class CustomerRemote extends ServiceBase {
       });
       List<CustomerModel> _customers = [];
       customers.forEach((element) {
-        _customers.add(new CustomerModel(id: element.data().id, name: element.data().name, storeId: element.data().storeId));
+        _customers.add(new CustomerModel(customerId: element.data().customerId, name: element.data().name, storeId: element.data().storeId));
       });
       return _customers;
     } on FirebaseFirestore catch (e) {
