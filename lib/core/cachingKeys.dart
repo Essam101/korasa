@@ -5,29 +5,13 @@ class CachingKeys {
   static const store = "store";
   static const isLoggedIn = "isLoggedIn";
 
-
-
-
-
   static const user = "user";
   static const storeUsers = "storeUsers";
   static const allUsers = "AllUsers";
 
-
-
-
-
   static const customer = "customer";
   static const storeCustomers = "storeCustomers";
 
-
-  static const order = "order";
-  static const customerOrders = "customerOrders";
-
-
-
-
-
-
-
+  static const page = "page";
+  static const customerPages = "customerPages";
 }
