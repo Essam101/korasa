@@ -56,7 +56,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             text: "continue",
             press: () async {
               if (_formKey.currentState!.validate()) {
-                await Provider.of<StoreServices>(context, listen: false).Navigator.pushNamed(context, HomeScreen.routeName);
+                // var xxx =    Provider.of<StoreServices>(context, listen: false).storeModel.;
+                Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
           ),
