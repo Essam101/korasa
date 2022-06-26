@@ -9,14 +9,14 @@ class StoreModel {
     required this.storeId,
     required this.name,
     required this.status,
-    this.notes,
+    this.description,
   });
 
   /// store Id
   final String storeId;
   final String name;
-  final String? notes;
-  final int status;
+  final String? description;
+  final StoreStatus status;
 
   factory StoreModel.fromRawJson(String str) => StoreModel.fromJson(json.decode(str));
 
@@ -25,16 +25,16 @@ class StoreModel {
   factory StoreModel.fromJson(Map<String, dynamic> json) => StoreModel(
         storeId: json["storeId"] == null ? null : json["storeId"],
         name: json["name"] == null ? null : json["name"],
-        notes: json["notes"] == null ? null : json["notes"],
+        description: json["description"] == null ? null : json["description"],
         status: json["status"] == null ? null : json["status"],
       );
 
   Map<String, dynamic> toJson() => {
         "storeId": storeId,
         "name": name,
-        "notes": notes,
+        "notes": description,
         "status": status,
       };
 }
 
-enum StoreStatus { Active, Deactivated }
+ enum  StoreStatus { Active, Deactivated }

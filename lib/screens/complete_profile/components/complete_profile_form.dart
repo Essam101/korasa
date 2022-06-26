@@ -4,11 +4,11 @@ import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
 import 'package:shop/components/form_error.dart';
 import 'package:shop/core/size_config.dart';
+import 'package:shop/models/storeModel.dart';
 import 'package:shop/screens/home/home_screen.dart';
-import 'package:shop/screens/otp/otp_screen.dart';
-import 'package:shop/services/store/store_services.dart';
 
 import '../../../core/constants.dart';
+import '../../../services/store/store_services.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -18,10 +18,11 @@ class CompleteProfileForm extends StatefulWidget {
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
-  String? firstName;
-  String? lastName;
-  String? phoneNumber;
-  String? address;
+
+   String?  storeId;
+   String storeName = "";
+   String? description;
+  StoreStatus status = StoreStatus.Deactivated;
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -43,20 +44,20 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       key: _formKey,
       child: Column(
         children: [
-          buildFirstNameFormField(),
+          buildStoreNameFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildLastNameFormField(),
+          buildStoreDescriptionFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildPhoneNumberFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildAddressFormField(),
+          // buildPhoneNumberFormField(),
+          // SizedBox(height: getProportionateScreenHeight(30)),
+          // buildAddressFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "continue",
+            text: "Create Store",
             press: () async {
               if (_formKey.currentState!.validate()) {
-                // var xxx =    Provider.of<StoreServices>(context, listen: false).storeModel.;
+                Provider.of<StoreServices>(context, listen: false).createStore(StoreModel(storeId: "storeId", name: storeName, status: status,description: description));
                 Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
@@ -66,78 +67,79 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     );
   }
 
-  TextFormField buildAddressFormField() {
+  // TextFormField buildAddressFormField() {
+  //   return TextFormField(
+  //     onSaved: (newValue) => address = newValue,
+  //     onChanged: (value) {
+  //       if (value.isNotEmpty) {
+  //         removeError(error: kAddressNullError);
+  //       }
+  //       return null;
+  //     },
+  //     validator: (value) {
+  //       if (value!.isEmpty) {
+  //         addError(error: kAddressNullError);
+  //         return "";
+  //       }
+  //       return null;
+  //     },
+  //     decoration: InputDecoration(
+  //       labelText: "Address",
+  //       hintText: "Enter your phone address",
+  //       // If  you are using latest version of flutter then lable text and hint text shown like this
+  //       // if you r using flutter less then 1.20.* then maybe this is not working properly
+  //       floatingLabelBehavior: FloatingLabelBehavior.always,
+  //       suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
+  //     ),
+  //   );
+  // }
+
+  // TextFormField buildPhoneNumberFormField() {
+  //   return TextFormField(
+  //     keyboardType: TextInputType.phone,
+  //     onSaved: (newValue) => phoneNumber = newValue,
+  //     onChanged: (value) {
+  //       if (value.isNotEmpty) {
+  //         removeError(error: kPhoneNumberNullError);
+  //       }
+  //       return null;
+  //     },
+  //     validator: (value) {
+  //       if (value!.isEmpty) {
+  //         addError(error: kPhoneNumberNullError);
+  //         return "";
+  //       }
+  //       return null;
+  //     },
+  //     decoration: InputDecoration(
+  //       labelText: "Phone Number",
+  //       hintText: "Enter your phone number",
+  //       // If  you are using latest version of flutter then lable text and hint text shown like this
+  //       // if you r using flutter less then 1.20.* then maybe this is not working properly
+  //       floatingLabelBehavior: FloatingLabelBehavior.always,
+  //       suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
+  //     ),
+  //   );
+  // }
+
+  TextFormField buildStoreDescriptionFormField() {
     return TextFormField(
-      onSaved: (newValue) => address = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kAddressNullError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kAddressNullError);
-          return "";
-        }
-        return null;
-      },
+      onSaved: (newValue) => description = newValue,
       decoration: InputDecoration(
-        labelText: "Address",
-        hintText: "Enter your phone address",
+        labelText: "Store descriptions",
+        hintText: "Enter your Store descriptions",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
+        // suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
       ),
+      maxLines: 8,
     );
   }
 
-  TextFormField buildPhoneNumberFormField() {
+  TextFormField buildStoreNameFormField() {
     return TextFormField(
-      keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phoneNumber = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPhoneNumberNullError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kPhoneNumberNullError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Phone Number",
-        hintText: "Enter your phone number",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
-      ),
-    );
-  }
-
-  TextFormField buildLastNameFormField() {
-    return TextFormField(
-      onSaved: (newValue) => lastName = newValue,
-      decoration: InputDecoration(
-        labelText: "Last Name",
-        hintText: "Enter your last name",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
-      ),
-    );
-  }
-
-  TextFormField buildFirstNameFormField() {
-    return TextFormField(
-      onSaved: (newValue) => firstName = newValue,
+      onSaved: (newValue) => storeName = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
@@ -152,8 +154,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         return null;
       },
       decoration: InputDecoration(
-        labelText: "First Name",
-        hintText: "Enter your first name",
+        labelText: "Store Name",
+        hintText: "Enter your Store Name",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
