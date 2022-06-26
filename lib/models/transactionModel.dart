@@ -1,46 +1,29 @@
-// To parse this JSON data, do
-//
-//     final transactions = transactionsFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
-class transactionModel {
-  transactionModel({
-    required this.id,
+class Transaction {
+  Transaction({
     required this.creationDate,
+    this.notes,
     required this.amount,
-    required this.orderId,
-    required this.customerId,
-    required this.storeId,
   });
 
-  final String id;
-  final DateTime creationDate;
-  final double amount;
-  final String orderId;
-  final String customerId;
-  final String storeId;
+  String creationDate;
+  String? notes;
+  double amount;
 
-  factory transactionModel.fromRawJson(String str) => transactionModel.fromJson(json.decode(str));
+  factory Transaction.fromRawJson(String str) => Transaction.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory transactionModel.fromJson(Map<String, dynamic> json) => transactionModel(
-    id: json["Id"],
-    creationDate: DateTime.parse(json["CreationDate"]),
-    amount: json["Amount"].toDouble(),
-    orderId: json["OrderId"],
-    customerId: json["CustomerId"],
-    storeId: json["StoreId"],
-  );
+  factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
+        creationDate: json["creationDate"],
+        notes: json["notes"],
+        amount: json["amount"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "Id": id,
-    "CreationDate": creationDate.toIso8601String(),
-    "Amount": amount,
-    "OrderId": orderId,
-    "CustomerId": customerId,
-    "StoreId": storeId,
-  };
+        "creationDate": creationDate,
+        "notes": notes,
+        "amount": amount,
+      };
 }

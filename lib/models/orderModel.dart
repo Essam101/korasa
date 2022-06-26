@@ -1,54 +1,37 @@
-// To parse this JSON data, do
-//
-//     final orders = ordersFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
-
-List<orderModel> orderModelFromJson(String str) =>
-    List<orderModel>.from(
-        json.decode(str).map((x) => orderModel.fromJson(x)));
-
-String orderModelToJson(List<orderModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class orderModel {
-  orderModel({
-     required this.id,
-     required this.productName,
-     required this.creationDate,
-     required this.amount,
-     required this.isPaid,
-     required this.storeId,
+class Order {
+  Order({
+    required this.creationDate,
+    required this.itemName,
+    required this.price,
+    this.notes,
+    this.isPaid = false,
   });
 
-  final String id;
-  final String productName;
-  final DateTime creationDate;
-  final double amount;
-  final bool isPaid;
-  final String storeId;
+  DateTime creationDate;
+  bool isPaid;
+  String itemName;
+  String? notes;
+  double price;
 
-  factory orderModel.fromRawJson(String str) => orderModel.fromJson(json.decode(str));
+  factory Order.fromRawJson(String str) => Order.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory orderModel.fromJson(Map<String, dynamic> json) => orderModel(
-    id: json["Id"],
-    productName: json["productName"],
-    creationDate: json["CreationDate"],
-    amount: json["Amount"].toDouble(),
-    isPaid: json["IsPaid"],
-    storeId: json["StoreId"],
-  );
+  factory Order.fromJson(Map<String, dynamic> json) => Order(
+        creationDate: json["creationDate"],
+        isPaid: json["isPaid"],
+        itemName: json["itemName"],
+        notes: json["notes"],
+        price: json["price"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "Id": id,
-    "productName": productName,
-    "CreationDate": creationDate,
-    "Amount": amount,
-    "IsPaid": isPaid,
-    "StoreId": storeId,
-  };
+        "creationDate": creationDate,
+        "isPaid": isPaid,
+        "itemName": itemName,
+        "notes": notes,
+        "price": price,
+      };
 }
