@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shop/core/enums.dart';
+import 'package:shop/core/extensions/system_feedback.dart';
 
 import 'service_base.dart';
 
@@ -11,9 +12,9 @@ class AuthServices extends ServiceBase {
       userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        systemFeedBack.showAlert(alertType: AlertType.Warning, massage: 'No user found for that email.');
+        'No user found for that email.'.showAlert(alertType: AlertType.Warning);
       } else if (e.code == 'wrong-password') {
-        systemFeedBack.showAlert(alertType: AlertType.Error, massage: 'Wrong password provided for that user.');
+        'Wrong password provided for that user.'.showAlert(alertType: AlertType.Error);
       }
     }
     notifyListeners();
@@ -24,10 +25,9 @@ class AuthServices extends ServiceBase {
       userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        systemFeedBack.showAlert(alertType: AlertType.Error, massage: 'The password provided is too weak.');
-        print('The password provided is too weak.');
+        'The password provided is too weak.'.showAlert(alertType: AlertType.Error);
       } else if (e.code == 'email-already-in-use') {
-        systemFeedBack.showAlert(alertType: AlertType.Error, massage: 'The account already exists for that email.');
+        'The account already exists for that email.'.showAlert(alertType: AlertType.Error);
       }
     } catch (e) {
       print(e);
@@ -40,9 +40,9 @@ class AuthServices extends ServiceBase {
       await FirebaseAuth.instance.signOut();
     } on FirebaseAuthException catch (e) {
       print(e);
-      systemFeedBack.showAlert(alertType: AlertType.Error, massage: 'The account already exists for that email.');
+      'The account already exists for that email.'.showAlert(alertType: AlertType.Error);
     } catch (e) {
-      systemFeedBack.showAlert(alertType: AlertType.Error, massage: e.toString());
+      e.toString().showAlert(alertType: AlertType.Error);
     }
   }
 }

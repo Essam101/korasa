@@ -4,7 +4,7 @@ import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
 import 'package:shop/components/form_error.dart';
 import 'package:shop/core/collectionsNames.dart';
-import 'package:shop/core/generateId.dart';
+import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/models/storeModel.dart';
 import 'package:shop/screens/home/home_screen.dart';
