@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/Product.dart';
+import '../../models/old/Product.dart';
 import 'components/body.dart';
 import 'components/custom_app_bar.dart';
 
@@ -9,8 +9,7 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProductDetailsArguments agrs =
-        ModalRoute.of(context)!.settings.arguments as ProductDetailsArguments;
+    final ProductDetailsArguments agrs = ModalRoute.of(context)!.settings.arguments as ProductDetailsArguments;
     return Scaffold(
       backgroundColor: Color(0xFFF5F6F9),
       appBar: PreferredSize(

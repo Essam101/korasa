@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop/components/product_card.dart';
-import 'package:shop/models/Product.dart';
+import 'package:shop/models/old/Product.dart';
 
 import 'package:shop/core/size_config.dart';
 import 'section_title.dart';
@@ -11,8 +11,7 @@ class PopularProducts extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SectionTitle(title: "Popular Products", press: () {}),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
@@ -23,11 +22,9 @@ class PopularProducts extends StatelessWidget {
               ...List.generate(
                 demoProducts.length,
                 (index) {
-                  if (demoProducts[index].isPopular)
-                    return ProductCard(product: demoProducts[index]);
+                  if (demoProducts[index].isPopular) return ProductCard(product: demoProducts[index]);
 
-                  return SizedBox
-                      .shrink(); // here by default width and height is 0
+                  return SizedBox.shrink(); // here by default width and height is 0
                 },
               ),
               SizedBox(width: getProportionateScreenWidth(20)),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop/core/size_config.dart';
-import 'package:shop/models/Product.dart';
+import 'package:shop/models/old/Product.dart';
 import 'package:shop/screens/details/details_screen.dart';
 
 import '../core/constants.dart';
@@ -71,16 +71,12 @@ class ProductCard extends StatelessWidget {
                       height: getProportionateScreenWidth(28),
                       width: getProportionateScreenWidth(28),
                       decoration: BoxDecoration(
-                        color: product.isFavourite
-                            ? kPrimaryColor.withOpacity(0.15)
-                            : kSecondaryColor.withOpacity(0.1),
+                        color: product.isFavourite ? kPrimaryColor.withOpacity(0.15) : kSecondaryColor.withOpacity(0.1),
                         shape: BoxShape.circle,
                       ),
                       child: SvgPicture.asset(
                         "assets/icons/Heart Icon_2.svg",
-                        color: product.isFavourite
-                            ? Color(0xFFFF4848)
-                            : Color(0xFFDBDEE4),
+                        color: product.isFavourite ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
                       ),
                     ),
                   ),

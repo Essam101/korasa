@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop/core/size_config.dart';
-import 'package:shop/models/Product.dart';
+import 'package:shop/models/old/Product.dart';
 
 import '../../../core/constants.dart';
 
@@ -36,8 +36,7 @@ class _ProductImagesState extends State<ProductImages> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ...List.generate(widget.product.images.length,
-                (index) => buildSmallProductPreview(index)),
+            ...List.generate(widget.product.images.length, (index) => buildSmallProductPreview(index)),
           ],
         )
       ],
@@ -60,8 +59,7 @@ class _ProductImagesState extends State<ProductImages> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-              color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
+          border: Border.all(color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
         child: Image.asset(widget.product.images[index]),
       ),
