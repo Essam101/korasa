@@ -15,12 +15,14 @@ class UserModel {
     required this.name,
     required this.role,
     required this.storeId,
+    required this.email
   });
 
   late final String userId;
   late final String name;
   late final roleType role;
   late final String storeId;
+  late final String email ;
 
   factory UserModel.fromRawJson(String str) => UserModel.fromJson(json.decode(str));
 
@@ -31,6 +33,7 @@ class UserModel {
         name: json["name"],
         role: json["Role"],
         storeId: json["StoreId"],
+    email: json["email"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -38,6 +41,7 @@ class UserModel {
         "name": name,
         "Role": role,
         "StoreId": storeId,
+        "email": email,
       };
 }
 
