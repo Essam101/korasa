@@ -11,7 +11,7 @@ class Order {
   });
 
   String orderId;
-  DateTime creationDate;
+  String creationDate;
   bool isPaid;
   String itemName;
   String? notes;

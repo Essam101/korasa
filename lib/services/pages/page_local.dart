@@ -37,7 +37,7 @@ class PageLocal {
   }
 
   Future<List<PageModel>>? getCachedCustomerPagesByCustomerId({required String customerId}) {
-    final jsonPage = localStorage.read(CachingKeys.page.addIdToKey(id: customerId));
+    final jsonPage = localStorage.read(CachingKeys.pages.addIdToKey(id: customerId));
     if (jsonPage != null) {
       return Future.value(pageModelFromJson(jsonPage));
     } else {

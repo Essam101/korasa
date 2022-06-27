@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/core/constants.dart';
 import 'package:shop/core/size_config.dart';
+import 'package:shop/models/pageModel.dart';
+import 'package:shop/models/transactionModel.dart';
 import 'package:shop/screens/sign_in/sign_in_screen.dart';
+import 'package:shop/services/pages/page_services.dart';
 import 'package:shop/services/transaction_services.dart';
 
 // This is the best practice
@@ -27,6 +31,22 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
+    // var model = new PageModel(
+    //   pageId: "page1",
+    //   storeId: "store1",
+    //   customerId: "customer1",
+    //   creationDate: new DateTime.now().toString(),
+    //   orders: [],
+    //   transactions: [],
+    // );
+    //
+    // Provider.of<PageServices>(context, listen: false).createPage(model);
+
+    // var trens = new Transaction(
+    //   transactionId: "transaction1",
+    //   creationDate: new DateTime.now().toString(),
+    //   amount: 60.0,
+    // );
   }
 
   @override

@@ -26,7 +26,7 @@ class PageModel {
   String pageId;
   String storeId;
   String customerId;
-  DateTime creationDate;
+  String creationDate;
   bool isClosed;
   double? paidAmount;
   double amount;
