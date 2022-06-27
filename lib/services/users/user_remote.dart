@@ -29,7 +29,7 @@ class UserRemote extends ServiceBase {
       List<UserModel> _stores = [];
       stores.forEach((element) {
         _stores
-            .add(new UserModel(userId: element.data().userId, name: element.data().name, role: element.data().role, storeId: element.data().storeId));
+            .add(new UserModel(userId: element.data().userId, email:element.data().email ,  name: element.data().name, role: element.data().role, storeId: element.data().storeId));
       });
       return _stores;
     } on FirebaseFirestore catch (e) {
@@ -48,7 +48,7 @@ class UserRemote extends ServiceBase {
       List<UserModel> _stores = [];
       stores.forEach((element) {
         _stores
-            .add(new UserModel(userId: element.data().userId, name: element.data().name, role: element.data().role, storeId: element.data().storeId));
+            .add(new UserModel(userId: element.data().userId, email: element.data().email, name: element.data().name, role: element.data().role, storeId: element.data().storeId));
       });
       return _stores;
     } on FirebaseFirestore catch (e) {
