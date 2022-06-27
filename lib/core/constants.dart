@@ -11,6 +11,8 @@ const kPrimaryGradientColor = LinearGradient(
 const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Color(0xFF757575);
 
+const kSecondaryColorDark = Colors.white;
+const kTextColorDark = Colors.white;
 const kAnimationDuration = Duration(milliseconds: 200);
 
 final headingStyle = TextStyle(
@@ -23,8 +25,7 @@ final headingStyle = TextStyle(
 const defaultDuration = Duration(milliseconds: 250);
 
 // Form Error
-final RegExp emailValidatorRegExp =
-    RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+final RegExp emailValidatorRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 const String kEmailNullError = "Please Enter your email";
 const String kInvalidEmailError = "Please Enter Valid Email";
 const String kPassNullError = "Please Enter your password";
@@ -35,8 +36,7 @@ const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
 
 final otpInputDecoration = InputDecoration(
-  contentPadding:
-      EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
+  contentPadding: EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
   border: outlineInputBorder(),
   focusedBorder: outlineInputBorder(),
   enabledBorder: outlineInputBorder(),

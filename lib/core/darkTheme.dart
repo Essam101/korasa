@@ -17,7 +17,7 @@ ThemeData darkThem() {
 InputDecorationTheme inputDecorationTheme() {
   OutlineInputBorder outlineInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(28),
-    borderSide: BorderSide(color: kTextColor),
+    borderSide: BorderSide(color: kTextColorDark),
     gapPadding: 10,
   );
   return InputDecorationTheme(
@@ -34,8 +34,8 @@ InputDecorationTheme inputDecorationTheme() {
 
 TextTheme textTheme() {
   return TextTheme(
-    bodyText1: TextStyle(color: kTextColor),
-    bodyText2: TextStyle(color: kTextColor),
+    bodyText1: TextStyle(color: kTextColorDark),
+    bodyText2: TextStyle(color: kTextColorDark),
   );
 }
 
@@ -43,13 +43,13 @@ AppBarTheme appBarTheme() {
   return AppBarTheme(
     color: Colors.black,
     elevation: 0,
-    systemOverlayStyle: SystemUiOverlayStyle.dark,
-    iconTheme: IconThemeData(color: Colors.black),
+    systemOverlayStyle: SystemUiOverlayStyle.light,
+    iconTheme: IconThemeData(color: Colors.white),
     toolbarTextStyle: TextTheme(
-      headline6: TextStyle(color: Color(0XFF8B8B8B), fontSize: 18),
+      headline6: TextStyle(color: Colors.white, fontSize: 18),
     ).bodyText2,
     titleTextStyle: TextTheme(
-      headline6: TextStyle(color: Color(0XFF8B8B8B), fontSize: 18),
+      headline6: TextStyle(color: Colors.white, fontSize: 18),
     ).headline6,
   );
 }
