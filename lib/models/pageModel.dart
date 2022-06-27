@@ -19,8 +19,8 @@ class PageModel {
     this.isClosed = false,
     this.paidAmount = 0,
     this.amount = 0,
-    this.orders,
-    this.transactions,
+    required this.orders,
+    required this.transactions,
   });
 
   String pageId;
@@ -30,8 +30,8 @@ class PageModel {
   bool isClosed;
   double? paidAmount;
   double amount;
-  List<Order>? orders;
-  List<Transaction>? transactions;
+  List<Order> orders;
+  List<Transaction> transactions;
 
   factory PageModel.fromRawJson(String str) => PageModel.fromJson(json.decode(str));
 
@@ -57,7 +57,7 @@ class PageModel {
         "isClosed": isClosed,
         "paidAmount": paidAmount,
         "amount": amount,
-        "orders": List<dynamic>.from(orders!.map((x) => x.toJson())),
-        "transactions": List<dynamic>.from(transactions!.map((x) => x.toJson())),
+        "orders": List<dynamic>.from(orders.map((x) => x.toJson())),
+        "transactions": List<dynamic>.from(transactions.map((x) => x.toJson())),
       };
 }

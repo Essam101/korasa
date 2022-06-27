@@ -27,7 +27,7 @@ class PageServices extends ServiceBase {
     pageRemote = new PageRemote(pageModelRef);
   }
 
-  getPageById({required String pageId}) async {
+  Future<PageModel> getPageById({required String pageId}) async {
     try {
       var page = await pageLocal.getCashedPageByPageId(PageId: pageId);
       if (page != null) {
@@ -47,6 +47,7 @@ class PageServices extends ServiceBase {
     } catch (e) {
       print(e);
     }
+    return customerPageModel;
   }
 
   getCustomerPagesByCustomerId({required String customerId}) async {

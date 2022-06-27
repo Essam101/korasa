@@ -2,6 +2,7 @@ import 'dart:convert';
 
 class Order {
   Order({
+    required this.orderId,
     required this.creationDate,
     required this.itemName,
     required this.price,
@@ -9,6 +10,7 @@ class Order {
     this.isPaid = false,
   });
 
+  String orderId;
   DateTime creationDate;
   bool isPaid;
   String itemName;
@@ -20,6 +22,7 @@ class Order {
   String toRawJson() => json.encode(toJson());
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
+        orderId: json["orderId"],
         creationDate: json["creationDate"],
         isPaid: json["isPaid"],
         itemName: json["itemName"],
@@ -28,6 +31,7 @@ class Order {
       );
 
   Map<String, dynamic> toJson() => {
+        "orderId": orderId,
         "creationDate": creationDate,
         "isPaid": isPaid,
         "itemName": itemName,

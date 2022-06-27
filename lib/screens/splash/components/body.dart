@@ -1,8 +1,10 @@
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop/core/constants.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/screens/sign_in/sign_in_screen.dart';
+import 'package:shop/services/transaction_services.dart';
 
 // This is the best practice
 import '../components/splash_content.dart';
@@ -20,6 +22,12 @@ class _BodyState extends State<Body> {
     {"text": "We help people conect with store \naround United State of America", "image": "assets/images/splash_2.png"},
     {"text": "We show the easy way to shop. \nJust stay at home with us", "image": "assets/images/splash_3.png"},
   ];
+  late TransactionServices transactionServices;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
