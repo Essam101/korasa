@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/core/darkTheme.dart';
 import 'package:shop/core/routes.dart';
 import 'package:shop/core/theme.dart';
 import 'package:shop/screens/splash/splash_screen.dart';
@@ -20,7 +22,9 @@ void main() async {
     );
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-    runApp(MyApp());
+    runApp(EasyDynamicThemeWidget(
+      child: MyApp(),
+    ));
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 
@@ -33,6 +37,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: theme(),
+        darkTheme: darkThem(),
+        themeMode: EasyDynamicTheme.of(context).themeMode,
         initialRoute: SplashScreen.routeName,
         routes: routes,
       ),

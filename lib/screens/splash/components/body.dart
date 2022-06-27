@@ -1,3 +1,4 @@
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shop/core/constants.dart';
 import 'package:shop/core/size_config.dart';
@@ -15,20 +16,11 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   int currentPage = 0;
   List<Map<String, String>> splashData = [
-    {
-      "text": "Welcome to Tokoto, Let’s shop!",
-      "image": "assets/images/splash_1.png"
-    },
-    {
-      "text":
-          "We help people conect with store \naround United State of America",
-      "image": "assets/images/splash_2.png"
-    },
-    {
-      "text": "We show the easy way to shop. \nJust stay at home with us",
-      "image": "assets/images/splash_3.png"
-    },
+    {"text": "Welcome to Tokoto, Let’s shop!", "image": "assets/images/splash_1.png"},
+    {"text": "We help people conect with store \naround United State of America", "image": "assets/images/splash_2.png"},
+    {"text": "We show the easy way to shop. \nJust stay at home with us", "image": "assets/images/splash_3.png"},
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -54,8 +46,7 @@ class _BodyState extends State<Body> {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
+                padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
                 child: Column(
                   children: <Widget>[
                     Spacer(),
@@ -73,6 +64,12 @@ class _BodyState extends State<Body> {
                         Navigator.pushNamed(context, SignInScreen.routeName);
                       },
                     ),
+                    Text("${EasyDynamicTheme.of(context).themeMode}"),
+                    ElevatedButton(
+                        onPressed: () {
+                          EasyDynamicTheme.of(context).changeTheme();
+                        },
+                        child: Text("Change")),
                     Spacer(),
                   ],
                 ),
