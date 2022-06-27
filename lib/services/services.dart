@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:shop/services/customers/customer_services.dart';
 import 'package:shop/services/pages/page_services.dart';
 import 'package:shop/services/store_services.dart';
 
@@ -23,6 +24,9 @@ class Services {
       ),
       ChangeNotifierProvider(
         create: (context) => new PageServices(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => new CustomerServices(),
       ),
     ];
   }

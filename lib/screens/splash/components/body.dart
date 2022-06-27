@@ -31,23 +31,6 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    // var model = new PageModel(
-    //   pageId: "page1",
-    //   storeId: "store1",
-    //   customerId: "customer1",
-    //   creationDate: new DateTime.now().toString(),
-    //   orders: [],
-    //   transactions: [],
-    // );
-    //
-    // Provider.of<PageServices>(context, listen: false).createPage(model);
-
-    var trens = new TransactionModel(
-      transactionId: "transaction1",
-      creationDate: new DateTime.now().toString(),
-      amount: 60.45,
-    );
-    new TransactionServices().addTransaction(context: context, pageId: "page1", transaction: trens);
   }
 
   @override
