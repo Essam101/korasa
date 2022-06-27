@@ -42,11 +42,12 @@ class _BodyState extends State<Body> {
     //
     // Provider.of<PageServices>(context, listen: false).createPage(model);
 
-    // var trens = new Transaction(
-    //   transactionId: "transaction1",
-    //   creationDate: new DateTime.now().toString(),
-    //   amount: 60.0,
-    // );
+    var trens = new TransactionModel(
+      transactionId: "transaction1",
+      creationDate: new DateTime.now().toString(),
+      amount: 60.45,
+    );
+    new TransactionServices().addTransaction(context: context, pageId: "page1", transaction: trens);
   }
 
   @override

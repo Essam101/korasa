@@ -19,14 +19,14 @@ class TransactionServices {
 
   addTransaction({required BuildContext context, required String pageId, required TransactionModel transaction}) async {
     transaction.transactionId = CollectionsNames.pages.generateId();
-    PageModel pageModel = await await Provider.of<PageServices>(context, listen: false).getPageById(pageId: pageId);
+    PageModel pageModel = await Provider.of<PageServices>(context, listen: false).getPageById(pageId: pageId);
     pageModel.transactions.add(transaction);
-    await await Provider.of<PageServices>(context, listen: false).updatePage(model: pageModel);
+    await Provider.of<PageServices>(context, listen: false).updatePage(model: pageModel);
   }
 
   deleteTransaction({required BuildContext context, required String pageId, required String transactionId}) async {
-    PageModel pageModel = await await Provider.of<PageServices>(context, listen: false).getPageById(pageId: pageId);
+    PageModel pageModel = await Provider.of<PageServices>(context, listen: false).getPageById(pageId: pageId);
     pageModel.transactions.removeWhere((element) => element.transactionId == transactionId);
-    await await Provider.of<PageServices>(context, listen: false).updatePage(model: pageModel);
+    await Provider.of<PageServices>(context, listen: false).updatePage(model: pageModel);
   }
 }
