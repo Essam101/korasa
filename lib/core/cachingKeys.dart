@@ -1,9 +1,11 @@
 import 'package:shop/core/collectionsNames.dart';
 
-class CachingKeys {
-  static String stores = "stores";
+extension CachingKeys on String {
   static const store = "store";
-  static const isLoggedIn = "isLoggedIn";
+  static const stores = "stores";
+
+  static const page = "page";
+  static const pages = "pages";
 
   static const user = "user";
   static const storeUsers = "storeUsers";
@@ -12,6 +14,10 @@ class CachingKeys {
   static const customer = "customer";
   static const storeCustomers = "storeCustomers";
 
-  static const page = "page";
+  static const isLoggedIn = "isLoggedIn";
   static const customerPages = "customerPages";
+
+  String addIdToKey({required String id}) {
+    return "${this + '_' + id}";
+  }
 }

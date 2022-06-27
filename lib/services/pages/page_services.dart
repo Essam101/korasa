@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shop/core/cachingKeys.dart';
 import 'package:shop/core/collectionsNames.dart';
+import 'package:shop/core/enums.dart';
+import 'package:shop/core/extensions/system_feedback.dart';
 import 'package:shop/models/pageModel.dart';
 import 'package:shop/services/pages/page_local.dart';
 import 'package:shop/services/pages/page_remote.dart';
@@ -7,29 +10,36 @@ import 'package:shop/services/pages/page_remote.dart';
 import 'package:shop/services/service_base.dart';
 
 class PageServices extends ServiceBase {
-  PageModel? pageModel;
-  List<PageModel> pagesModel = <PageModel>[];
-  late PageRemote pageRemote;
-  PageLocal pageLocal = new PageLocal();
   var pageModelRef;
+  late PageRemote pageRemote;
+  late PageLocal pageLocal = new PageLocal();
+
+  late PageModel customerPageModel;
+  late List<PageModel> customerPagesModel;
+  late List<PageModel> storePagesModel;
 
   PageServices() {
     pageModelRef = db.instance.collection(CollectionsNames.stores).withConverter<PageModel>(
           fromFirestore: (snapshot, _) => PageModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );
+    print(pageModelRef.runtimeType);
     pageRemote = new PageRemote(pageModelRef);
   }
 
-  getPage({required String pageId}) async {
+  getPageById({required String pageId}) async {
     try {
-      PageModel? cachedPage = await pageLocal.getCashPage();
-      if (cachedPage != null) {
-        pageModel = cachedPage;
+      var page = await pageLocal.getCashedPageByPageId(PageId: pageId);
+      if (page != null) {
+        customerPageModel = page;
       } else {
-        var page = await pageRemote.getPage(pageId: pageId);
-        pageModel = page;
-        pageLocal.cachingPage(pageModel);
+        var page = await pageRemote.getPageByPageId(pageId: pageId);
+        if (page != null) {
+          customerPageModel = page;
+          await pageLocal.cachingPageByPageId(model: customerPageModel);
+        } else {
+          "Page Not Found".showAlert(alertType: AlertType.Error);
+        }
       }
       notifyListeners();
     } on FirebaseFirestore catch (e) {
@@ -39,15 +49,41 @@ class PageServices extends ServiceBase {
     }
   }
 
-  getCustomerPages({required String customerId}) async {
+  getCustomerPagesByCustomerId({required String customerId}) async {
     try {
-      var cashCustomerPages = await pageLocal.getCashCustomerPages();
-      if (cashCustomerPages != null) {
-        pagesModel = cashCustomerPages;
+      var pages = await pageLocal.getCachedCustomerPagesByCustomerId(customerId: customerId);
+      if (pages != null) {
+        customerPagesModel = pages;
       } else {
-        var customerPages = await pageRemote.getCustomerPages(customerId: customerId);
-        pagesModel = customerPages;
-        await pageLocal.cachingCustomerPages(pagesModel);
+        var pages = await pageRemote.getPagesByCustomerId(customerId: customerId);
+        if (pages.length > 0) {
+          customerPagesModel = pages;
+          await pageLocal.cachingCustomerPages(customerId: customerId, model: customerPagesModel);
+        } else {
+          "Not Found".showAlert(alertType: AlertType.Error);
+        }
+      }
+      notifyListeners();
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getStorePagesByStoreId({required String storeId}) async {
+    try {
+      var pages = await pageLocal.getCachedStorePagesByStoreId(storeId: storeId);
+      if (pages != null) {
+        storePagesModel = pages;
+      } else {
+        var pages = await pageRemote.getPagesByStoreId(storeId: storeId);
+        if (pages.length > 0) {
+          storePagesModel = pages;
+          await pageLocal.cachingStorePages(storeId: storeId, model: storePagesModel);
+        } else {
+          "Not Found".showAlert(alertType: AlertType.Error);
+        }
       }
       notifyListeners();
     } on FirebaseFirestore catch (e) {
@@ -60,9 +96,11 @@ class PageServices extends ServiceBase {
   createPage(PageModel model) async {
     try {
       await pageModelRef.add(model);
-      await getPage(pageId: model.pageId);
-      pageLocal.deleteCachedPage();
-      pageLocal.deleteCachedCustomerPage();
+      await pageLocal.deleteCachedPage();
+      await pageLocal.deleteCachedPages();
+      await getPageById(pageId: model.pageId);
+      await getCustomerPagesByCustomerId(customerId: model.customerId);
+      await getStorePagesByStoreId(storeId: model.storeId);
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
@@ -72,12 +110,17 @@ class PageServices extends ServiceBase {
 
   updatePage({required PageModel model}) async {
     try {
-      QueryDocumentSnapshot<PageModel> user = await pageModelRef.where('pageId', isEqualTo: model.pageId).get().then((snapshot) {
+      QueryDocumentSnapshot<PageModel> page = await pageModelRef.where('pageId', isEqualTo: model.pageId).get().then((snapshot) {
         return snapshot.docs.first;
       });
-      pageModelRef.doc(user.id).update(model.toJson());
-      pageLocal.deleteCachedPage();
-      pageLocal.deleteCachedCustomerPage();
+      pageModelRef.doc(page.id).update(model.toJson());
+
+      await pageLocal.deleteCachedPage();
+      await pageLocal.deleteCachedPages();
+      await getPageById(pageId: model.pageId);
+      await getCustomerPagesByCustomerId(customerId: model.customerId);
+      await getStorePagesByStoreId(storeId: model.storeId);
+
       notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
@@ -92,8 +135,11 @@ class PageServices extends ServiceBase {
         return snapshot.docs.first;
       });
       pageModelRef.doc(page.id).delete();
-      pageLocal.deleteCachedPage();
-      pageLocal.deleteCachedCustomerPage();
+      await pageLocal.deleteCachedPage();
+      await pageLocal.deleteCachedPages();
+      await getPageById(pageId: page.data().pageId);
+      await getCustomerPagesByCustomerId(customerId: page.data().customerId);
+      await getStorePagesByStoreId(storeId: page.data().storeId);
       notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);

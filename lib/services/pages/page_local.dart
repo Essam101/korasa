@@ -6,19 +6,29 @@ import '../../models/pageModel.dart';
 class PageLocal {
   GetStorage localStorage = new GetStorage();
 
-  Future<void>? cachingPage(PageModel? model) {
+  Future<void>? cachingPageByPageId({required PageModel? model}) {
     if (model != null) {
-      return localStorage.write(CachingKeys.user, model.toJson());
+      return localStorage.write(CachingKeys.page.addIdToKey(id: model.pageId), model.toJson());
     }
     return null;
   }
 
-  Future<void> cachingCustomerPages(List<PageModel> model) {
-    return localStorage.write(CachingKeys.customerPages, pageModelToJson(model));
+  Future<void>? cachingCustomerPages({required String customerId, required List<PageModel>? model}) {
+    if (model != null) {
+      return localStorage.write(CachingKeys.pages.addIdToKey(id: customerId), pageModelToJson(model));
+    }
+    return null;
   }
 
-  Future<PageModel>? getCashPage() {
-    final jsonPage = localStorage.read(CachingKeys.page);
+  Future<void>? cachingStorePages({required String storeId, required List<PageModel>? model}) {
+    if (model != null) {
+      return localStorage.write(CachingKeys.pages.addIdToKey(id: storeId), pageModelToJson(model));
+    }
+    return null;
+  }
+
+  Future<PageModel>? getCashedPageByPageId({required String PageId}) {
+    final jsonPage = localStorage.read(CachingKeys.page.addIdToKey(id: PageId));
     if (jsonPage != null) {
       return Future.value(PageModel.fromRawJson(jsonPage));
     } else {
@@ -26,10 +36,19 @@ class PageLocal {
     }
   }
 
-  Future<List<PageModel>>? getCashCustomerPages() {
-    final jsonPages = localStorage.read(CachingKeys.storeCustomers);
-    if (jsonPages != null && jsonPages.length != 0) {
-      return Future.value(pageModelFromJson(jsonPages));
+  Future<List<PageModel>>? getCachedCustomerPagesByCustomerId({required String customerId}) {
+    final jsonPage = localStorage.read(CachingKeys.page.addIdToKey(id: customerId));
+    if (jsonPage != null) {
+      return Future.value(pageModelFromJson(jsonPage));
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<PageModel>>? getCachedStorePagesByStoreId({required String storeId}) {
+    final jsonPage = localStorage.read(CachingKeys.page.addIdToKey(id: storeId));
+    if (jsonPage != null) {
+      return Future.value(pageModelFromJson(jsonPage));
     } else {
       return null;
     }
@@ -39,7 +58,7 @@ class PageLocal {
     localStorage.remove(CachingKeys.page);
   }
 
-  deleteCachedCustomerPage() {
-    localStorage.remove(CachingKeys.customerPages);
+  deleteCachedPages() {
+    localStorage.remove(CachingKeys.pages);
   }
 }
