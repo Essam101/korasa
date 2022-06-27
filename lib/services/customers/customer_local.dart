@@ -5,19 +5,22 @@ import 'package:shop/models/customerModel.dart';
 class CustomerLocal {
   GetStorage localStorage = new GetStorage();
 
-  Future<void>? cachingCustomer(CustomerModel? model) {
+  Future<void>? cachingCustomerById({required String customerId, CustomerModel? model}) {
     if (model != null) {
-      return localStorage.write(CachingKeys.user, model.toJson());
+      return localStorage.write(CachingKeys.user.addIdToKey(id: customerId), model.toJson());
     }
     return null;
   }
 
-  Future<void> cachingStoreCustomers(List<CustomerModel> storeCustomers) {
-    return localStorage.write(CachingKeys.storeUsers, customerModelToJson(storeCustomers));
+  Future<void> cachingStoreCustomersByStoreId({
+    required String storeId,
+    required List<CustomerModel> storeCustomers,
+  }) {
+    return localStorage.write(CachingKeys.storeUsers.addIdToKey(id: storeId), customerModelToJson(storeCustomers));
   }
 
-  Future<CustomerModel>? getCashCustomer() {
-    final jsonCustomer = localStorage.read(CachingKeys.customer);
+  Future<CustomerModel>? getCashedCustomerById({required String customerId}) {
+    final jsonCustomer = localStorage.read(CachingKeys.customer.addIdToKey(id: customerId));
     if (jsonCustomer != null) {
       return Future.value(CustomerModel.fromRawJson(jsonCustomer));
     } else {
@@ -25,8 +28,8 @@ class CustomerLocal {
     }
   }
 
-  Future<List<CustomerModel>>? getCashStoreUCustomers() {
-    final jsonCustomers = localStorage.read(CachingKeys.storeCustomers);
+  Future<List<CustomerModel>>? getCashedStoreCustomersByStoreId({required String storeId}) {
+    final jsonCustomers = localStorage.read(CachingKeys.storeCustomers.addIdToKey(id: storeId));
     if (jsonCustomers != null && jsonCustomers.length != 0) {
       return Future.value(customerModelFromJson(jsonCustomers));
     } else {
@@ -34,11 +37,11 @@ class CustomerLocal {
     }
   }
 
-  deleteCachedCustomer() {
-    localStorage.remove(CachingKeys.customer);
+  deleteCachedCustomer({required String customerId}) {
+    localStorage.remove(CachingKeys.customer.addIdToKey(id: customerId));
   }
 
-  deleteCachedStoreCustomers() {
-    localStorage.remove(CachingKeys.storeCustomers);
+  deleteCachedStoreCustomers({required String storeId}) {
+    localStorage.remove(CachingKeys.storeCustomers.addIdToKey(id: storeId));
   }
 }
