@@ -7,7 +7,7 @@ import 'package:shop/models/pageModel.dart';
 import 'package:shop/services/pages/page_services.dart';
 
 class OrderServices {
-  editOrder({required BuildContext context, required String pageId, required Order order}) async {
+  editOrder({required BuildContext context, required String pageId, required OrderModel order}) async {
     PageModel pageModel = await Provider.of<PageServices>(context, listen: false).getPageById(pageId: pageId);
     pageModel.orders.forEach((element) {
       if (element.orderId == order.orderId) {
@@ -17,7 +17,7 @@ class OrderServices {
     await Provider.of<PageServices>(context, listen: false).updatePage(model: pageModel);
   }
 
-  addOrder({required BuildContext context, required String pageId, required Order order}) async {
+  addOrder({required BuildContext context, required String pageId, required OrderModel order}) async {
     order.orderId = CollectionsNames.pages.generateId();
     PageModel pageModel = await await Provider.of<PageServices>(context, listen: false).getPageById(pageId: pageId);
     pageModel.orders.add(order);

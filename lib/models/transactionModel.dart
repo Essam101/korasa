@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class Transaction {
-  Transaction({
+class TransactionModel {
+  TransactionModel({
     required this.transactionId,
     required this.creationDate,
     required this.amount,
@@ -13,11 +13,11 @@ class Transaction {
   double amount;
   String? notes;
 
-  factory Transaction.fromRawJson(String str) => Transaction.fromJson(json.decode(str));
+  factory TransactionModel.fromRawJson(String str) => TransactionModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
+  factory TransactionModel.fromJson(Map<String, dynamic> json) => TransactionModel(
         transactionId: json["transactionId"],
         creationDate: json["creationDate"],
         notes: json["notes"],

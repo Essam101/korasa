@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class Order {
-  Order({
+class OrderModel {
+  OrderModel({
     required this.orderId,
     required this.creationDate,
     required this.itemName,
@@ -17,11 +17,11 @@ class Order {
   String? notes;
   double price;
 
-  factory Order.fromRawJson(String str) => Order.fromJson(json.decode(str));
+  factory OrderModel.fromRawJson(String str) => OrderModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Order.fromJson(Map<String, dynamic> json) => Order(
+  factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
         orderId: json["orderId"],
         creationDate: json["creationDate"],
         isPaid: json["isPaid"],

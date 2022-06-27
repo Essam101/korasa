@@ -7,7 +7,7 @@ import 'package:shop/models/transactionModel.dart';
 import 'package:shop/services/pages/page_services.dart';
 
 class TransactionServices {
-  editTransaction({required BuildContext context, required String pageId, required Transaction transaction}) async {
+  editTransaction({required BuildContext context, required String pageId, required TransactionModel transaction}) async {
     PageModel pageModel = await Provider.of<PageServices>(context, listen: false).getPageById(pageId: pageId);
     pageModel.transactions.forEach((element) {
       if (element.transactionId == transaction.transactionId) {
@@ -17,7 +17,7 @@ class TransactionServices {
     await Provider.of<PageServices>(context, listen: false).updatePage(model: pageModel);
   }
 
-  addTransaction({required BuildContext context, required String pageId, required Transaction transaction}) async {
+  addTransaction({required BuildContext context, required String pageId, required TransactionModel transaction}) async {
     transaction.transactionId = CollectionsNames.pages.generateId();
     PageModel pageModel = await await Provider.of<PageServices>(context, listen: false).getPageById(pageId: pageId);
     pageModel.transactions.add(transaction);

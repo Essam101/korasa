@@ -30,8 +30,8 @@ class PageModel {
   bool isClosed;
   double? paidAmount;
   double amount;
-  List<Order> orders;
-  List<Transaction> transactions;
+  List<OrderModel> orders;
+  List<TransactionModel> transactions;
 
   factory PageModel.fromRawJson(String str) => PageModel.fromJson(json.decode(str));
 
@@ -45,8 +45,8 @@ class PageModel {
         isClosed: json["isClosed"],
         paidAmount: json["paidAmount"],
         amount: json["amount"],
-        orders: List<Order>.from(json["orders"].map((x) => Order.fromJson(x))),
-        transactions: List<Transaction>.from(json["transactions"].map((x) => Transaction.fromJson(x))),
+        orders: List<OrderModel>.from(json["orders"].map((x) => OrderModel.fromJson(x))),
+        transactions: List<TransactionModel>.from(json["transactions"].map((x) => TransactionModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
