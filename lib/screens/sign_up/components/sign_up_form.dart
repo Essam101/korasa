@@ -57,39 +57,6 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          buildNameFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildEmailFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildPasswordFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildConformPassFormField(),
-          FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(40)),
-          DefaultButton(
-            text: "Continue",
-            press: () async {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                await authServices.signUp(email: email, password: password);
-                if (authServices.userCredential != null) {
-                  await userServices.createUser(
-                    model: new UserModel(
-                      userId: CollectionsNames.users.generateId(),
-                      name: name,
-                      role: 1,
-                      storeId: CollectionsNames.stores.generateId(),
-                      email: email,
-                      password: password
-                    ),
-                  );
-                  Navigator.pushNamed(context, CompleteSingUpScreen.routeName);
-=======
     return ModalProgressHUD(
       inAsyncCall: isLoading,
       child: Form(
@@ -119,11 +86,11 @@ class _SignUpFormState extends State<SignUpForm> {
                         role: 1,
                         storeId: CollectionsNames.stores.generateId(),
                         email: email,
+                        password: password,
                       ),
                     );
                     Navigator.pushNamed(context, CompleteSingUpScreen.routeName);
                   }
->>>>>>> Stashed changes
                 }
               },
             ),
