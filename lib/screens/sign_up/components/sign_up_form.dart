@@ -25,10 +25,10 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
-  late String name;
-  late String email;
-  late String password;
-  late String conform_password;
+  late String name = "Essam";
+  late String email = "Essamsaleh"+ "".generateId().substring(0,10) + "yahoo.com";
+  late String password = 'Essam 101';
+  late String conform_password =  'Essam 101';
   bool remember = false;
   final List<String?> errors = [];
   late AuthServices authServices;
