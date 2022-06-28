@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
@@ -31,6 +32,8 @@ class _SignUpFormState extends State<SignUpForm> {
   late AuthServices authServices;
   late UserServices userServices;
 
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +57,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< Updated upstream
     return Form(
       key: _formKey,
       child: Column(
@@ -85,11 +89,46 @@ class _SignUpFormState extends State<SignUpForm> {
                     ),
                   );
                   Navigator.pushNamed(context, CompleteSingUpScreen.routeName);
+=======
+    return ModalProgressHUD(
+      inAsyncCall: isLoading,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            buildNameFormField(),
+            SizedBox(height: getProportionateScreenHeight(30)),
+            buildEmailFormField(),
+            SizedBox(height: getProportionateScreenHeight(30)),
+            buildPasswordFormField(),
+            SizedBox(height: getProportionateScreenHeight(30)),
+            buildConformPassFormField(),
+            FormError(errors: errors),
+            SizedBox(height: getProportionateScreenHeight(40)),
+            DefaultButton(
+              text: "Continue",
+              press: () async {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  await authServices.signUp(email: email, password: password);
+                  if (authServices.userCredential != null) {
+                    await userServices.createUser(
+                      model: new UserModel(
+                        userId: CollectionsNames.users.generateId(),
+                        name: name,
+                        role: 1,
+                        storeId: CollectionsNames.stores.generateId(),
+                        email: email,
+                      ),
+                    );
+                    Navigator.pushNamed(context, CompleteSingUpScreen.routeName);
+                  }
+>>>>>>> Stashed changes
                 }
-              }
-            },
-          ),
-        ],
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
