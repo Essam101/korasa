@@ -25,12 +25,15 @@ class SplashScreen extends StatelessWidget {
     // You have to call it on your starting screen
 
 
-    Provider.of<CustomerServices>(context, listen: false).createCustomer(
-        new CustomerModel(
-            customerId: CollectionsNames.customers.generateId(),
-            name: 'customer1',
-            notes: 'notes',
-            storeId: 'store1'));
+    // Provider.of<CustomerServices>(context, listen: false).createCustomer(
+    //     new CustomerModel(
+    //         customerId: CollectionsNames.customers.generateId(),
+    //         name: 'customer1',
+    //         notes: 'notes',
+    //         storeId: 'store1'));
+
+    Provider.of<CustomerServices>(context, listen: false).updateCustomer(model: new CustomerModel(customerId: "26c32eea-3c2c-52b5-9513-07ce6148b444", name: "Ahmed", notes: "Updated", storeId: "Store2"));
+
 
     SizeConfig().init(context);
     return Scaffold(
