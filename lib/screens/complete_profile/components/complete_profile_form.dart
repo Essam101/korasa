@@ -70,6 +70,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       key: _formKey,
       child: Column(
         children: [
+          Text(storeName),
           buildStoreNameFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildStoreDescriptionFormField(),
@@ -84,11 +85,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             press: () async {
               if (_formKey.currentState!.validate() && userServices.userModel != null) {
                 storeServices.createStore(
-                  new StoreModel(
-                    storeId: userServices.userModel!.storeId,
-                    name: storeName,
-                    status: status.index,
-                  ),
+                  new StoreModel(storeId: userServices.userModel!.storeId, name: storeName, status: status.index, description: storeDescription),
                 );
                 if (storeServices.storeModel != null) Navigator.pushNamed(context, HomeScreen.routeName);
               }
@@ -161,6 +158,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           storeDescription = newValue;
         }
       },
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kNamelNullError);
+        }
+        storeDescription = value;
+        return null;
+      },
       decoration: InputDecoration(
         labelText: "Store descriptions",
         hintText: "Enter your Store descriptions",
@@ -176,12 +180,15 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildStoreNameFormField() {
     return TextFormField(
       onSaved: (newValue) {
-        if (newValue != null && newValue != "") storeName = newValue;
+        if (newValue != null) {
+          storeName = newValue;
+        }
       },
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
         }
+        storeName = value;
         return null;
       },
       validator: (value) {
