@@ -63,9 +63,9 @@ class StoreServices extends ServiceBase {
   createStore(StoreModel storeModel) async {
     try {
       await _storeModelRef.add(storeModel);
+      await _storeLocal.deleteCachedStore();
+      await _storeLocal.deleteCachedStores();
       await getStore(storeId: storeModel.storeId);
-      _storeLocal.deleteCachedStore();
-      _storeLocal.deleteCachedStores();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {

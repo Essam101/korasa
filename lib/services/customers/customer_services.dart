@@ -6,7 +6,7 @@ import 'package:shop/services/customers/customer_remote.dart';
 import 'package:shop/services/service_base.dart';
 
 class CustomerServices extends ServiceBase {
-  CustomerModel? _customerModel;
+  CustomerModel? customerModel;
   List<CustomerModel> _customersModel = <CustomerModel>[];
   late CustomerRemote _customerRemote;
   CustomerLocal _customerLocal = new CustomerLocal();
@@ -24,11 +24,11 @@ class CustomerServices extends ServiceBase {
     try {
       var customer = await _customerLocal.getCashedCustomerById(customerId: customerId);
       if (customer != null) {
-        _customerModel = customer;
+        customerModel = customer;
       } else {
         var customer = await _customerRemote.getCustomer(customerId: customerId);
-        _customerModel = customer;
-        _customerLocal.cachingCustomerById(customerId: customerId,model: _customerModel);
+        customerModel = customer;
+        _customerLocal.cachingCustomerById(customerId: customerId, model: customerModel);
       }
       notifyListeners();
     } on FirebaseFirestore catch (e) {

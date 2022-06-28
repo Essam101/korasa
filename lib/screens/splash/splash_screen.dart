@@ -11,8 +11,6 @@ import 'package:shop/services/users/user_services.dart';
 import '../../models/customerModel.dart';
 import '../../services/customers/customer_services.dart';
 
-
-
 class SplashScreen extends StatelessWidget {
   static String routeName = "/splash";
 
@@ -34,24 +32,23 @@ class SplashScreen extends StatelessWidget {
 
     // Provider.of<CustomerServices>(context, listen: false).updateCustomer(model: new CustomerModel(customerId: "26c32eea-3c2c-52b5-9513-07ce6148b444", name: "Ahmed", notes: "Updated", storeId: "Store2"));
 
-
-    Provider.of<UserServices>(context, listen: false).createUser(
-        model: new UserModel(
-            userId: CollectionsNames.users.generateId(),
-            name: 'ahmed abdullah',
-            role:   roleType.owner.index,
-            storeId: 'Store1',
-            email: 'ahmedabdullah111@gmail.com'));
-
-
-
-    Provider.of<UserServices>(context, listen: false).createUser(
-        model: new UserModel(
-            userId: CollectionsNames.users.generateId(),
-            name: 'essam mabrouk',
-            role: roleType.emp.index,
-            storeId: 'Store1',
-            email: 'essam22@gmail.com'));
+    // Provider.of<UserServices>(context, listen: false).createUser(
+    //     model: new UserModel(
+    //         userId: CollectionsNames.users.generateId(),
+    //         name: 'ahmed abdullah',
+    //         role:   roleType.owner.index,
+    //         storeId: 'Store1',
+    //         email: 'ahmedabdullah111@gmail.com'));
+    //
+    //
+    //
+    // Provider.of<UserServices>(context, listen: false).createUser(
+    //     model: new UserModel(
+    //         userId: CollectionsNames.users.generateId(),
+    //         name: 'essam mabrouk',
+    //         role: roleType.emp.index,
+    //         storeId: 'Store1',
+    //         email: 'essam22@gmail.com'));
 
     SizeConfig().init(context);
     return Scaffold(

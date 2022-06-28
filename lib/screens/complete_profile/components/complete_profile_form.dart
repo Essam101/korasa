@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
@@ -6,8 +7,12 @@ import 'package:shop/components/form_error.dart';
 import 'package:shop/core/collectionsNames.dart';
 import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/core/size_config.dart';
+import 'package:shop/models/customerModel.dart';
 import 'package:shop/models/storeModel.dart';
 import 'package:shop/screens/home/home_screen.dart';
+import 'package:shop/services/auth_services.dart';
+import 'package:shop/services/customers/customer_services.dart';
+import 'package:shop/services/users/user_services.dart';
 
 import '../../../core/constants.dart';
 import '../../../services/store/store_services.dart';
@@ -20,15 +25,18 @@ class CompleteProfileForm extends StatefulWidget {
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
-  late StoreModel storeModel;
 
   // String? storeId;
   String storeName = "";
+  String storeDescription = "";
 
   // String? description;
-  late StoreStatus status;
+  late StoreStatus status = StoreStatus.Active;
 
   late StoreServices storeServices;
+
+  late AuthServices authServices;
+  late UserServices userServices;
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -53,6 +61,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     // this.status = StoreStatus.Deactivated;
 
     storeServices = Provider.of<StoreServices>(context, listen: false);
+    userServices = Provider.of<UserServices>(context, listen: false);
   }
 
   @override
@@ -73,10 +82,15 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           DefaultButton(
             text: "Create Store",
             press: () async {
-              if (_formKey.currentState!.validate()) {
-                storeModel.storeId = CollectionsNames.stores.generateId();
-                storeServices.createStore(storeModel);
-                Navigator.pushNamed(context, HomeScreen.routeName);
+              if (_formKey.currentState!.validate() && userServices.userModel != null) {
+                storeServices.createStore(
+                  new StoreModel(
+                    storeId: userServices.userModel!.storeId,
+                    name: storeName,
+                    status: status.index,
+                  ),
+                );
+                if (storeServices.storeModel != null) Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
           ),
@@ -143,7 +157,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildStoreDescriptionFormField() {
     return TextFormField(
       onSaved: (newValue) {
-        storeModel.description = newValue;
+        if (newValue != null) {
+          storeDescription = newValue;
+        }
       },
       decoration: InputDecoration(
         labelText: "Store descriptions",
@@ -160,7 +176,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildStoreNameFormField() {
     return TextFormField(
       onSaved: (newValue) {
-        if (newValue != null && newValue != "") storeModel.name = newValue;
+        if (newValue != null && newValue != "") storeName = newValue;
       },
       onChanged: (value) {
         if (value.isNotEmpty) {

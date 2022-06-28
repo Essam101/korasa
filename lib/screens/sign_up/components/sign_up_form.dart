@@ -3,8 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
 import 'package:shop/components/form_error.dart';
+import 'package:shop/core/collectionsNames.dart';
+import 'package:shop/core/extensions/generateId.dart';
+import 'package:shop/models/customerModel.dart';
+import 'package:shop/models/userModel.dart';
 import 'package:shop/screens/complete_profile/complete_profile_screen.dart';
 import 'package:shop/services/auth_services.dart';
+import 'package:shop/services/customers/customer_services.dart';
+import 'package:shop/services/users/user_services.dart';
 
 import '../../../core/constants.dart';
 import 'package:shop/core/size_config.dart';
@@ -16,17 +22,20 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
+  late String name;
   late String email;
   late String password;
   late String conform_password;
   bool remember = false;
   final List<String?> errors = [];
   late AuthServices authServices;
+  late UserServices userServices;
 
   @override
   void initState() {
     super.initState();
     authServices = Provider.of<AuthServices>(context, listen: false);
+    userServices = Provider.of<UserServices>(context, listen: false);
   }
 
   void addError({String? error}) {
@@ -49,6 +58,8 @@ class _SignUpFormState extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: [
+          buildNameFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
@@ -61,11 +72,18 @@ class _SignUpFormState extends State<SignUpForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
                 await authServices.signUp(email: email, password: password);
-                var user = authServices.userCredential;
-                if (user != null) {
-                  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                if (authServices.userCredential != null) {
+                  await userServices.createUser(
+                    model: new UserModel(
+                      userId: CollectionsNames.users.generateId(),
+                      name: name,
+                      role: 1,
+                      storeId: CollectionsNames.stores.generateId(),
+                      email: email,
+                    ),
+                  );
+                  Navigator.pushNamed(context, CompleteSingUpScreen.routeName);
                 }
               }
             },
@@ -145,6 +163,38 @@ class _SignUpFormState extends State<SignUpForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+      ),
+    );
+  }
+
+  TextFormField buildNameFormField() {
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      onSaved: (newValue) {
+        if (newValue != null) {
+          name = newValue;
+        }
+      },
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kEmailNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kEmailNullError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Name",
+        hintText: "Enter your Name",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
       ),
     );
   }
