@@ -40,6 +40,21 @@ class UserServices extends ServiceBase {
     }
   }
 
+  getUserByEmail({required String email}) async {
+    try {
+      var user = await _userRemote.getUserByEmail(email: email);
+      _userModel = user;
+
+      notifyListeners();
+
+      return _userModel;
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   getStoreUsers({required String storeId}) async {
     try {
       var cashStoreUsers = await _userLocal.getCashStoreUsers(storeId: storeId);
@@ -79,11 +94,16 @@ class UserServices extends ServiceBase {
 
   createUser({required UserModel model}) async {
     try {
-      await _userModelRef.add(model);
-      await getUser(userId: model.userId);
-      _userLocal.deleteCachedUser(userId: model.userId);
-      _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
-      _userLocal.deleteCachedAllUsers();
+
+      var _user = await _userRemote.getUserByEmail(email: model.email);
+      if(_user == null){
+        await _userModelRef.add(model);
+        await getUser(userId: model.userId);
+        _userLocal.deleteCachedUser(userId: model.userId);
+        _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
+        _userLocal.deleteCachedAllUsers();
+      }
+
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
