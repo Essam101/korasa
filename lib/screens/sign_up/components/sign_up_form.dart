@@ -81,6 +81,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       role: 1,
                       storeId: CollectionsNames.stores.generateId(),
                       email: email,
+                      password: password
                     ),
                   );
                   Navigator.pushNamed(context, CompleteSingUpScreen.routeName);

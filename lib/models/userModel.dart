@@ -15,7 +15,8 @@ class UserModel {
     required this.name,
     required this.role,
     required this.storeId,
-    required this.email
+    required this.email,
+    required this.password
   });
 
   late final String userId;
@@ -23,6 +24,10 @@ class UserModel {
   late final int role;
   late final String storeId;
   late final String email ;
+
+  late final String password;
+
+
 
   factory UserModel.fromRawJson(String str) => UserModel.fromJson(json.decode(str));
 
@@ -34,6 +39,7 @@ class UserModel {
         role: json["Role"],
         storeId: json["StoreId"],
     email: json["email"],
+    password: json["password"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -42,6 +48,7 @@ class UserModel {
         "Role": role,
         "StoreId": storeId,
         "email": email,
+        "password": password,
       };
 }
 
