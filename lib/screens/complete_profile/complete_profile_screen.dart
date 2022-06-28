@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import 'components/body.dart';
 
 class CompleteSingUpScreen extends StatefulWidget {
-  static String routeName = "/complete_singUp_screen";
+  static String routeName = "/complete_singUp";
 
   @override
   State<CompleteSingUpScreen> createState() => _CompleteSingUpScreenState();
@@ -16,11 +17,14 @@ class _CompleteSingUpScreenState extends State<CompleteSingUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Sign Up'),
+    return ModalProgressHUD(
+      inAsyncCall: isLoading,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Sign Up'),
+        ),
+        body: Body(loading: loading),
       ),
-      body: Body(loading: loading),
     );
   }
 }
