@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:shop/services/customers/customer_services.dart';
 import 'package:shop/services/pages/page_services.dart';
-import 'package:shop/services/store_services.dart';
 
 import 'auth_services.dart';
 import 'store/store_services.dart';

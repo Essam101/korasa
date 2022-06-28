@@ -5,7 +5,7 @@ import 'package:shop/models/customerModel.dart';
 class CustomerLocal {
   GetStorage localStorage = new GetStorage();
 
-  Future<void>? cachingCustomerById({required String customerId, CustomerModel? model}) {
+  Future<void>? cachingCustomerById({required String customerId,required CustomerModel? model}) {
     if (model != null) {
       return localStorage.write(CachingKeys.user.addIdToKey(id: customerId), model.toJson());
     }

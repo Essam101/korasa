@@ -28,7 +28,7 @@ class CustomerServices extends ServiceBase {
       } else {
         var customer = await customerRemote.getCustomer(customerId: customerId);
         customerModel = customer;
-        customerLocal.getCashedCustomerById(customerId: customerId);
+        customerLocal.cachingCustomerById(customerId: customerId,model: customerModel);
       }
       notifyListeners();
     } on FirebaseFirestore catch (e) {
