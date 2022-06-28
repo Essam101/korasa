@@ -21,6 +21,21 @@ class UserRemote extends ServiceBase {
     return null;
   }
 
+
+  Future<UserModel?> getUserByEmail({required String email}) async {
+    try {
+      QueryDocumentSnapshot<UserModel> user = await userModelRef.where('email', isEqualTo: email).get().then((snapshot) {
+        return snapshot.docs.first;
+      });
+      return user.data();
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
   Future<List<UserModel>> getStoreUsers({required String storeId}) async {
     try {
       List<QueryDocumentSnapshot<UserModel>> stores = await userModelRef.where('storeId', isEqualTo: storeId).get().then((snapshot) {

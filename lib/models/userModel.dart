@@ -20,7 +20,7 @@ class UserModel {
 
   late final String userId;
   late final String name;
-  late final roleType role;
+  late final int role;
   late final String storeId;
   late final String email ;
 
