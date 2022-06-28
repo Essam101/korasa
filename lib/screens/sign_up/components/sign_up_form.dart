@@ -25,10 +25,10 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
-  late String name = "Essam";
-  late String email = "Essamsaleh"+ "".generateId().substring(0,10) + "yahoo.com";
-  late String password = 'Essam 101';
-  late String conform_password =  'Essam 101';
+  late String name = "";
+  late String email = "";
+  late String password = '';
+  late String conform_password = '';
   bool remember = false;
   final List<String?> errors = [];
   late AuthServices authServices;
@@ -105,6 +105,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildConformPassFormField() {
     return TextFormField(
+      initialValue: "Essam 101101",
       obscureText: true,
       onSaved: (newValue) {
         if (newValue != null) {
@@ -112,21 +113,21 @@ class _SignUpFormState extends State<SignUpForm> {
         }
       },
       onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && password == conform_password) {
-          removeError(error: kMatchPassError);
-        }
+        // if (value.isNotEmpty) {
+        //   removeError(error: kPassNullError);
+        // } else if (value.isNotEmpty && password == conform_password) {
+        //   removeError(error: kMatchPassError);
+        // }
         conform_password = value;
       },
       validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        } else if ((password != value)) {
-          addError(error: kMatchPassError);
-          return "";
-        }
+        // if (value!.isEmpty) {
+        //   addError(error: kPassNullError);
+        //   return "";
+        // } else if ((password != value)) {
+        //   addError(error: kMatchPassError);
+        //   return "";
+        // }
         return null;
       },
       decoration: InputDecoration(
@@ -142,6 +143,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
+      initialValue: "Essam 101101",
       obscureText: true,
       onSaved: (newValue) {
         if (newValue != null) {
@@ -179,6 +181,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildNameFormField() {
     return TextFormField(
+      initialValue: "Essam Saleh",
       keyboardType: TextInputType.name,
       onSaved: (newValue) {
         if (newValue != null) {
@@ -211,6 +214,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
+      initialValue: DateTime.now().microsecondsSinceEpoch.toString().generateId().replaceAll('-', '') + "@gmail.com",
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) {
         if (newValue != null) {
