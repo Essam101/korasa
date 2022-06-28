@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
@@ -7,13 +8,14 @@ import 'package:shop/core/collectionsNames.dart';
 import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/models/userModel.dart';
+import 'package:shop/screens/complete_profile/complete_profile_screen.dart';
 import 'package:shop/services/auth_services.dart';
 import 'package:shop/services/users/user_services.dart';
 
 import '../../../core/constants.dart';
 
 class SignUpForm extends StatefulWidget {
-  final Function loading;
+  final Function(bool) loading;
 
   const SignUpForm({required this.loading});
 
@@ -75,7 +77,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 press: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    widget.loading();
+                    widget.loading(true);
                     await authServices.signUp(email: email, password: password);
                     if (authServices.userCredential != null) {
                       await userServices.createUser(
@@ -88,8 +90,8 @@ class _SignUpFormState extends State<SignUpForm> {
                           password: password,
                         ),
                       );
-                      widget.loading();
-                      //  Navigator.pushNamed(context, CompleteSingUpScreen.routeName);
+                      widget.loading(false);
+                      Navigator.pushNamed(context, CompleteSingUpScreen.routeName);
                     }
                   }
                 },

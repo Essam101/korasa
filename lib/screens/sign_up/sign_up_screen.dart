@@ -12,7 +12,8 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   bool isLoading = false;
-  loading() => setState(() => isLoading = !isLoading);
+
+  loading(bool v) => setState(() => isLoading = v);
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         appBar: AppBar(
           title: Text("Sign Up"),
         ),
-        body: ModalProgressHUD(
-          inAsyncCall: isLoading,
-          child: Body(loading: loading),
-        ),
+        body: Body(loading: loading),
       ),
     );
   }

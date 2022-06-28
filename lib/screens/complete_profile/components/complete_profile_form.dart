@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
@@ -18,6 +19,10 @@ import '../../../core/constants.dart';
 import '../../../services/store/store_services.dart';
 
 class CompleteProfileForm extends StatefulWidget {
+  final Function(bool) loading;
+
+  const CompleteProfileForm({required this.loading});
+
   @override
   _CompleteProfileFormState createState() => _CompleteProfileFormState();
 }
@@ -84,9 +89,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             text: "Create Store",
             press: () async {
               if (_formKey.currentState!.validate() && userServices.userModel != null) {
+                widget.loading(true);
                 storeServices.createStore(
                   new StoreModel(storeId: userServices.userModel!.storeId, name: storeName, status: status.index, description: storeDescription),
                 );
+                widget.loading(false);
                 if (storeServices.storeModel != null) Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },

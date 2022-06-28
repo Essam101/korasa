@@ -6,7 +6,7 @@ import 'package:shop/core/size_config.dart';
 import 'sign_up_form.dart';
 
 class Body extends StatelessWidget {
-  final Function loading;
+  final Function(bool) loading;
 
   const Body({required this.loading});
 
