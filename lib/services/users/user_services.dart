@@ -7,13 +7,13 @@ import 'package:shop/services/users/user_local.dart';
 import 'package:shop/services/users/user_remote.dart';
 
 class UserServices {
-  Db db = new Db();
+  Db _db = new Db();
   late UserRemote _userRemote;
   userLocal _userLocal = new userLocal();
   var _userModelRef;
 
   UserServices() {
-    _userModelRef = db.instance.collection(CollectionsNames.users).withConverter<UserModel>(
+    _userModelRef = _db.instance.collection(CollectionsNames.users).withConverter<UserModel>(
           fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );
