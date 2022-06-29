@@ -77,7 +77,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 press: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    widget.loading(true);
+                    //  widget.loading(true);
                     await authServices.signUp(email: email, password: password);
                     if (authServices.userCredential != null) {
                       await userServices.createUser(
@@ -90,7 +90,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           password: password,
                         ),
                       );
-                      widget.loading(false);
+                      //   widget.loading(false);
                       Navigator.pushNamed(context, CompleteSingUpScreen.routeName);
                     }
                   }
