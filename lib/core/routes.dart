@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:shop/screens/cart/cart_screen.dart';
-import 'package:shop/screens/complete_profile/complete_profile_screen.dart';
+import 'package:shop/screens/complete_store/complete_store_screen.dart';
 import 'package:shop/screens/details/details_screen.dart';
 import 'package:shop/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop/screens/home/home_screen.dart';
