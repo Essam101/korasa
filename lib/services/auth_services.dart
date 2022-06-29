@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shop/core/db.dart';
 import 'package:shop/core/enums.dart';
 import 'package:shop/core/extensions/system_feedback.dart';
 
 import 'service_base.dart';
 
-class AuthServices extends ServiceBase {
-  UserCredential? userCredential;
+class AuthServices {
+  Db _db = new Db();
 
-  signIn({required String email, required String password}) async {
+  Future<UserCredential?> signIn({required String email, required String password}) async {
+    UserCredential? userCredential;
     try {
       userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
@@ -17,10 +19,12 @@ class AuthServices extends ServiceBase {
         'Wrong password provided for that user.'.showAlert(alertType: AlertType.Error);
       }
     }
-    notifyListeners();
+    return userCredential;
   }
 
-  signUp({required String email, required String password}) async {
+  Future<UserCredential?> signUp({required String email, required String password}) async {
+    UserCredential? userCredential;
+
     try {
       userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
@@ -32,17 +36,19 @@ class AuthServices extends ServiceBase {
     } catch (e) {
       print(e);
     }
-    notifyListeners();
+    return userCredential;
   }
 
-  logOut() async {
+  Future<bool> logOut() async {
     try {
       await FirebaseAuth.instance.signOut();
+      return true;
     } on FirebaseAuthException catch (e) {
       print(e);
       'The account already exists for that email.'.showAlert(alertType: AlertType.Error);
     } catch (e) {
       e.toString().showAlert(alertType: AlertType.Error);
     }
+    return false;
   }
 }
