@@ -17,8 +17,8 @@ class _CompleteSingUpScreenState extends State<CompleteSingUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ModalProgressHUD(
-      inAsyncCall: isLoading,
+    return WillPopScope(
+      onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
           title: Text('Sign Up'),
