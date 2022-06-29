@@ -41,11 +41,9 @@ class UserServices {
 
   Future<UserModel?> getUserByEmail({required String email}) async {
     UserModel? userModel;
-
     try {
       var user = await _userRemote.getUserByEmail(email: email);
       userModel = user;
-
       return userModel;
     } on FirebaseFirestore catch (e) {
       print(e);
