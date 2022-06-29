@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
@@ -9,21 +11,20 @@ import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/models/userModel.dart';
 import 'package:shop/screens/complete_profile/complete_profile_screen.dart';
+import 'package:shop/screens/sign_up/state_management/sign_up_state.dart';
 import 'package:shop/services/auth_services.dart';
 import 'package:shop/services/users/user_services.dart';
 
 import '../../../core/constants.dart';
 
 class SignUpForm extends StatefulWidget {
-  final Function(bool) loading;
-
-  const SignUpForm({required this.loading});
-
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  final signUpState = Get.put(SignUpState());
+
   final _formKey = GlobalKey<FormState>();
   late String name = "";
   late String email = "";
@@ -31,14 +32,10 @@ class _SignUpFormState extends State<SignUpForm> {
   late String conform_password = '';
   bool remember = false;
   final List<String?> errors = [];
-  late AuthServices authServices;
-  late UserServices userServices;
 
   @override
   void initState() {
     super.initState();
-    authServices = Provider.of<AuthServices>(context, listen: false);
-    userServices = Provider.of<UserServices>(context, listen: false);
   }
 
   void addError({String? error}) {
@@ -77,22 +74,20 @@ class _SignUpFormState extends State<SignUpForm> {
                 press: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    //  widget.loading(true);
-                    await authServices.signUp(email: email, password: password);
-                    if (authServices.userCredential != null) {
-                      await userServices.createUser(
-                        model: new UserModel(
-                          userId: CollectionsNames.users.generateId(),
-                          name: name,
-                          role: 1,
-                          storeId: CollectionsNames.stores.generateId(),
-                          email: email,
-                          password: password,
-                        ),
-                      );
-                      //   widget.loading(false);
-                      Navigator.pushNamed(context, CompleteSingUpScreen.routeName);
-                    }
+                    await Provider.of<SignUpState>(context, listen: false)
+                        .signUpAndCreateUser(
+                          model: new UserModel(
+                            userId: CollectionsNames.users.generateId(),
+                            name: name,
+                            role: 1,
+                            storeId: CollectionsNames.stores.generateId(),
+                            email: email,
+                            password: password,
+                          ),
+                        )
+                        .then((value) => {
+                              if (value) Navigator.pushNamed(context, CompleteSingUpScreen.routeName),
+                            });
                   }
                 },
               ),

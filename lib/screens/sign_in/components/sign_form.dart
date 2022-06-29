@@ -22,12 +22,12 @@ class _SignFormState extends State<SignForm> {
   late String password = "123456@#";
   bool? remember = false;
   final List<String?> errors = [];
-  late AuthServices authServices;
+  // late AuthServices authServices;
 
   @override
   void initState() {
     super.initState();
-    authServices = Provider.of<AuthServices>(context, listen: false);
+    // authServices = Provider.of<AuthServices>(context, listen: false);
   }
 
   void addError({String? error}) {
@@ -83,11 +83,11 @@ class _SignFormState extends State<SignForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                await authServices.signIn(email: email, password: password);
-                if (authServices.userCredential != null) {
-                  KeyboardUtil.hideKeyboard(context);
-                  Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                }
+                // await authServices.signIn(email: email, password: password);
+                // if (authServices.userCredential != null) {
+                //   KeyboardUtil.hideKeyboard(context);
+                //   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                // }
               }
             },
           ),

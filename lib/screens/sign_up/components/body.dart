@@ -6,10 +6,6 @@ import 'package:shop/core/size_config.dart';
 import 'sign_up_form.dart';
 
 class Body extends StatelessWidget {
-  final Function(bool) loading;
-
-  const Body({required this.loading});
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,7 +23,7 @@ class Body extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
-                SignUpForm(loading: loading),
+                SignUpForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

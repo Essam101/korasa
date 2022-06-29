@@ -95,14 +95,11 @@ class UserServices {
   Future<UserModel?> createUser({required UserModel model}) async {
     UserModel? userModel;
     try {
-      var _user = await _userRemote.getUserByEmail(email: model.email);
-      if (_user == null) {
-        await _userModelRef.add(model);
-        _userLocal.deleteCachedUser(userId: model.userId);
-        _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
-        _userLocal.deleteCachedAllUsers();
-        userModel = await getUser(userId: model.userId);
-      }
+      await _userModelRef.add(model);
+      _userLocal.deleteCachedUser(userId: model.userId);
+      _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
+      // _userLocal.deleteCachedAllUsers();
+      userModel = await getUser(userId: model.userId);
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
