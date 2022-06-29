@@ -18,9 +18,6 @@ class Services {
   List<SingleChildWidget> providers() {
     return [
       ChangeNotifierProvider(
-        create: (context) => new StoreServices(),
-      ),
-      ChangeNotifierProvider(
         create: (context) => new PageServices(),
       ),
       ChangeNotifierProvider(

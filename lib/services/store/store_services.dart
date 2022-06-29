@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 import 'package:shop/core/collectionsNames.dart';
 import 'package:shop/core/db.dart';
 import 'package:shop/models/storeModel.dart';
-import 'package:shop/services/service_base.dart';
 import 'package:shop/services/store/store_local.dart';
 import 'package:shop/services/store/store_remote.dart';
 
@@ -81,7 +77,7 @@ class StoreServices {
   Future<StoreModel?> updateStore({required StoreModel model}) async {
     StoreModel? storeModel;
     try {
-      QueryDocumentSnapshot<StoreModel> store = await _storeModelRef.where('storeId', isEqualTo: storeModel.storeId).get().then((snapshot) {
+      QueryDocumentSnapshot<StoreModel> store = await _storeModelRef.where('storeId', isEqualTo: model.storeId).get().then((snapshot) {
         return snapshot.docs.first;
       });
       _storeModelRef.doc(store.id).update(model.toJson());
