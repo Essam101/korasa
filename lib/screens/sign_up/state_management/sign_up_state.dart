@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:shop/core/enums.dart';
 import 'package:shop/core/extensions/system_feedback.dart';
 import 'package:shop/models/userModel.dart';
-import 'package:shop/screens/complete_profile/complete_profile_screen.dart';
 import 'package:shop/services/auth_services.dart';
 import 'package:shop/services/service_base.dart';
 import 'package:shop/services/users/user_services.dart';

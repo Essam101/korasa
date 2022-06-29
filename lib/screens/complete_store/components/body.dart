@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop/core/constants.dart';
 import 'package:shop/core/size_config.dart';
 
-import 'complete_profile_form.dart';
+import 'complete_store_form.dart';
 
 class Body extends StatelessWidget {
   final Function(bool) loading;

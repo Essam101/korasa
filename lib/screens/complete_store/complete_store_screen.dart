@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:shop/core/enums.dart';
+import 'package:shop/core/extensions/system_feedback.dart';
 
 import 'components/body.dart';
 
@@ -18,7 +20,10 @@ class _CompleteSingUpScreenState extends State<CompleteSingUpScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () {
+        "Complete Store Data".showAlert(alertType: AlertType.Error);
+        return Future.value(false);
+      },
       child: Scaffold(
         appBar: AppBar(
           title: Text('Sign Up'),

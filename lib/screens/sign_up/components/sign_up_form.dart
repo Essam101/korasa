@@ -10,7 +10,7 @@ import 'package:shop/core/collectionsNames.dart';
 import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/models/userModel.dart';
-import 'package:shop/screens/complete_profile/complete_profile_screen.dart';
+import 'package:shop/screens/complete_store/complete_store_screen.dart';
 import 'package:shop/screens/sign_up/state_management/sign_up_state.dart';
 import 'package:shop/services/auth_services.dart';
 import 'package:shop/services/users/user_services.dart';
