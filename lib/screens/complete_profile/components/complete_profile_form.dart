@@ -61,10 +61,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    // this.storeName = "";
-    // this.status = StoreStatus.Deactivated;
-
     storeServices = Provider.of<StoreServices>(context, listen: false);
     userServices = Provider.of<UserServices>(context, listen: false);
   }

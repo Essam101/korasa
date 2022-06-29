@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:shop/screens/sign_up/state_management/sign_up_state.dart';
 import 'package:shop/services/customers/customer_services.dart';
 import 'package:shop/services/pages/page_services.dart';
 import 'package:shop/services/users/user_services.dart';
@@ -17,9 +18,6 @@ class Services {
   List<SingleChildWidget> providers() {
     return [
       ChangeNotifierProvider(
-        create: (context) => new AuthServices(),
-      ),
-      ChangeNotifierProvider(
         create: (context) => new StoreServices(),
       ),
       ChangeNotifierProvider(
@@ -29,7 +27,7 @@ class Services {
         create: (context) => new CustomerServices(),
       ),
       ChangeNotifierProvider(
-        create: (context) => new UserServices(),
+        create: (context) => new SignUpState(),
       ),
     ];
   }

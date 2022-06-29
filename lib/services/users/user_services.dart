@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/core/collectionsNames.dart';
+import 'package:shop/core/db.dart';
 import 'package:shop/models/userModel.dart';
 import 'package:shop/services/service_base.dart';
 import 'package:shop/services/users/user_local.dart';
 import 'package:shop/services/users/user_remote.dart';
 
-class UserServices extends ServiceBase {
-  UserModel? userModel;
-  List<UserModel> _usersModel = <UserModel>[];
+class UserServices {
+  Db db = new Db();
   late UserRemote _userRemote;
   userLocal _userLocal = new userLocal();
   var _userModelRef;
@@ -20,7 +20,8 @@ class UserServices extends ServiceBase {
     _userRemote = new UserRemote(_userModelRef);
   }
 
-  getUser({required String userId}) async {
+  Future<UserModel?> getUser({required String userId}) async {
+    UserModel? userModel;
     try {
       UserModel? cachedUser = await _userLocal.getCashUser(userId: userId);
       if (cachedUser != null) {
@@ -30,20 +31,20 @@ class UserServices extends ServiceBase {
         userModel = user;
         _userLocal.cachingUser(userId: userId, model: userModel);
       }
-      notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
       print(e);
     }
+    return userModel;
   }
 
-  getUserByEmail({required String email}) async {
+  Future<UserModel?> getUserByEmail({required String email}) async {
+    UserModel? userModel;
+
     try {
       var user = await _userRemote.getUserByEmail(email: email);
       userModel = user;
-
-      notifyListeners();
 
       return userModel;
     } on FirebaseFirestore catch (e) {
@@ -51,59 +52,65 @@ class UserServices extends ServiceBase {
     } catch (e) {
       print(e);
     }
+    return userModel;
   }
 
-  getStoreUsers({required String storeId}) async {
+  Future<List<UserModel>?> getStoreUsers({required String storeId}) async {
+    List<UserModel> usersModel = <UserModel>[];
     try {
       var cashStoreUsers = await _userLocal.getCashStoreUsers(storeId: storeId);
       if (cashStoreUsers != null) {
-        _usersModel = cashStoreUsers;
+        usersModel = cashStoreUsers;
       } else {
         var storeUsers = await _userRemote.getStoreUsers(storeId: storeId);
-        _usersModel = storeUsers;
-        await _userLocal.cachingStoreUsers(storeId: storeId, storeUsers: _usersModel);
+        usersModel = storeUsers;
+        await _userLocal.cachingStoreUsers(storeId: storeId, storeUsers: usersModel);
       }
-      notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
       print(e);
     }
+    return usersModel;
   }
 
-  getAllUsers() async {
+  Future<List<UserModel>?> getAllUsers() async {
+    List<UserModel> usersModel = <UserModel>[];
+
     try {
       var cashAllUsers = await _userLocal.getCashAllUsers();
       if (cashAllUsers != null) {
-        _usersModel = cashAllUsers;
+        usersModel = cashAllUsers;
       } else {
         var storeUsers = await _userRemote.getAllUsers();
-        _usersModel = storeUsers;
-        await _userLocal.cachingAllUsers(_usersModel);
+        usersModel = storeUsers;
+        await _userLocal.cachingAllUsers(usersModel);
       }
-      notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
       print(e);
     }
+    return usersModel;
   }
 
-  createUser({required UserModel model}) async {
+  Future<UserModel?> createUser({required UserModel model}) async {
+    UserModel? userModel;
     try {
       var _user = await _userRemote.getUserByEmail(email: model.email);
       if (_user == null) {
         await _userModelRef.add(model);
-        await getUser(userId: model.userId);
         _userLocal.deleteCachedUser(userId: model.userId);
         _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
         _userLocal.deleteCachedAllUsers();
+        userModel = await getUser(userId: model.userId);
       }
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
       print(e);
     }
+    return userModel;
   }
 
   updateUser({required UserModel model}) async {
@@ -115,7 +122,6 @@ class UserServices extends ServiceBase {
       _userLocal.deleteCachedUser(userId: model.userId);
       _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
       _userLocal.deleteCachedAllUsers();
-      notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
@@ -132,7 +138,6 @@ class UserServices extends ServiceBase {
       _userLocal.deleteCachedUser(userId: userId);
       _userLocal.deleteCachedStoreUsers(storeId: storeId);
       _userLocal.deleteCachedAllUsers();
-      notifyListeners();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
