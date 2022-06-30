@@ -126,7 +126,7 @@ class UserServices {
       _userModelRef.doc(user.id).update(model.toJson());
       _userLocal.deleteCachedUser(userId: model.userId);
       _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
-      _userLocal.deleteCachedAllUsers();
+      // _userLocal.deleteCachedAllUsers();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
@@ -142,7 +142,7 @@ class UserServices {
       _userModelRef.doc(user.id).delete();
       _userLocal.deleteCachedUser(userId: userId);
       _userLocal.deleteCachedStoreUsers(storeId: storeId);
-      _userLocal.deleteCachedAllUsers();
+      // _userLocal.deleteCachedAllUsers();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get_storage/get_storage.dart';
 import 'package:shop/core/cachingKeys.dart';
 import 'package:shop/models/userModel.dart';
@@ -7,7 +9,7 @@ class userLocal {
 
   Future<void>? cachingUser({required UserModel? model}) {
     if (model != null) {
-      return localStorage.write(CachingKeys.user, model.toJson());
+      localStorage.write(CachingKeys.user, model.toJson());
     }
     return null;
   }
@@ -23,7 +25,7 @@ class userLocal {
   Future<UserModel>? getCashUser() {
     final jsonUsers = localStorage.read(CachingKeys.user);
     if (jsonUsers != null) {
-      return Future.value(UserModel.fromRawJson(jsonUsers));
+      return Future.value(UserModel.fromRawJson(jsonEncode(jsonUsers)));
     } else {
       return null;
     }
@@ -48,18 +50,18 @@ class userLocal {
   }
 
   deleteCachedUser({required String userId}) {
-    localStorage.remove(CachingKeys.user.addIdToKey(id: userId));
+    localStorage.remove(CachingKeys.user);
   }
 
   deleteCachedStoreUsers({required String storeId}) {
     localStorage.remove(CachingKeys.storeUsers.addIdToKey(id: storeId));
   }
 
-  deleteCachedAllUsers() {
-    for (int i = 0; i < localStorage.getKeys().length; i++) {
-      if (localStorage.getKeys()[i].toString().contains(CachingKeys.user)) {
-        localStorage.remove(localStorage.getKeys()[i]);
-      }
-    }
-  }
+// deleteCachedAllUsers() {
+//   for (int i = 0; i < localStorage.getKeys().length; i++) {
+//     if (localStorage.getKeys()[i].toString().contains(CachingKeys.user)) {
+//       localStorage.remove(localStorage.getKeys()[i]);
+//     }
+//   }
+// }
 }

@@ -30,7 +30,6 @@ class _SignFormState extends State<SignForm> {
   @override
   void initState() {
     super.initState();
-    Provider.of<SignInState>(context, listen: false).getLoggedInUser().then((value) => {userModel = value});
   }
 
   void addError({String? error}) {
@@ -99,7 +98,7 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
-      initialValue: userModel?.password,
+      initialValue: Provider.of<SignInState>(context, listen: true).userModel?.password,
       obscureText: true,
       onSaved: (newValue) {
         if (newValue != null) password = newValue;
@@ -135,7 +134,7 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
-      initialValue: userModel?.email,
+      initialValue: Provider.of<SignInState>(context, listen: true).userModel?.email,
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) {
         if (newValue != null) email = newValue;

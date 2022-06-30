@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/core/darkTheme.dart';
 import 'package:shop/core/routes.dart';
@@ -23,7 +24,7 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-
+    await GetStorage.init();
     runApp(EasyDynamicThemeWidget(
       child: MyApp(),
     ));

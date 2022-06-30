@@ -16,40 +16,6 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Provider.of<StoreServices>(context, listen: false).getStores();
-    // Provider.of<StoreServices>(context, listen: false).createStore(new StoreModel(storeId: "1", name: "Essam", status: StoreStatus.Active.index));
-    // Provider.of<StoreServices>(context, listen: false)
-    //     .updateStore(storeModel: new StoreModel(storeId: "10", name: "name", status: StoreStatus.Active.index));
-    // Provider.of<StoreServices>(context, listen: false).deleteStore(storeId: "10");
-    // You have to call it on your starting screen
-
-    // Provider.of<CustomerServices>(context, listen: false).createCustomer(
-    //     new CustomerModel(
-    //         customerId: CollectionsNames.customers.generateId(),
-    //         name: 'customer1',
-    //         notes: 'notes',
-    //         storeId: 'store1'));
-
-    // Provider.of<CustomerServices>(context, listen: false).updateCustomer(model: new CustomerModel(customerId: "26c32eea-3c2c-52b5-9513-07ce6148b444", name: "Ahmed", notes: "Updated", storeId: "Store2"));
-
-    // Provider.of<UserServices>(context, listen: false).createUser(
-    //     model: new UserModel(
-    //         userId: CollectionsNames.users.generateId(),
-    //         name: 'ahmed abdullah',
-    //         role:   roleType.owner.index,
-    //         storeId: 'Store1',
-    //         email: 'ahmedabdullah111@gmail.com'));
-    //
-    //
-    //
-    // Provider.of<UserServices>(context, listen: false).createUser(
-    //     model: new UserModel(
-    //         userId: CollectionsNames.users.generateId(),
-    //         name: 'essam mabrouk',
-    //         role: roleType.emp.index,
-    //         storeId: 'Store1',
-    //         email: 'essam22@gmail.com'));
-
     SizeConfig().init(context);
     return Scaffold(
       body: Body(),
