@@ -10,11 +10,14 @@ class IconBtnWithCounter extends StatelessWidget {
     required this.svgSrc,
     this.numOfitem = 0,
     required this.press,
+    this.IconColor = Colors.black,
   }) : super(key: key);
 
   final String svgSrc;
   final int numOfitem;
   final GestureTapCallback press;
+
+  final IconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,10 @@ class IconBtnWithCounter extends StatelessWidget {
               color: kSecondaryColor.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: SvgPicture.asset(svgSrc),
+            child: SvgPicture.asset(
+              svgSrc,
+              color: IconColor,
+            ),
           ),
           if (numOfitem != 0)
             Positioned(
