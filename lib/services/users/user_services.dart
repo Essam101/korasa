@@ -107,7 +107,7 @@ class UserServices {
     try {
       await _userModelRef.add(model);
       _userLocal.deleteCachedUser(userId: model.userId);
-      _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
+      //_userLocal.deleteCachedStoreUsers(storeId: model.storeId);
       // _userLocal.deleteCachedAllUsers();
       userModel = await getUser(userId: model.userId);
     } on FirebaseFirestore catch (e) {
@@ -125,7 +125,7 @@ class UserServices {
       });
       _userModelRef.doc(user.id).update(model.toJson());
       _userLocal.deleteCachedUser(userId: model.userId);
-      _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
+      //  if (model.storeId != null) _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
       // _userLocal.deleteCachedAllUsers();
     } on FirebaseFirestore catch (e) {
       print(e);

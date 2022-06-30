@@ -80,7 +80,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             userId: CollectionsNames.users.generateId(),
                             name: name,
                             role: 1,
-                            storeId: CollectionsNames.stores.generateId(),
+                            storeId: "",
                             email: email,
                             password: password,
                           ),

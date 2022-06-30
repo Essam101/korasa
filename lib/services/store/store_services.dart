@@ -59,7 +59,7 @@ class StoreServices {
     return storesModel;
   }
 
-  Future<StoreModel?> createStore(StoreModel model) async {
+  Future<StoreModel?> createStore({required StoreModel model}) async {
     StoreModel? storeModel;
     try {
       await _storeModelRef.add(model);
