@@ -6,6 +6,7 @@ import 'package:shop/core/constants.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/models/pageModel.dart';
 import 'package:shop/models/transactionModel.dart';
+import 'package:shop/screens/home/home_screen.dart';
 import 'package:shop/screens/sign_in/sign_in_screen.dart';
 import 'package:shop/screens/sign_in/state_management/sign_in_state.dart';
 import 'package:shop/services/pages/page_services.dart';
@@ -33,6 +34,11 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     Provider.of<SignInState>(context, listen: false).getLoggedInUser();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

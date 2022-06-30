@@ -10,12 +10,15 @@ import 'package:provider/provider.dart';
 import 'package:shop/core/darkTheme.dart';
 import 'package:shop/core/routes.dart';
 import 'package:shop/core/theme.dart';
+import 'package:shop/screens/sign_in/state_management/sign_in_state.dart';
 import 'package:shop/screens/splash/splash_screen.dart';
 import 'package:shop/services/services.dart';
 import 'package:shop/services/store_services.dart';
 
 import 'core/esayLoadingConfig.dart';
+import 'core/size_config.dart';
 import 'firebase_options.dart';
+import 'screens/home/home_screen.dart';
 
 void main() async {
   runZonedGuarded<Future<void>>(() async {
@@ -43,7 +46,7 @@ class MyApp extends StatelessWidget {
         theme: theme(),
         darkTheme: darkThem(),
         themeMode: EasyDynamicTheme.of(context).themeMode,
-        initialRoute: SplashScreen.routeName,
+        initialRoute: new SignInState().getIsLoggedIn() ? HomeScreen.routeName : SplashScreen.routeName,
         routes: routes,
         builder: EasyLoading.init(),
       ),
