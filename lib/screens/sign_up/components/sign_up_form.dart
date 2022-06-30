@@ -86,7 +86,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           ),
                         )
                         .then((value) => {
-                              if (value) Navigator.pushReplacementNamed(context, CompleteSingUpScreen.routeName),
+                              if (value) Navigator.pushReplacementNamed(context, CompleteStoreScreen.routeName),
                             });
                   }
                 },

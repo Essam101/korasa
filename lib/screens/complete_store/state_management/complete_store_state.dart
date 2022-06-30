@@ -8,6 +8,9 @@ import 'package:shop/services/store/store_services.dart';
 import 'package:shop/services/users/user_services.dart';
 
 class CompleteStoreState extends ServiceBase {
+
+
+
   createStore({required StoreModel storeModel}) async {
     isLoading = true;
     bool result = true;
@@ -35,4 +38,6 @@ class CompleteStoreState extends ServiceBase {
     }
     return false;
   }
+
+
 }

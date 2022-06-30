@@ -13,6 +13,8 @@ import 'package:shop/services/auth_services.dart';
 
 import '../../../components/default_button.dart';
 import '../../../core/constants.dart';
+import '../../complete_store/complete_store_screen.dart';
+import '../../complete_store/state_management/complete_store_state.dart';
 
 class SignForm extends StatefulWidget {
   @override
@@ -87,7 +89,18 @@ class _SignFormState extends State<SignForm> {
                 _formKey.currentState!.save();
                 Provider.of<SignInState>(context, listen: false)
                     .signIn(email: email, password: password)
-                    .then((value) => {if (value) Navigator.pushNamed(context, LoginSuccessScreen.routeName)});
+                    .then((value) async => {
+
+                      if (value) {
+                        if(await   Provider.of<CompleteStoreState>(context, listen: false).IsUserHasStore() ){
+                          Navigator.pushReplacementNamed(context, LoginSuccessScreen.routeName)
+                        }else{
+                          Navigator.pushReplacementNamed(context, CompleteStoreScreen.routeName)
+                        }
+
+                      }
+
+                    });
               }
             },
           ),

@@ -5,14 +5,14 @@ import 'package:shop/core/extensions/system_feedback.dart';
 
 import 'components/body.dart';
 
-class CompleteSingUpScreen extends StatefulWidget {
-  static String routeName = "/complete_singUp";
+class CompleteStoreScreen extends StatefulWidget {
+  static String routeName = "/complete_store";
 
   @override
-  State<CompleteSingUpScreen> createState() => _CompleteSingUpScreenState();
+  State<CompleteStoreScreen> createState() => _CompleteStoreScreenState();
 }
 
-class _CompleteSingUpScreenState extends State<CompleteSingUpScreen> {
+class _CompleteStoreScreenState extends State<CompleteStoreScreen> {
   bool isLoading = false;
 
   loading(bool v) => setState(() => isLoading = v);
