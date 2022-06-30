@@ -29,13 +29,13 @@ class CustomerModel {
         customerId: json["customerId"],
         name: json["name"],
         notes: json["notes"],
-        storeId: json["StoreId"],
+        storeId: json["storeId"],
       );
 
   Map<String, dynamic> toJson() => {
         "customerId": customerId,
         "name": name,
         "notes": notes,
-        "StoreId": storeId,
+        "storeId": storeId,
       };
 }
