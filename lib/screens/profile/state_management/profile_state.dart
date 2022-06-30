@@ -9,7 +9,10 @@ class ProfileState extends ServiceBase {
     isLoading = true;
     bool result = true;
     "Loading".showLoading(alertType: AlertType.Loading);
+
     await new AuthServices().logOut().then((value) => {result = value});
+
+    await getStorage.erase();
     isLoading = false;
     "Success".showLoading(alertType: result ? AlertType.Success : AlertType.Error);
     return result;

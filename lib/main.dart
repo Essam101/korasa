@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         theme: theme(),
         darkTheme: darkThem(),
         themeMode: EasyDynamicTheme.of(context).themeMode,
-        initialRoute: new SignInState().getIsLoggedIn() ? HomeScreen.routeName : SplashScreen.routeName,
+        initialRoute: SplashScreen.routeName,
         routes: routes,
         builder: EasyLoading.init(),
       ),

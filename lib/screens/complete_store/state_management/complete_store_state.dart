@@ -8,10 +8,7 @@ import 'package:shop/services/store/store_services.dart';
 import 'package:shop/services/users/user_services.dart';
 
 class CompleteStoreState extends ServiceBase {
-
-
-
-  createStore({required StoreModel storeModel}) async {
+  Future<bool> createStore({required StoreModel storeModel}) async {
     isLoading = true;
     bool result = true;
     "Loading".showLoading(alertType: AlertType.Loading);
@@ -20,8 +17,15 @@ class CompleteStoreState extends ServiceBase {
     var user = await userServices.getLoggedInUser();
     if (user != null) {
       await new StoreServices().createStore(model: storeModel);
-      user?.storeId = storeModel.storeId;
-      await userServices.updateUser(model: user);
+      await userServices.updateUser(
+          model: new UserModel(
+        userId: user.userId,
+        name: user.name,
+        role: user.role,
+        storeId: storeModel.storeId,
+        email: user.email,
+        password: user.password,
+      ));
     } else {
       result = false;
     }
@@ -31,13 +35,11 @@ class CompleteStoreState extends ServiceBase {
     return result;
   }
 
-  Future<bool> IsUserHasStore() async {
+  Future<bool> isUserHasStore() async {
     UserModel? user = await new UserServices().getLoggedInUser();
     if (user != null) {
       return user.storeId.isNotEmpty;
     }
     return false;
   }
-
-
 }

@@ -49,7 +49,7 @@ class userLocal {
     }
   }
 
-  deleteCachedUser({required String userId}) {
+  deleteCachedUser() {
     localStorage.remove(CachingKeys.user);
   }
 

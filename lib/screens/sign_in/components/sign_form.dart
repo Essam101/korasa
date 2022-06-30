@@ -87,21 +87,22 @@ class _SignFormState extends State<SignForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                Provider.of<SignInState>(context, listen: false)
-                    .signIn(email: email, password: password)
-                    .then((value) async => {
-
-                      if (value) {
-                        if(await   Provider.of<CompleteStoreState>(context, listen: false).IsUserHasStore() ){
-                          Navigator.pushReplacementNamed(context, LoginSuccessScreen.routeName)
-                        }else{
-                          Navigator.pushReplacementNamed(context, CompleteStoreScreen.routeName)
+                Provider.of<SignInState>(context, listen: false).signIn(email: email, password: password).then((value) async => {
+                      if (value)
+                        {
+                          if (await Provider.of<CompleteStoreState>(context, listen: false).isUserHasStore())
+                            {Navigator.pushReplacementNamed(context, LoginSuccessScreen.routeName)}
+                          else
+                            {Navigator.pushReplacementNamed(context, CompleteStoreScreen.routeName)}
                         }
-
-                      }
-
                     });
               }
+            },
+          ),
+          DefaultButton(
+            text: "clear cache ",
+            press: () async {
+              new GetStorage().erase();
             },
           ),
         ],

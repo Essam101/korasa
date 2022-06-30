@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
 import 'package:shop/components/form_error.dart';
+import 'package:shop/core/collectionsNames.dart';
+import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/models/storeModel.dart';
+import 'package:shop/screens/complete_store/state_management/complete_store_state.dart';
+import 'package:shop/screens/home/home_screen.dart';
 
 import '../../../core/constants.dart';
 import '../../../services/store/store_services.dart';
@@ -61,7 +67,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       key: _formKey,
       child: Column(
         children: [
-          Text(storeName),
           buildStoreNameFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildStoreDescriptionFormField(),
@@ -74,14 +79,24 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           DefaultButton(
             text: "Create Store",
             press: () async {
-              // if (_formKey.currentState!.validate() && userServices.userModel != null) {
-              //   widget.loading(true);
-              //   storeServices.createStore(
-              //     new StoreModel(storeId: userServices.userModel!.storeId, name: storeName, status: status.index, description: storeDescription),
-              //   );
-              //   widget.loading(false);
-              //   if (storeServices.storeModel != null) Navigator.pushNamed(context, HomeScreen.routeName);
-              // }
+              if (_formKey.currentState!.validate()) {
+                Provider.of<CompleteStoreState>(context, listen: false)
+                    .createStore(
+                      storeModel: new StoreModel(
+                        storeId: CollectionsNames.stores.generateId(),
+                        name: storeName,
+                        status: StoreStatus.Active.index,
+                        description: storeDescription,
+                      ),
+                    )
+                    .then((value) => {if (value) Navigator.pushNamed(context, HomeScreen.routeName)});
+              }
+            },
+          ),
+          DefaultButton(
+            text: "clear data",
+            press: () async {
+              new GetStorage().erase();
             },
           ),
         ],

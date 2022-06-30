@@ -106,7 +106,7 @@ class UserServices {
     UserModel? userModel;
     try {
       await _userModelRef.add(model);
-      _userLocal.deleteCachedUser(userId: model.userId);
+      _userLocal.deleteCachedUser();
       //_userLocal.deleteCachedStoreUsers(storeId: model.storeId);
       // _userLocal.deleteCachedAllUsers();
       userModel = await getUser(userId: model.userId);
@@ -124,9 +124,10 @@ class UserServices {
         return snapshot.docs.first;
       });
       _userModelRef.doc(user.id).update(model.toJson());
-      _userLocal.deleteCachedUser(userId: model.userId);
+      _userLocal.deleteCachedUser();
       //  if (model.storeId != null) _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
       // _userLocal.deleteCachedAllUsers();
+      await getUser(userId: model.userId);
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
@@ -140,7 +141,7 @@ class UserServices {
         return snapshot.docs.first;
       });
       _userModelRef.doc(user.id).delete();
-      _userLocal.deleteCachedUser(userId: userId);
+      _userLocal.deleteCachedUser();
       _userLocal.deleteCachedStoreUsers(storeId: storeId);
       // _userLocal.deleteCachedAllUsers();
     } on FirebaseFirestore catch (e) {
