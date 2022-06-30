@@ -5,9 +5,9 @@ import 'package:shop/models/userModel.dart';
 class userLocal {
   GetStorage localStorage = new GetStorage();
 
-  Future<void>? cachingUser({required String userId, required UserModel? model}) {
+  Future<void>? cachingUser({required UserModel? model}) {
     if (model != null) {
-      return localStorage.write(CachingKeys.user.addIdToKey(id: userId), model.toJson());
+      return localStorage.write(CachingKeys.user, model.toJson());
     }
     return null;
   }
@@ -20,8 +20,8 @@ class userLocal {
     return localStorage.write(CachingKeys.storeUsers, userModelToJson(allUsers));
   }
 
-  Future<UserModel>? getCashUser({required String userId}) {
-    final jsonUsers = localStorage.read(CachingKeys.user.addIdToKey(id: userId));
+  Future<UserModel>? getCashUser() {
+    final jsonUsers = localStorage.read(CachingKeys.user);
     if (jsonUsers != null) {
       return Future.value(UserModel.fromRawJson(jsonUsers));
     } else {

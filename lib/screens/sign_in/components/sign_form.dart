@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/form_error.dart';
 import 'package:shop/core/keyboard.dart';
 import 'package:shop/core/size_config.dart';
+import 'package:shop/models/userModel.dart';
 import 'package:shop/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop/screens/login_success/login_success_screen.dart';
+import 'package:shop/screens/sign_in/state_management/sign_in_state.dart';
 import 'package:shop/services/auth_services.dart';
 
 import '../../../components/default_button.dart';
@@ -17,17 +20,17 @@ class SignForm extends StatefulWidget {
 }
 
 class _SignFormState extends State<SignForm> {
+  UserModel? userModel;
   final _formKey = GlobalKey<FormState>();
   late String email = "essamsaleh101@gmail.com";
   late String password = "123456@#";
   bool? remember = false;
   final List<String?> errors = [];
-  // late AuthServices authServices;
 
   @override
   void initState() {
     super.initState();
-    // authServices = Provider.of<AuthServices>(context, listen: false);
+    Provider.of<SignInState>(context, listen: false).getLoggedInUser().then((value) => {userModel = value});
   }
 
   void addError({String? error}) {
@@ -83,11 +86,9 @@ class _SignFormState extends State<SignForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // await authServices.signIn(email: email, password: password);
-                // if (authServices.userCredential != null) {
-                //   KeyboardUtil.hideKeyboard(context);
-                //   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                // }
+                Provider.of<SignInState>(context, listen: false)
+                    .signIn(email: email, password: password)
+                    .then((value) => {if (value) Navigator.pushNamed(context, LoginSuccessScreen.routeName)});
               }
             },
           ),
@@ -98,6 +99,7 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
+      initialValue: userModel?.password,
       obscureText: true,
       onSaved: (newValue) {
         if (newValue != null) password = newValue;
@@ -133,6 +135,7 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
+      initialValue: userModel?.email,
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) {
         if (newValue != null) email = newValue;

@@ -13,7 +13,7 @@ extension SystemFeedBackEx on String {
       EasyLoading.showSuccess(this, maskType: EasyLoadingMaskType.black);
     } else if (AlertType.Error == alertType) {
       EasyLoading.showError(
-        this,
+        "Error",
       );
     } else {
       EasyLoading.showInfo('Useful Information.');

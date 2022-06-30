@@ -20,16 +20,27 @@ class UserServices {
     _userRemote = new UserRemote(_userModelRef);
   }
 
+  Future<UserModel?> getLoggedInUser() async {
+    try {
+      return await _userLocal.getCashUser();
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
   Future<UserModel?> getUser({required String userId}) async {
     UserModel? userModel;
     try {
-      UserModel? cachedUser = await _userLocal.getCashUser(userId: userId);
+      UserModel? cachedUser = await _userLocal.getCashUser();
       if (cachedUser != null) {
         userModel = cachedUser;
       } else {
         var user = await _userRemote.getUser(userId: userId);
         userModel = user;
-        _userLocal.cachingUser(userId: userId, model: userModel);
+        _userLocal.cachingUser(model: userModel);
       }
     } on FirebaseFirestore catch (e) {
       print(e);
@@ -42,9 +53,8 @@ class UserServices {
   Future<UserModel?> getUserByEmail({required String email}) async {
     UserModel? userModel;
     try {
-      var user = await _userRemote.getUserByEmail(email: email);
-      userModel = user;
-      return userModel;
+      userModel = await _userRemote.getUserByEmail(email: email);
+      if (userModel != null) _userLocal.cachingUser(model: userModel);
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
