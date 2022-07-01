@@ -10,13 +10,18 @@ class AddCustomerScreen extends StatefulWidget {
 }
 
 class _AddCustomerScreen extends State<AddCustomerScreen> {
+
+
+  bool isLoading = false;
+
+  loading(bool v) => setState(() => isLoading = v);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Add New Customer"),
       ),
-      body: Body(),
+      body: Body(loading: loading),
     );
   }
 }

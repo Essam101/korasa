@@ -26,7 +26,8 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
   final List<String> errors = [];
 
   late String customerName;
-  late String notes;
+
+  late String customerNotes;
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -47,10 +48,15 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
   Widget build(BuildContext context) {
     return Form(key: _formKey, child: Column(
       children: [
+        SizedBox(height: getProportionateScreenHeight(30)),
         buildCustomerNameField(),
+
         SizedBox(height: getProportionateScreenHeight(30)),
 
+        buildCustomerNotesField(),
+
         FormError(errors: errors),
+
         SizedBox(height: getProportionateScreenHeight(40)),
 
         DefaultButton(
@@ -61,7 +67,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                   .createCustomer(model: new CustomerModel(
                   customerId: CollectionsNames.customers.generateId(),
                   name: customerName,
-                  notes: notes,
+                  notes: customerNotes,
                   storeId: '')).then((value) =>
               {
                 if(value) Navigator.pushNamed(context, HomeScreen.routeName)
@@ -103,6 +109,33 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
       ),
+    );
+  }
+
+
+
+  TextFormField buildCustomerNotesField() {
+    return TextFormField(
+      onSaved: (newValue) {
+        if (newValue != null) {
+          this.customerNotes = newValue;
+        }
+      },
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kNamelNullError);
+        }
+        customerNotes = value;
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Customer Notes",
+        hintText: "You Can Add  notes ",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
+      maxLines: 8,
     );
   }
 }
