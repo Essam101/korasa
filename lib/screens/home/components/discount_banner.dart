@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:shop/core/size_config.dart';
 
+import '../../../components/default_button.dart';
+import '../../sign_up/sign_up_screen.dart';
+
 class DiscountBanner extends StatelessWidget {
   const DiscountBanner({
     Key? key,
@@ -18,7 +21,7 @@ class DiscountBanner extends StatelessWidget {
         vertical: getProportionateScreenWidth(15),
       ),
       decoration: BoxDecoration(
-        color: Color(0xFF4A3298),
+        color: Color(0xFF26068A),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text.rich(
@@ -33,9 +36,11 @@ class DiscountBanner extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+
           ],
         ),
       ),
+
     );
   }
 }

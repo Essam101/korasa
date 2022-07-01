@@ -19,7 +19,7 @@ class CustomerModel {
   final String customerId;
   final String name;
   final String notes;
-  final String storeId;
+  late final String storeId;
 
   factory CustomerModel.fromRawJson(String str) => CustomerModel.fromJson(json.decode(str));
 

@@ -56,7 +56,7 @@ class CustomerServices extends ServiceBase {
     }
   }
 
-  createCustomer(CustomerModel model) async {
+  createCustomer({required CustomerModel model}) async {
     try {
       await _customerModelRef.add(model);
       await getCustomer(customerId: model.customerId);
