@@ -12,8 +12,6 @@ class AddCustomerState extends ServiceBase {
 
     "Loading".showLoading(alertType: AlertType.Loading);
 
-    CustomerServices customerServices = new CustomerServices();
-
     UserServices userServices = new UserServices();
 
     var user = await userServices.getLoggedInUser();
