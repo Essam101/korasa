@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/models/customerModel.dart';
 import 'package:shop/screens/customer/state_management/customre_state.dart';
-import 'package:shop/screens/navigation/navigation_screen.dart';
 
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/default_button.dart';
@@ -11,17 +10,28 @@ import '../../../components/form_error.dart';
 import '../../../core/collectionsNames.dart';
 import '../../../core/constants.dart';
 import '../../../core/size_config.dart';
-import '../../home/home_screen.dart';
 
 class AddCustomerForm extends StatefulWidget {
+  final String? userId;
+  final String? name;
+
+  const AddCustomerForm({super.key, this.name, this.userId});
+
   @override
   _AddCustomerFormState createState() => _AddCustomerFormState();
 }
 
 class _AddCustomerFormState extends State<AddCustomerForm> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.userId != null) {
+      customerName = widget.name!;
+    }
 
-  CustomerModel? _customerModel;
-
+    setState(() {});
+  }
 
   final _formKey = GlobalKey<FormState>();
   final List<String> errors = [];
@@ -64,7 +74,8 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                       .createCustomer(
                           model: new CustomerModel(
                               creationDate: new DateTime.now().toString(),
-                              customerId: CollectionsNames.customers.generateId(),
+                              customerId:
+                                  CollectionsNames.customers.generateId(),
                               name: customerName,
                               notes: customerNotes,
                               storeId: ''))
@@ -78,7 +89,8 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
 
   TextFormField buildCustomerNameField() {
     return TextFormField(
-      initialValue: Provider.of<CustomerState>(context,listen: true).customerModel?.name,
+      initialValue:
+          customerName,
       onSaved: (newValue) {
         if (newValue != null) {
           this.customerName = newValue;
@@ -109,7 +121,9 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
 
   TextFormField buildCustomerNotesField() {
     return TextFormField(
-      initialValue: Provider.of<CustomerState>(context,listen: true).customerModel?.notes,
+      initialValue: Provider.of<CustomerState>(context, listen: true)
+          .customerModel
+          ?.notes,
       onSaved: (newValue) {
         if (newValue != null) {
           this.customerNotes = newValue;

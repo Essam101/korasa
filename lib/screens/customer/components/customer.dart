@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-
-import 'package:shop/core/size_config.dart';
-import 'package:shop/models/customerModel.dart';
+ import 'package:shop/models/customerModel.dart';
+import 'package:shop/screens/customer/components/add_customer_form.dart';
 import 'package:shop/screens/customer/state_management/customre_state.dart';
 
 class Customer extends StatelessWidget {
@@ -13,7 +13,9 @@ class Customer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Color(0xFFF5F6F9), borderRadius: BorderRadius.all(Radius.circular(10))),
+      decoration: BoxDecoration(
+          color: Color(0xFFF5F6F9),
+          borderRadius: BorderRadius.all(Radius.circular(10))),
       margin: EdgeInsets.all(5),
       child: Column(
         children: [
@@ -31,7 +33,15 @@ class Customer extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: OutlinedButton.icon(
                   onPressed: () {
-                    // Respond to button press
+                    showBarModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AddCustomerForm(
+                          userId: customerModel.customerId,
+                          name: customerModel.name,
+                        );
+                      },
+                    );
                   },
                   icon: Icon(Icons.edit, size: 18),
                   label: Text("تعديل  "),
@@ -40,9 +50,9 @@ class Customer extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: OutlinedButton.icon(
-                  onPressed:  () async  {
-                  await  Provider.of<CustomerState>(context, listen: false)
-                    .deleteCustomer(customerId: customerModel.customerId);
+                  onPressed: () async {
+                    await Provider.of<CustomerState>(context, listen: false)
+                        .deleteCustomer(customerId: customerModel.customerId);
                     // Respond to button press
                   },
                   icon: Icon(Icons.delete, size: 18),
