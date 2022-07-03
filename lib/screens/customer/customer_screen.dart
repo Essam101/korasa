@@ -39,7 +39,6 @@ class _CustomerScreenState extends State<CustomerScreen> {
           child: Column(
             children: [
               Header(),
-              Text("${Provider.of<CustomerState>(context, listen: true).isLoading}"),
               SizedBox(height: getProportionateScreenWidth(10)),
               for (var i in Provider.of<CustomerState>(context, listen: true).customersModel) Customer(customerModel: i),
               Loading()

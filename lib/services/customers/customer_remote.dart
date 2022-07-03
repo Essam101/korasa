@@ -30,6 +30,7 @@ class CustomerRemote extends ServiceBase {
       customers.forEach((element) {
         _customers.add(
           new CustomerModel(
+            creationDate: element.data().creationDate,
             customerId: element.data().customerId,
             name: element.data().name,
             storeId: element.data().storeId,

@@ -59,7 +59,11 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                   Provider.of<CustomerState>(context, listen: false)
                       .createCustomer(
                           model: new CustomerModel(
-                              customerId: CollectionsNames.customers.generateId(), name: customerName, notes: customerNotes, storeId: ''))
+                              creationDate: new DateTime.now().toString(),
+                              customerId: CollectionsNames.customers.generateId(),
+                              name: customerName,
+                              notes: customerNotes,
+                              storeId: ''))
                       .then((value) => {if (value) Navigator.pop(context)});
                 }
               },

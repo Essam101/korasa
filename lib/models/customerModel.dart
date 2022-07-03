@@ -14,12 +14,14 @@ class CustomerModel {
     required this.name,
     required this.notes,
     required this.storeId,
+    required this.creationDate,
   });
 
   final String customerId;
   final String name;
   final String notes;
-  late  String storeId;
+  late String storeId;
+  late String creationDate;
 
   factory CustomerModel.fromRawJson(String str) => CustomerModel.fromJson(json.decode(str));
 
@@ -30,6 +32,7 @@ class CustomerModel {
         name: json["name"],
         notes: json["notes"],
         storeId: json["storeId"],
+        creationDate: json["creationDate"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,5 +40,6 @@ class CustomerModel {
         "name": name,
         "notes": notes,
         "storeId": storeId,
+        "creationDate": creationDate,
       };
 }
