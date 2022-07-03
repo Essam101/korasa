@@ -3,6 +3,7 @@ import 'package:shop/screens/cart/cart_screen.dart';
 import 'package:shop/screens/complete_store/complete_store_screen.dart';
 import 'package:shop/screens/complete_store/state_management/complete_store_state.dart';
 import 'package:shop/screens/customer/add_customer_screen.dart';
+import 'package:shop/screens/customer/customer_screen.dart';
 import 'package:shop/screens/details/details_screen.dart';
 import 'package:shop/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop/screens/home/home_screen.dart';
@@ -32,5 +33,5 @@ final Map<String, WidgetBuilder> routes = {
   ProfileScreen.routeName: (context) => ProfileScreen(),
   StoreStaffScreen.routeName: (context) => StoreStaffScreen(),
   NavigationScreen.routeName: (context) => NavigationScreen(),
-  AddCustomerScreen.routeName: (context) => AddCustomerScreen(),
+  CustomerScreen.routeName: (context) => CustomerScreen(),
 };

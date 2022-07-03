@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shop/core/size_config.dart';
 
-class AddStaff extends StatefulWidget {
-  const AddStaff({Key? key}) : super(key: key);
+class AddStaffForm extends StatefulWidget {
+  const AddStaffForm({Key? key}) : super(key: key);
 
   @override
-  State<AddStaff> createState() => _AddStaffState();
+  State<AddStaffForm> createState() => _AddStaffFormState();
 }
 
-class _AddStaffState extends State<AddStaff> {
+class _AddStaffFormState extends State<AddStaffForm> {
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop/core/size_config.dart';
-import 'package:shop/screens/customer/add_customer_screen.dart';
+import 'package:shop/screens/customer/customer_screen.dart';
 
 class Categories extends StatelessWidget {
   @override
@@ -11,19 +11,14 @@ class Categories extends StatelessWidget {
     ];
     return Padding(
       padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(
           categories.length,
           (index) => CategoryCard(
-              icon: categories[index]["icon"],
-              text: categories[index]["text"],
-              press: () =>
-                  Navigator.pushNamed(context, AddCustomerScreen.routeName)),
+              icon: categories[index]["icon"], text: categories[index]["text"], press: () => Navigator.pushNamed(context, CustomerScreen.routeName)),
         ),
-
       ),
     );
   }

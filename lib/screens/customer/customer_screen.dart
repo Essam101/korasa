@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop/components/coustom_bottom_nav_bar.dart';
 import 'package:shop/core/enums.dart';
 import 'package:shop/core/size_config.dart';
-import 'package:shop/screens/store_staff/components/header.dart';
+import 'package:shop/screens/customer/components/header.dart';
 
 class CustomerScreen extends StatefulWidget {
   static String routeName = "/customer";

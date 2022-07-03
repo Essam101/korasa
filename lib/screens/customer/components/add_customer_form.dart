@@ -13,10 +13,6 @@ import '../../../core/size_config.dart';
 import '../../home/home_screen.dart';
 
 class AddCustomerForm extends StatefulWidget {
-  final Function(bool) loading;
-
-  const AddCustomerForm({required this.loading});
-
   @override
   _AddCustomerFormState createState() => _AddCustomerFormState();
 }
@@ -36,7 +32,6 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
       });
   }
 
-
   void removeError({String? error}) {
     if (errors.contains(error))
       setState(() {
@@ -46,39 +41,31 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(key: _formKey, child: Column(
-      children: [
-        SizedBox(height: getProportionateScreenHeight(30)),
-        buildCustomerNameField(),
-
-        SizedBox(height: getProportionateScreenHeight(30)),
-
-        buildCustomerNotesField(),
-
-        FormError(errors: errors),
-
-        SizedBox(height: getProportionateScreenHeight(40)),
-
-        DefaultButton(
-          text: "Add Customer",
-          press: () async {
-            if (_formKey.currentState!.validate()) {
-              Provider.of<AddCustomerState>(context, listen: false)
-                  .createCustomer(model: new CustomerModel(
-                  customerId: CollectionsNames.customers.generateId(),
-                  name: customerName,
-                  notes: customerNotes,
-                  storeId: '')).then((value) =>
-              {
-                if(value) Navigator.pushNamed(context, HomeScreen.routeName)
-              });
-            }
-          },
-        ),
-      ],
-    ));
+    return Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            SizedBox(height: getProportionateScreenHeight(30)),
+            buildCustomerNameField(),
+            SizedBox(height: getProportionateScreenHeight(30)),
+            buildCustomerNotesField(),
+            FormError(errors: errors),
+            SizedBox(height: getProportionateScreenHeight(40)),
+            DefaultButton(
+              text: "Add Customer",
+              press: () async {
+                if (_formKey.currentState!.validate()) {
+                  Provider.of<AddCustomerState>(context, listen: false)
+                      .createCustomer(
+                          model: new CustomerModel(
+                              customerId: CollectionsNames.customers.generateId(), name: customerName, notes: customerNotes, storeId: ''))
+                      .then((value) => {if (value) Navigator.pushNamed(context, HomeScreen.routeName)});
+                }
+              },
+            ),
+          ],
+        ));
   }
-
 
   TextFormField buildCustomerNameField() {
     return TextFormField(
@@ -94,7 +81,6 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
         this.customerName = value;
         return null;
       },
-
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: kNamelNullError);
@@ -102,7 +88,6 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
         }
         return null;
       },
-
       decoration: InputDecoration(
         labelText: "Customer Name",
         hintText: "Enter Customer Name",
@@ -111,8 +96,6 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
       ),
     );
   }
-
-
 
   TextFormField buildCustomerNotesField() {
     return TextFormField(

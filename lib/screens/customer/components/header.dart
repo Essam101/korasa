@@ -3,9 +3,11 @@ import 'package:shop/core/constants.dart';
 import 'package:shop/screens/cart/cart_screen.dart';
 
 import 'package:shop/core/size_config.dart';
+import 'package:shop/screens/customer/components/add_customer_form.dart';
 import 'package:shop/screens/home/components/icon_btn_with_counter.dart';
 import 'package:shop/screens/store_staff/components/add_staff_form.dart';
 import 'package:shop/screens/store_staff/components/search_field.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class Header extends StatelessWidget {
   const Header({
@@ -23,10 +25,10 @@ class Header extends StatelessWidget {
           IconBtnWithCounter(
               svgSrc: "assets/icons/more.svg",
               press: () {
-                showModalBottomSheet<void>(
+                showBarModalBottomSheet<void>(
                   context: context,
                   builder: (BuildContext context) {
-                    return AddStaffForm();
+                    return AddCustomerForm();
                   },
                 );
               }),
