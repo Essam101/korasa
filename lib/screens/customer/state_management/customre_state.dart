@@ -6,6 +6,7 @@ import 'package:shop/services/service_base.dart';
 
 class CustomerState extends ServiceBase {
   List<CustomerModel> customersModel = [];
+  CustomerModel? customerModel;
 
   getCustomers() async {
     this.isLoading = true;
