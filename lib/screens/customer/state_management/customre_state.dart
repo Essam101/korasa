@@ -1,17 +1,17 @@
-import 'package:get_storage/get_storage.dart';
 import 'package:shop/core/enums.dart';
 import 'package:shop/core/extensions/system_feedback.dart';
 import 'package:shop/models/customerModel.dart';
 import 'package:shop/services/customers/customer_services.dart';
 import 'package:shop/services/service_base.dart';
-import 'package:shop/services/users/user_services.dart';
 
 class CustomerState extends ServiceBase {
   List<CustomerModel> customersModel = [];
 
   getCustomers() async {
     this.isLoading = true;
-    if (storeId.isNotEmpty) customersModel = await new CustomerServices().getStoreCustomer(storeId: storeId);
+    if (storeId.isNotEmpty)
+      customersModel =
+          await new CustomerServices().getStoreCustomer(storeId: storeId);
     isLoading = false;
     notifyListeners();
   }
@@ -29,7 +29,29 @@ class CustomerState extends ServiceBase {
     }
 
     isLoading = false;
-    "Success".showLoading(alertType: result ? AlertType.Success : AlertType.Error);
+    "Success"
+        .showLoading(alertType: result ? AlertType.Success : AlertType.Error);
+    return result;
+  }
+
+  Future<bool> deleteCustomer({required String customerId}) async {
+    this.isLoading = true;
+
+    bool result = true;
+
+    "Loading".showLoading(alertType: AlertType.Loading);
+
+    try {
+      await new CustomerServices().deleteCustomer(customerId: customerId);
+      await getCustomers();
+    } catch (e) {
+      result = false;
+    }
+
+    isLoading = false;
+    "Success"
+        .showLoading(alertType: result ? AlertType.Success : AlertType.Error);
+
     return result;
   }
 }

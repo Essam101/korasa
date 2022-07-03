@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:shop/core/size_config.dart';
 import 'package:shop/models/customerModel.dart';
+import 'package:shop/screens/customer/state_management/customre_state.dart';
 
 class Customer extends StatelessWidget {
   final CustomerModel customerModel;
@@ -38,7 +40,9 @@ class Customer extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: OutlinedButton.icon(
-                  onPressed: () {
+                  onPressed:  () async  {
+                  await  Provider.of<CustomerState>(context, listen: false)
+                    .deleteCustomer(customerId: customerModel.customerId);
                     // Respond to button press
                   },
                   icon: Icon(Icons.delete, size: 18),

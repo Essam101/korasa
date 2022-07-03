@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:shop/components/coustom_bottom_nav_bar.dart';
-import 'package:shop/core/enums.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/screens/customer/components/customer.dart';
 import 'package:shop/screens/customer/components/header.dart';
 import 'package:shop/screens/customer/components/loading.dart';
 import 'package:shop/screens/customer/state_management/customre_state.dart';
 
-import '../../core/constants.dart';
 
 class CustomerScreen extends StatefulWidget {
   static String routeName = "/customer";
