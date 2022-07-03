@@ -42,4 +42,10 @@ class ServiceBase extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  clear() {
+    currantUser = null;
+    storeId = "";
+    userId = "";
+  }
 }

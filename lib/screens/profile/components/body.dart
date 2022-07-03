@@ -47,7 +47,7 @@ class Body extends StatelessWidget {
             icon: "assets/icons/Log out.svg",
             press: () async {
               Provider.of<ProfileState>(context, listen: false)
-                  .logOut()
+                  .logOut(context: context)
                   .then((value) => {if (value) Navigator.pushReplacementNamed(context, SplashScreen.routeName)});
             },
           ),
