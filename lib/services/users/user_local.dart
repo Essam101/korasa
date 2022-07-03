@@ -22,7 +22,7 @@ class UserLocal {
     return localStorage.write(CachingKeys.storeUsers, userModelToJson(allUsers));
   }
 
-  Future<UserModel>? getCashUser() {
+  Future<UserModel>? getCashUserAsync() {
     final jsonUsers = localStorage.read(CachingKeys.user);
     if (jsonUsers != null) {
       return Future.value(UserModel.fromRawJson(jsonEncode(jsonUsers)));
@@ -31,7 +31,7 @@ class UserLocal {
     }
   }
 
-  UserModel? getCashUserTest() {
+  UserModel? getCashUser() {
     final jsonUsers = localStorage.read(CachingKeys.user);
     if (jsonUsers != null) {
       return UserModel.fromRawJson(jsonEncode(jsonUsers));

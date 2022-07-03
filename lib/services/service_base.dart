@@ -35,7 +35,7 @@ class ServiceBase extends ChangeNotifier {
   String storeId = "";
 
   Future<void> setCurrentUser() async {
-    currantUser = new UserLocal().getCashUserTest();
+    currantUser = new UserLocal().getCashUser();
     if (currantUser != null) {
       userId = currantUser!.userId;
       storeId = currantUser!.storeId;

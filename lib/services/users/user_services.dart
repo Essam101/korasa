@@ -22,7 +22,7 @@ class UserServices {
 
   Future<UserModel?> getLoggedInUser() async {
     try {
-      return await _userLocal.getCashUser();
+      return await _userLocal.getCashUserAsync();
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
@@ -34,7 +34,7 @@ class UserServices {
   Future<UserModel?> getUser({required String userId}) async {
     UserModel? userModel;
     try {
-      UserModel? cachedUser = await _userLocal.getCashUser();
+      UserModel? cachedUser = await _userLocal.getCashUserAsync();
       if (cachedUser != null) {
         userModel = cachedUser;
       } else {
