@@ -1,4 +1,6 @@
+import 'package:shop/core/collectionsNames.dart';
 import 'package:shop/core/enums.dart';
+import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/core/extensions/system_feedback.dart';
 import 'package:shop/models/customerModel.dart';
 import 'package:shop/services/customers/customer_services.dart';
@@ -22,7 +24,7 @@ class CustomerState extends ServiceBase {
     bool result = true;
     "Loading".showLoading(alertType: AlertType.Loading);
 
-    if (model.customerId.isNotEmpty) {
+    if (model.customerId.isNotEmpty&&  storeId.isNotEmpty) {
       // Update
       await new CustomerServices().updateCustomer(model: model);
       await getCustomers();
@@ -30,6 +32,7 @@ class CustomerState extends ServiceBase {
     {
       if (storeId.isNotEmpty) {
         model.storeId = storeId;
+        model.customerId = CollectionsNames.customers.generateId();
         await new CustomerServices().createCustomer(model: model);
         await getCustomers();
       } else {

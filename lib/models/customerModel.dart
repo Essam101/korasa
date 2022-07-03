@@ -17,7 +17,7 @@ class CustomerModel {
     required this.creationDate,
   });
 
-  final String customerId;
+  late String customerId;
   final String name;
   final String notes;
   late String storeId;
