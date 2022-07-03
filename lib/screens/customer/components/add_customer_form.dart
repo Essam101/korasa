@@ -19,6 +19,10 @@ class AddCustomerForm extends StatefulWidget {
 }
 
 class _AddCustomerFormState extends State<AddCustomerForm> {
+
+  CustomerModel? _customerModel;
+
+
   final _formKey = GlobalKey<FormState>();
   final List<String> errors = [];
 
@@ -74,6 +78,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
 
   TextFormField buildCustomerNameField() {
     return TextFormField(
+      initialValue: Provider.of<CustomerState>(context,listen: true).customerModel?.name,
       onSaved: (newValue) {
         if (newValue != null) {
           this.customerName = newValue;
@@ -104,6 +109,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
 
   TextFormField buildCustomerNotesField() {
     return TextFormField(
+      initialValue: Provider.of<CustomerState>(context,listen: true).customerModel?.notes,
       onSaved: (newValue) {
         if (newValue != null) {
           this.customerNotes = newValue;
