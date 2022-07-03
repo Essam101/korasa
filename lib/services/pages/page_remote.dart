@@ -3,7 +3,7 @@ import 'package:shop/models/customerModel.dart';
 import 'package:shop/models/pageModel.dart';
 import 'package:shop/services/service_base.dart';
 
-class PageRemote extends ServiceBase {
+class PageRemote {
   final pageModelRef;
 
   PageRemote(this.pageModelRef);

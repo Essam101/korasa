@@ -6,7 +6,7 @@ import 'package:shop/core/collectionsNames.dart';
 import 'package:shop/models/storeModel.dart';
 import 'package:shop/services/service_base.dart';
 
-class StoreRemote extends ServiceBase {
+class StoreRemote {
   final storeModelRef;
 
   StoreRemote(this.storeModelRef);

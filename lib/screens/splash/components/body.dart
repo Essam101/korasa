@@ -36,7 +36,7 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await new SplashState().navigateTo(context: context);
+      await Provider.of<SplashState>(context, listen: false).navigateTo(context: context);
     });
   }
 

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/models/customerModel.dart';
 import 'package:shop/services/service_base.dart';
 
-class CustomerRemote extends ServiceBase {
+class CustomerRemote {
   final customerModelRef;
 
   CustomerRemote(this.customerModelRef);

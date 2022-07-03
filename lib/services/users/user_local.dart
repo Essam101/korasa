@@ -31,6 +31,15 @@ class UserLocal {
     }
   }
 
+  UserModel? getCashUserTest() {
+    final jsonUsers = localStorage.read(CachingKeys.user);
+    if (jsonUsers != null) {
+      return UserModel.fromRawJson(jsonEncode(jsonUsers));
+    } else {
+      return null;
+    }
+  }
+
   Future<List<UserModel>>? getCashStoreUsers({required String storeId}) {
     final jsonStores = localStorage.read(CachingKeys.storeUsers.addIdToKey(id: storeId));
     if (jsonStores != null && jsonStores.length != 0) {

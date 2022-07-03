@@ -7,6 +7,8 @@ import 'package:shop/screens/navigation/state_management/navigation_state.dart';
 import 'package:shop/screens/profile/state_management/profile_state.dart';
 import 'package:shop/screens/sign_in/state_management/sign_in_state.dart';
 import 'package:shop/screens/sign_up/state_management/sign_up_state.dart';
+import 'package:shop/screens/splash/splash_screen.dart';
+import 'package:shop/screens/splash/state_management/splash_state.dart';
 import 'package:shop/screens/store_staff/state_management/store_staff_state.dart';
 import 'package:shop/services/customers/customer_services.dart';
 import 'package:shop/services/pages/page_services.dart';
@@ -47,6 +49,9 @@ class Services {
       ),
       ChangeNotifierProvider(
         create: (context) => new StoreStaffState(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => new SplashState(),
       ),
     ];
   }

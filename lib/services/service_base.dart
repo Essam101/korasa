@@ -11,7 +11,7 @@ import 'package:shop/services/users/user_services.dart';
 
 class ServiceBase extends ChangeNotifier {
   ServiceBase() {
-    setCurrentUser();
+    setCurrentUser().then((value) => {print("ServiceBase")});
   }
 
   Db db = new Db();
@@ -34,15 +34,12 @@ class ServiceBase extends ChangeNotifier {
 
   String storeId = "";
 
-  setCurrentUser() {
-    new UserLocal().getCashUser()?.then((value) => {
-          currantUser = value,
-          if (currantUser != null)
-            {
-              userId = value.userId,
-              storeId = value.storeId,
-            }
-        });
+  Future<void> setCurrentUser() async {
+    currantUser = new UserLocal().getCashUserTest();
+    if (currantUser != null) {
+      userId = currantUser!.userId;
+      storeId = currantUser!.storeId;
+    }
     notifyListeners();
   }
 }

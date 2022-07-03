@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/models/userModel.dart';
 import 'package:shop/services/service_base.dart';
 
-class UserRemote extends ServiceBase {
+class UserRemote {
   final userModelRef;
 
   UserRemote(this.userModelRef);
@@ -20,7 +20,6 @@ class UserRemote extends ServiceBase {
     }
     return null;
   }
-
 
   Future<UserModel?> getUserByEmail({required String email}) async {
     try {
@@ -43,8 +42,13 @@ class UserRemote extends ServiceBase {
       });
       List<UserModel> _stores = [];
       stores.forEach((element) {
-        _stores
-            .add(new UserModel(userId: element.data().userId, email:element.data().email ,password: element.data().password,  name: element.data().name, role: element.data().role, storeId: element.data().storeId));
+        _stores.add(new UserModel(
+            userId: element.data().userId,
+            email: element.data().email,
+            password: element.data().password,
+            name: element.data().name,
+            role: element.data().role,
+            storeId: element.data().storeId));
       });
       return _stores;
     } on FirebaseFirestore catch (e) {
@@ -62,8 +66,13 @@ class UserRemote extends ServiceBase {
       });
       List<UserModel> _stores = [];
       stores.forEach((element) {
-        _stores
-            .add(new UserModel(userId: element.data().userId, email: element.data().email,password: element.data().password, name: element.data().name, role: element.data().role, storeId: element.data().storeId));
+        _stores.add(new UserModel(
+            userId: element.data().userId,
+            email: element.data().email,
+            password: element.data().password,
+            name: element.data().name,
+            role: element.data().role,
+            storeId: element.data().storeId));
       });
       return _stores;
     } on FirebaseFirestore catch (e) {
