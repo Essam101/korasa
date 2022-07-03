@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/models/customerModel.dart';
 import 'package:shop/screens/customer/state_management/customre_state.dart';
 
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/default_button.dart';
 import '../../../components/form_error.dart';
-import '../../../core/collectionsNames.dart';
 import '../../../core/constants.dart';
 import '../../../core/size_config.dart';
 
 class AddCustomerForm extends StatefulWidget {
-  final String? userId;
-  final String? name;
+  final String? customerId;
+  final String? customerName;
+  final String? storeId;
+  final String? creationDate;
+  final String? note;
 
-  const AddCustomerForm({super.key, this.name, this.userId});
+  const AddCustomerForm(
+      {super.key,
+      this.customerId,
+      this.customerName,
+      this.storeId,
+      this.creationDate,
+      this.note});
 
   @override
   _AddCustomerFormState createState() => _AddCustomerFormState();
@@ -26,8 +33,12 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.userId != null) {
-      customerName = widget.name!;
+    if (widget.customerId != null) {
+      customerId = widget.customerId!;
+      customerName = widget.customerName!;
+      customerNotes = widget.note!;
+      storeId = widget.storeId!;
+      creationDate = widget.creationDate!;
     }
 
     setState(() {});
@@ -35,10 +46,12 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
 
   final _formKey = GlobalKey<FormState>();
   final List<String> errors = [];
+  late String customerId;
 
+  late String creationDate;
   late String customerName;
-
   late String customerNotes;
+  late String storeId;
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -67,18 +80,18 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
             FormError(errors: errors),
             SizedBox(height: getProportionateScreenHeight(40)),
             DefaultButton(
-              text: "Add Customer",
+              text:(customerId.isNotEmpty ? " Update"  : "Add")  + " Customer",
               press: () async {
                 if (_formKey.currentState!.validate()) {
                   Provider.of<CustomerState>(context, listen: false)
-                      .createCustomer(
+                      .updateOrCreateCustomer(
                           model: new CustomerModel(
                               creationDate: new DateTime.now().toString(),
                               customerId:
-                                  CollectionsNames.customers.generateId(),
+                                  customerId.isNotEmpty ? customerId : "",
                               name: customerName,
                               notes: customerNotes,
-                              storeId: ''))
+                              storeId: storeId))
                       .then((value) => {if (value) Navigator.pop(context)});
                 }
               },
@@ -89,8 +102,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
 
   TextFormField buildCustomerNameField() {
     return TextFormField(
-      initialValue:
-          customerName,
+      initialValue: customerName,
       onSaved: (newValue) {
         if (newValue != null) {
           this.customerName = newValue;
@@ -121,9 +133,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
 
   TextFormField buildCustomerNotesField() {
     return TextFormField(
-      initialValue: Provider.of<CustomerState>(context, listen: true)
-          .customerModel
-          ?.notes,
+      initialValue: customerNotes,
       onSaved: (newValue) {
         if (newValue != null) {
           this.customerNotes = newValue;

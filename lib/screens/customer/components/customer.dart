@@ -37,8 +37,11 @@ class Customer extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return AddCustomerForm(
-                          userId: customerModel.customerId,
-                          name: customerModel.name,
+                          customerId: customerModel.customerId,
+                          customerName: customerModel.name,
+                          storeId: customerModel.storeId,
+                          note: customerModel.notes,
+                          creationDate:  customerModel.creationDate,
                         );
                       },
                     );
