@@ -1,40 +1,67 @@
 import 'package:flutter/material.dart';
 
 import 'package:shop/core/size_config.dart';
+import 'package:shop/models/userModel.dart';
 
 class Worker extends StatelessWidget {
+  final UserModel userModel;
+
   const Worker({
     Key? key,
+    required this.userModel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 90,
-      width: double.infinity,
-      margin: EdgeInsets.all(getProportionateScreenWidth(20)),
-      padding: EdgeInsets.symmetric(
-        horizontal: getProportionateScreenWidth(20),
-        vertical: getProportionateScreenWidth(15),
-      ),
-      decoration: BoxDecoration(
-        color: Color(0xFF4A3298),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text.rich(
-        TextSpan(
-          style: TextStyle(color: Colors.white),
-          children: [
-            TextSpan(text: "A Summer Surpise\n"),
-            TextSpan(
-              text: "Cashback 20%",
-              style: TextStyle(
-                fontSize: getProportionateScreenWidth(24),
-                fontWeight: FontWeight.bold,
+      decoration: BoxDecoration(color: Color(0xFFF5F6F9), borderRadius: BorderRadius.all(Radius.circular(10))),
+      margin: EdgeInsets.all(5),
+      child: Column(
+        children: [
+          ListTile(
+            title: Text(userModel.name),
+            subtitle: Text(userModel.email),
+            leading: Icon(Icons.label),
+            trailing: Text("100 \$"),
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlinedButton.icon(
+                  onPressed: () {
+                    // Respond to button press
+                  },
+                  icon: Icon(Icons.edit, size: 18),
+                  label: Text("تعديل  "),
+                ),
               ),
-            ),
-          ],
-        ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlinedButton.icon(
+                  onPressed: () {
+                    // Respond to button press
+                  },
+                  icon: Icon(Icons.delete, size: 18),
+                  label: Text("حذف  "),
+                ),
+              ),
+              SizedBox(width: 40),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlinedButton.icon(
+                  onPressed: () {
+                    // Respond to button press
+                  },
+                  icon: Icon(Icons.add, size: 18),
+                  label: Text("اضافة طلب"),
+                ),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }

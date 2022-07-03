@@ -15,7 +15,7 @@ class UserModel {
   late final String userId;
   late final String name;
   late final int role;
-  late final String storeId;
+  late String storeId;
 
   late final String email;
 

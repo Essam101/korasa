@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shop/core/constants.dart';
 import 'package:shop/screens/cart/cart_screen.dart';
 
@@ -23,7 +24,7 @@ class Header extends StatelessWidget {
           IconBtnWithCounter(
               svgSrc: "assets/icons/more.svg",
               press: () {
-                showModalBottomSheet<void>(
+                showBarModalBottomSheet<void>(
                   context: context,
                   builder: (BuildContext context) {
                     return AddStaffForm();

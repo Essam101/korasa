@@ -63,7 +63,7 @@ class UserServices {
     return userModel;
   }
 
-  Future<List<UserModel>?> getStoreUsers({required String storeId}) async {
+  Future<List<UserModel>> getStoreUsers({required String storeId}) async {
     List<UserModel> usersModel = <UserModel>[];
     try {
       var cashStoreUsers = await _userLocal.getCashStoreUsers(storeId: storeId);
@@ -107,9 +107,7 @@ class UserServices {
     try {
       await _userModelRef.add(model);
       _userLocal.deleteCachedUser();
-      //_userLocal.deleteCachedStoreUsers(storeId: model.storeId);
-      // _userLocal.deleteCachedAllUsers();
-      userModel = await getUser(userId: model.userId);
+      _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
