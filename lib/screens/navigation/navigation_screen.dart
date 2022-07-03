@@ -35,6 +35,15 @@ class _NavigationScreenState extends State<NavigationScreen> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
+              "assets/icons/customers.svg",
+              color: Provider.of<NavigationState>(context, listen: false).tabColor(1),
+              height: 30,
+              width: 50,
+            ),
+            label: 'Customer',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
               "assets/icons/User Icon.svg",
               color: Provider.of<NavigationState>(context, listen: false).tabColor(1),
             ),
