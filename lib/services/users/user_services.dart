@@ -9,7 +9,7 @@ import 'package:shop/services/users/user_remote.dart';
 class UserServices {
   Db _db = new Db();
   late UserRemote _userRemote;
-  userLocal _userLocal = new userLocal();
+  UserLocal _userLocal = new UserLocal();
   var _userModelRef;
 
   UserServices() {
@@ -108,6 +108,7 @@ class UserServices {
       await _userModelRef.add(model);
       _userLocal.deleteCachedUser();
       _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
+      await getUser(userId: model.userId);
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {

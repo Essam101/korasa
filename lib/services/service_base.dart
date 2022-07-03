@@ -5,19 +5,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:shop/core/db.dart';
 import 'package:shop/core/extensions/system_feedback.dart';
 import 'package:shop/models/userModel.dart';
+import 'package:shop/screens/sign_in/state_management/sign_in_state.dart';
 import 'package:shop/services/users/user_local.dart';
 import 'package:shop/services/users/user_services.dart';
 
 class ServiceBase extends ChangeNotifier {
   ServiceBase() {
-    new userLocal().getCashUser()?.then((value) => {
-          currantUser = value,
-          if (currantUser != null)
-            {
-              userId = value.userId,
-              storeId = value.storeId,
-            }
-        });
+    setCurrentUser();
   }
 
   Db db = new Db();
@@ -34,9 +28,21 @@ class ServiceBase extends ChangeNotifier {
     notifyListeners();
   }
 
-  late UserModel? currantUser;
+  UserModel? currantUser;
 
   String userId = "";
 
   String storeId = "";
+
+  setCurrentUser() {
+    new UserLocal().getCashUser()?.then((value) => {
+          currantUser = value,
+          if (currantUser != null)
+            {
+              userId = value.userId,
+              storeId = value.storeId,
+            }
+        });
+    notifyListeners();
+  }
 }

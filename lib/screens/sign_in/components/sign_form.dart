@@ -90,7 +90,7 @@ class _SignFormState extends State<SignForm> {
                 Provider.of<SignInState>(context, listen: false).signIn(email: email, password: password).then((value) async => {
                       if (value)
                         {
-                          if (await Provider.of<CompleteStoreState>(context, listen: false).isUserHasStore())
+                          if (await Provider.of<CompleteStoreState>(context, listen: false).storeId.isNotEmpty)
                             {Navigator.pushReplacementNamed(context, LoginSuccessScreen.routeName)}
                           else
                             {Navigator.pushReplacementNamed(context, CompleteStoreScreen.routeName)}

@@ -17,22 +17,14 @@ class SignInState extends ServiceBase {
     isLoading = true;
     bool result = true;
     "Loading".showLoading(alertType: AlertType.Loading);
-    await new AuthServices().signIn(email: email, password: password).then((value) => {result = value != null, setIsLoggedIn(value: result)});
+    await new AuthServices().signIn(email: email, password: password).then((value) => {result = value != null});
+    await new UserServices().getUserByEmail(email: email);
     isLoading = false;
     "Success".showLoading(alertType: result ? AlertType.Success : AlertType.Error);
     return result;
   }
 
-  getLoggedInUser() async {
-    userModel = await new UserServices().getLoggedInUser();
-    notifyListeners();
-  }
-
-  bool getIsLoggedIn() {
-    return getStorage.read(CachingKeys.isLoggedIn) ?? false;
-  }
-
-  setIsLoggedIn({required bool value}) {
-    return getStorage.write(CachingKeys.isLoggedIn, value);
+  Future<UserModel?> getLoggedInUser() async {
+    return await new UserServices().getLoggedInUser();
   }
 }

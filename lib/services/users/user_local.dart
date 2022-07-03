@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:shop/core/cachingKeys.dart';
 import 'package:shop/models/userModel.dart';
 
-class userLocal {
+class UserLocal {
   GetStorage localStorage = new GetStorage();
 
   Future<void>? cachingUser({required UserModel? model}) {
