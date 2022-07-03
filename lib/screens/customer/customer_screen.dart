@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shop/components/coustom_bottom_nav_bar.dart';
 import 'package:shop/core/enums.dart';
 import 'package:shop/core/size_config.dart';
+import 'package:shop/screens/customer/components/customer.dart';
 import 'package:shop/screens/customer/components/header.dart';
+import 'package:shop/screens/customer/components/loading.dart';
+import 'package:shop/screens/customer/state_management/customre_state.dart';
+
+import '../../core/constants.dart';
 
 class CustomerScreen extends StatefulWidget {
   static String routeName = "/customer";
@@ -15,6 +23,14 @@ class CustomerScreen extends StatefulWidget {
 
 class _CustomerScreenState extends State<CustomerScreen> {
   @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await Provider.of<CustomerState>(context, listen: false).getCustomers();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -23,6 +39,10 @@ class _CustomerScreenState extends State<CustomerScreen> {
           child: Column(
             children: [
               Header(),
+              Text("${Provider.of<CustomerState>(context, listen: true).isLoading}"),
+              SizedBox(height: getProportionateScreenWidth(10)),
+              for (var i in Provider.of<CustomerState>(context, listen: true).customersModel) Customer(customerModel: i),
+              Loading()
             ],
           ),
         ),

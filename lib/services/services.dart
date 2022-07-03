@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:shop/screens/complete_store/state_management/complete_store_state.dart';
-import 'package:shop/screens/customer/state_management/add_customre_state.dart';
+import 'package:shop/screens/customer/state_management/customre_state.dart';
 import 'package:shop/screens/navigation/state_management/navigation_state.dart';
 import 'package:shop/screens/profile/state_management/profile_state.dart';
 import 'package:shop/screens/sign_in/state_management/sign_in_state.dart';
@@ -27,13 +27,10 @@ class Services {
         create: (context) => new PageServices(),
       ),
       ChangeNotifierProvider(
-        create: (context) => new CustomerServices(),
-      ),
-      ChangeNotifierProvider(
         create: (context) => new SignUpState(),
       ),
       ChangeNotifierProvider(
-        create: (context) => new AddCustomerState(),
+        create: (context) => new CustomerState(),
       ),
       ChangeNotifierProvider(
         create: (context) => new SignInState(),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shop/core/size_config.dart';
 
+const ProjectBackGround = Colors.white10;
+
 const kPrimaryColor = Color(0xFFFF7643);
 const Color KInActiveIconColor = Color(0xFFB6B6B6);
 const kPrimaryLightColor = Color(0xFFFFECDF);

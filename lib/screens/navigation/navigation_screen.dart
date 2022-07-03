@@ -18,6 +18,14 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   @override
+  void initState() {
+    super.initState();
+    // if (widget.selectedScreenIndex != null) {
+    //   Provider.of<NavigationState>(context, listen: true).selectedScreenIndex = widget.selectedScreenIndex;
+    // }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -37,7 +45,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
             icon: SvgPicture.asset(
               "assets/icons/customers.svg",
               color: Provider.of<NavigationState>(context, listen: false).tabColor(1),
-              height: 30,
+              height: 28,
               width: 50,
             ),
             label: 'Customer',
@@ -45,7 +53,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               "assets/icons/User Icon.svg",
-              color: Provider.of<NavigationState>(context, listen: false).tabColor(1),
+              color: Provider.of<NavigationState>(context, listen: false).tabColor(2),
             ),
             label: 'Profile',
           ),

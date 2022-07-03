@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/models/customerModel.dart';
-import 'package:shop/screens/customer/state_management/add_customre_state.dart';
+import 'package:shop/screens/customer/state_management/customre_state.dart';
+import 'package:shop/screens/navigation/navigation_screen.dart';
 
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/default_button.dart';
@@ -55,11 +56,11 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
               text: "Add Customer",
               press: () async {
                 if (_formKey.currentState!.validate()) {
-                  Provider.of<AddCustomerState>(context, listen: false)
+                  Provider.of<CustomerState>(context, listen: false)
                       .createCustomer(
                           model: new CustomerModel(
                               customerId: CollectionsNames.customers.generateId(), name: customerName, notes: customerNotes, storeId: ''))
-                      .then((value) => {if (value) Navigator.pushNamed(context, HomeScreen.routeName)});
+                      .then((value) => {if (value) Navigator.pop(context)});
                 }
               },
             ),

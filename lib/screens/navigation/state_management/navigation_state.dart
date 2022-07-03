@@ -7,6 +7,7 @@ import 'package:shop/services/service_base.dart';
 
 class NavigationState extends ServiceBase {
   int selectedScreenIndex = 0;
+
   List<Widget> screens = [HomeScreen(), CustomerScreen(), ProfileScreen()];
 
   Widget selectedScreen() => screens.elementAt(selectedScreenIndex);
