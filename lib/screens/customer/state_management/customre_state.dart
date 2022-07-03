@@ -10,9 +10,7 @@ class CustomerState extends ServiceBase {
 
   getCustomers() async {
     this.isLoading = true;
-    if (storeId.isNotEmpty)
-      customersModel =
-          await new CustomerServices().getStoreCustomer(storeId: storeId);
+    if (storeId.isNotEmpty) customersModel = await new CustomerServices().getStoreCustomer(storeId: storeId);
     isLoading = false;
     notifyListeners();
   }
@@ -30,8 +28,7 @@ class CustomerState extends ServiceBase {
     }
 
     isLoading = false;
-    "Success"
-        .showLoading(alertType: result ? AlertType.Success : AlertType.Error);
+    "Success".showLoading(alertType: result ? AlertType.Success : AlertType.Error);
     return result;
   }
 
@@ -50,9 +47,15 @@ class CustomerState extends ServiceBase {
     }
 
     isLoading = false;
-    "Success"
-        .showLoading(alertType: result ? AlertType.Success : AlertType.Error);
+    "Success".showLoading(alertType: result ? AlertType.Success : AlertType.Error);
 
     return result;
+  }
+
+  @override
+  clear() {
+    super.clear();
+    customersModel.clear();
+    notifyListeners();
   }
 }
