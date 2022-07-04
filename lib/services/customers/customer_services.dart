@@ -20,7 +20,7 @@ class CustomerServices {
     _customerRemote = new CustomerRemote(_customerModelRef);
   }
 
-  getCustomer({required String customerId}) async {
+  Future<CustomerModel?> getCustomer({required String customerId}) async {
     CustomerModel? customerModel;
     try {
       var customer = await _customerLocal.getCashedCustomerById(customerId: customerId);
@@ -70,7 +70,7 @@ class CustomerServices {
     }
   }
 
-  updateCustomer({required CustomerModel model}) async {
+  Future<CustomerModel?> updateCustomer({required CustomerModel model}) async {
     try {
       QueryDocumentSnapshot<CustomerModel> customer = await _customerModelRef.where('customerId', isEqualTo: model.customerId).get().then((snapshot) {
         return snapshot.docs.first;
@@ -78,14 +78,16 @@ class CustomerServices {
       _customerModelRef.doc(customer.id).update(model.toJson());
       _customerLocal.deleteCachedCustomer(customerId: model.customerId);
       _customerLocal.deleteCachedStoreCustomers(storeId: model.storeId);
+      return getCustomer(customerId: model.customerId);
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
       print(e);
     }
+    return null;
   }
 
-  deleteCustomer({required String customerId}) async {
+  Future<bool> deleteCustomer({required String customerId}) async {
     try {
       QueryDocumentSnapshot<CustomerModel> customer = await _customerModelRef.where('customerId', isEqualTo: customerId).get().then((snapshot) {
         return snapshot.docs.first;
@@ -93,10 +95,12 @@ class CustomerServices {
       _customerModelRef.doc(customer.id).delete();
       _customerLocal.deleteCachedCustomer(customerId: customerId);
       _customerLocal.deleteCachedStoreCustomers(storeId: customer.data().storeId);
+      return true;
     } on FirebaseFirestore catch (e) {
       print(e);
     } catch (e) {
       print(e);
     }
+    return false;
   }
 }

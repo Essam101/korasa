@@ -12,9 +12,7 @@ class CustomerState extends ServiceBase {
 
   getCustomers() async {
     this.isLoading = true;
-    if (storeId.isNotEmpty)
-      customersModel =
-          await new CustomerServices().getStoreCustomer(storeId: storeId);
+    if (storeId.isNotEmpty) customersModel = await new CustomerServices().getStoreCustomer(storeId: storeId);
     isLoading = false;
     notifyListeners();
   }
@@ -41,30 +39,14 @@ class CustomerState extends ServiceBase {
     }
 
     isLoading = false;
-    "Success"
-        .showLoading(alertType: result ? AlertType.Success : AlertType.Error);
+    "Success".showLoading(alertType: result ? AlertType.Success : AlertType.Error);
     return result;
   }
 
-  Future<bool> deleteCustomer({required String customerId}) async {
+  deleteCustomer({required String customerId}) async {
     this.isLoading = true;
-
-    bool result = true;
-
-    "Loading".showLoading(alertType: AlertType.Loading);
-
-    try {
-      await new CustomerServices().deleteCustomer(customerId: customerId);
-      await getCustomers();
-    } catch (e) {
-      result = false;
-    }
-
-    isLoading = false;
-    "Success"
-        .showLoading(alertType: result ? AlertType.Success : AlertType.Error);
-
-    return result;
+    await new CustomerServices().deleteCustomer(customerId: customerId);
+    await getCustomers();
   }
 
   @override

@@ -9,7 +9,6 @@ import 'package:shop/services/users/user_local.dart';
 
 class SplashState extends ServiceBase {
   navigateTo({required BuildContext context}) async {
-    // await setCurrentUser();
     bool isLoggedIn = currantUser != null;
     bool isUserHasStore = storeId.isNotEmpty;
     if (isLoggedIn && isUserHasStore) {
