@@ -43,7 +43,7 @@ class CustomerServices {
     List<CustomerModel> customersModel = [];
     try {
       var customers = await _customerLocal.getCashedStoreCustomersByStoreId(storeId: storeId);
-      if (customers != null) {
+      if (customers != null && customers.length != 0) {
         customersModel = customers;
       } else {
         var customers = await _customerRemote.getStoreCustomers(storeId: storeId);

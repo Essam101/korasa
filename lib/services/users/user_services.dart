@@ -12,9 +12,7 @@ class UserServices {
   var _userModelRef;
 
   UserServices() {
-    _userModelRef = _db.instance
-        .collection(CollectionsNames.users)
-        .withConverter<UserModel>(
+    _userModelRef = _db.instance.collection(CollectionsNames.users).withConverter<UserModel>(
           fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );
@@ -68,13 +66,12 @@ class UserServices {
     List<UserModel> usersModel = <UserModel>[];
     try {
       var cashStoreUsers = await _userLocal.getCashStoreUsers(storeId: storeId);
-      if (cashStoreUsers != null) {
+      if (cashStoreUsers != null && cashStoreUsers.length != 0) {
         usersModel = cashStoreUsers;
       } else {
         var storeUsers = await _userRemote.getStoreUsers(storeId: storeId);
         usersModel = storeUsers;
-        await _userLocal.cachingStoreUsers(
-            storeId: storeId, storeUsers: usersModel);
+        await _userLocal.cachingStoreUsers(storeId: storeId, storeUsers: usersModel);
       }
     } on FirebaseFirestore catch (e) {
       print(e);
@@ -121,10 +118,7 @@ class UserServices {
 
   updateUser({required UserModel model}) async {
     try {
-      QueryDocumentSnapshot<UserModel> user = await _userModelRef
-          .where('userId', isEqualTo: model.userId)
-          .get()
-          .then((snapshot) {
+      QueryDocumentSnapshot<UserModel> user = await _userModelRef.where('userId', isEqualTo: model.userId).get().then((snapshot) {
         return snapshot.docs.first;
       });
       _userModelRef.doc(user.id).update(model.toJson());
@@ -141,10 +135,7 @@ class UserServices {
 
   deleteUser({required String userId, required String storeId}) async {
     try {
-      QueryDocumentSnapshot<UserModel> user = await _userModelRef
-          .where('userId', isEqualTo: userId)
-          .get()
-          .then((snapshot) {
+      QueryDocumentSnapshot<UserModel> user = await _userModelRef.where('userId', isEqualTo: userId).get().then((snapshot) {
         return snapshot.docs.first;
       });
       _userModelRef.doc(user.id).delete();
