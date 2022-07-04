@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/models/userModel.dart';
 
-class Worker extends StatelessWidget {
+class Employee extends StatelessWidget {
   final UserModel userModel;
 
-  const Worker({
+  const Employee({
     Key? key,
     required this.userModel,
   }) : super(key: key);
@@ -19,7 +19,7 @@ class Worker extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            title: Text(userModel.name + "    ${userModel.role}" )  ,
+            title: Text(userModel.name + "    ${userModel.role}"),
             subtitle: Text(userModel.email),
             leading: Icon(Icons.label),
             trailing: Text("100 \$"),

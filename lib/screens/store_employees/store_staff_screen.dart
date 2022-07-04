@@ -7,7 +7,7 @@ import 'package:shop/screens/store_employees/components/header.dart';
 import 'package:shop/screens/store_employees/state_management/store_employees_state.dart';
 
 import '../customer/components/loading.dart';
-import 'components/worker.dart';
+import 'components/employee.dart';
 
 class StoreEmployeesScreen extends StatefulWidget {
   static String routeName = "/storeStaff";
@@ -37,7 +37,7 @@ class _StoreEmployeesScreenState extends State<StoreEmployeesScreen> {
             children: [
               Header(),
               SizedBox(height: getProportionateScreenWidth(10)),
-              for (var i in Provider.of<StoreEmployeesState>(context, listen: true).userModel) Worker(userModel: i),
+              for (var i in Provider.of<StoreEmployeesState>(context, listen: true).userModel) Employee(userModel: i),
               Loading()
             ],
           ),
