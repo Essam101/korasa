@@ -13,7 +13,7 @@ class StoreServices {
   var _storeModelRef;
 
   StoreServices() {
-    _storeModelRef = _db.instance.collection(CollectionsNames.stores).withConverter<StoreModel>(
+    _storeModelRef = _db.db.collection(CollectionsNames.stores).withConverter<StoreModel>(
           fromFirestore: (snapshot, _) => StoreModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );

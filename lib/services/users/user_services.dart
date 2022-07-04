@@ -12,7 +12,7 @@ class UserServices {
   var _userModelRef;
 
   UserServices() {
-    _userModelRef = _db.instance.collection(CollectionsNames.users).withConverter<UserModel>(
+    _userModelRef = _db.db.collection(CollectionsNames.users).withConverter<UserModel>(
           fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );

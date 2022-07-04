@@ -14,7 +14,7 @@ class ServiceBase extends ChangeNotifier {
     setCurrentUser().then((value) => {print("ServiceBase")});
   }
 
-  Instances db = new Instances();
+  Instances instance = new Instances();
   GetStorage getStorage = new GetStorage();
 
   bool _isLoading = false;

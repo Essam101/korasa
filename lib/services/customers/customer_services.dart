@@ -13,7 +13,7 @@ class CustomerServices {
   var _customerModelRef;
 
   CustomerServices() {
-    _customerModelRef = _db.instance.collection(CollectionsNames.customers).withConverter<CustomerModel>(
+    _customerModelRef = _db.db.collection(CollectionsNames.customers).withConverter<CustomerModel>(
           fromFirestore: (snapshot, _) => CustomerModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );

@@ -19,7 +19,7 @@ class PageServices extends ServiceBase {
   late List<PageModel> storePagesModel;
 
   PageServices() {
-    pageModelRef = db.instance.collection(CollectionsNames.pages).withConverter<PageModel>(
+    pageModelRef = instance.db.collection(CollectionsNames.pages).withConverter<PageModel>(
           fromFirestore: (snapshot, _) => PageModel.fromJson(snapshot.data()!),
           toFirestore: (store, _) => store.toJson(),
         );
