@@ -73,7 +73,7 @@ class _AddStaffFormState extends State<AddStaffForm> {
                         email: email,
                         storeId: '',
                         password: password,
-                        role: 1,
+                        role: roleType.emp.name,
                       ))
                       .then((value) => {if (value) Navigator.pop(context)});
                 }

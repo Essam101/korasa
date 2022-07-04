@@ -79,7 +79,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           model: new UserModel(
                             userId: CollectionsNames.users.generateId(),
                             name: name,
-                            role: 1,
+                            role: roleType.owner.name,
                             storeId: "",
                             email: email,
                             password: password,

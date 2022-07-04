@@ -19,7 +19,7 @@ class Worker extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            title: Text(userModel.name),
+            title: Text(userModel.name + "    ${userModel.role}" )  ,
             subtitle: Text(userModel.email),
             leading: Icon(Icons.label),
             trailing: Text("100 \$"),
