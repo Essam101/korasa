@@ -32,16 +32,7 @@ class NotificationServices {
       "to": "/topics/test"
     });
     try {
-      await subscribeToTopic(topicName: "test");
-      await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
-          headers: {
-            "Host": "fcm.googleapis.com",
-            "Content-Type": "application/json; charset=UTF-8",
-            "Content-Length": data.length.toString(),
-            "Authorization":
-                "key=AAAAxxGRMUw:APA91bEM4xFB7b--K3ckH0aook-QtX-5o8X6rC-YVAAfvQSJrOwRZ0eoO8kQSTQXzVxlt7eNCjvcR2mahKZiLIeZGE6-VeUP4yL7xSmccw5ScP4ArqRmgFgcr_JUvzW_uMEDlHryE6i8",
-          },
-          body: data);
+      await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'), headers: cloudMessaging.header(), body: data);
       print('FCM request for device sent!');
     } catch (e) {
       print(e);
