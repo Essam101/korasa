@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/core/collectionsNames.dart';
-import 'package:shop/core/db.dart';
+import 'package:shop/core/instances.dart';
 import 'package:shop/models/userModel.dart';
 import 'package:shop/services/users/user_local.dart';
 import 'package:shop/services/users/user_remote.dart';
 
 class UserServices {
-  Db _db = new Db();
+  Instances _db = new Instances();
   late UserRemote _userRemote;
   UserLocal _userLocal = new UserLocal();
   var _userModelRef;

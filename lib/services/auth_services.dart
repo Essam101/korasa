@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shop/core/db.dart';
+import 'package:shop/core/instances.dart';
 import 'package:shop/core/enums.dart';
 import 'package:shop/core/extensions/system_feedback.dart';
 
 import 'service_base.dart';
 
 class AuthServices {
-  Db _db = new Db();
+  Instances _db = new Instances();
 
   Future<UserCredential?> signIn({required String email, required String password}) async {
     UserCredential? userCredential;

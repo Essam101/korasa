@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/core/collectionsNames.dart';
-import 'package:shop/core/db.dart';
+import 'package:shop/core/instances.dart';
 import 'package:shop/models/customerModel.dart';
 import 'package:shop/services/customers/customer_local.dart';
 import 'package:shop/services/customers/customer_remote.dart';
 import 'package:shop/services/service_base.dart';
 
 class CustomerServices {
-  Db _db = new Db();
+  Instances _db = new Instances();
   late CustomerRemote _customerRemote;
   CustomerLocal _customerLocal = new CustomerLocal();
   var _customerModelRef;

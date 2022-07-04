@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/core/collectionsNames.dart';
-import 'package:shop/core/db.dart';
+import 'package:shop/core/instances.dart';
 import 'package:shop/models/storeModel.dart';
 import 'package:shop/services/store/store_local.dart';
 import 'package:shop/services/store/store_remote.dart';
 
 class StoreServices {
-  Db _db = new Db();
+  Instances _db = new Instances();
 
   late StoreRemote _storeRemote;
   StoreLocal _storeLocal = new StoreLocal();
