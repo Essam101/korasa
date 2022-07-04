@@ -5,11 +5,11 @@ import 'package:shop/services/service_base.dart';
 import 'package:shop/services/users/user_services.dart';
 
 class StoreEmployeesState extends ServiceBase {
-  List<UserModel> userModel = [];
+  List<UserModel> usersModel = [];
 
   getWorkers() async {
     this.isLoading = true;
-    if (storeId.isNotEmpty) userModel = await new UserServices().getStoreUsers(storeId: storeId);
+    if (storeId.isNotEmpty) usersModel = await new UserServices().getStoreUsers(storeId: storeId);
     isLoading = false;
     notifyListeners();
   }
@@ -29,5 +29,12 @@ class StoreEmployeesState extends ServiceBase {
     isLoading = false;
     "Success".showLoading(alertType: result ? AlertType.Success : AlertType.Error);
     return result;
+  }
+
+  @override
+  clear() {
+    super.clear();
+    usersModel.clear();
+    notifyListeners();
   }
 }

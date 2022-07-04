@@ -112,7 +112,6 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
-      initialValue: Provider.of<SignInState>(context, listen: true).userModel?.password,
       obscureText: true,
       onSaved: (newValue) {
         if (newValue != null) password = newValue;
@@ -148,7 +147,6 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
-      initialValue: Provider.of<SignInState>(context, listen: true).userModel?.email,
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) {
         if (newValue != null) email = newValue;

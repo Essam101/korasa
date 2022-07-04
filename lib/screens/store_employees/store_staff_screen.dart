@@ -37,7 +37,7 @@ class _StoreEmployeesScreenState extends State<StoreEmployeesScreen> {
             children: [
               Header(),
               SizedBox(height: getProportionateScreenWidth(10)),
-              for (var i in Provider.of<StoreEmployeesState>(context, listen: true).userModel) Employee(userModel: i),
+              for (var i in Provider.of<StoreEmployeesState>(context, listen: true).usersModel) Employee(userModel: i),
               Loading()
             ],
           ),
