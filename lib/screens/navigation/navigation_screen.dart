@@ -29,6 +29,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   test() async {
     NotificationServices notificationServices = new NotificationServices();
+
     await notificationServices.subscribeToTopic(topicName: 'test');
     notificationServices.getInitialMessage(action: () {
       print("Test getInitialMessage");

@@ -43,4 +43,16 @@ class CloudMessaging {
       sound: true,
     );
   }
+
+  Map<String, String> header() {
+    var _header = {
+      "Host": "<calculated when request is sent>",
+      "Content-Type": "application/json",
+      "Content-Length": "272",
+      "Authorization":
+          "key=AAAAxxGRMUw:APA91bEM4xFB7b--K3ckH0aook-QtX-5o8X6rC-YVAAfvQSJrOwRZ0eoO8kQSTQXzVxlt7eNCjvcR2mahKZiLIeZGE6-VeUP4yL7xSmccw5ScP4ArqRmgFgcr_JUvzW_uMEDlHryE6i8",
+    };
+
+    return _header;
+  }
 }
