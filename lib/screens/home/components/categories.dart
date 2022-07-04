@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop/core/size_config.dart';
+import 'package:shop/models/notificationModels/notificationModel.dart';
 import 'package:shop/screens/customer/customer_screen.dart';
+import 'package:shop/services/notification_services.dart';
 
 class Categories extends StatelessWidget {
   @override
@@ -17,7 +19,11 @@ class Categories extends StatelessWidget {
         children: List.generate(
           categories.length,
           (index) => CategoryCard(
-              icon: categories[index]["icon"], text: categories[index]["text"], press: () => Navigator.pushNamed(context, CustomerScreen.routeName)),
+              icon: categories[index]["icon"],
+              text: categories[index]["text"],
+              press: () async {
+                await new NotificationServices().sendPushNotification();
+              }),
         ),
       ),
     );

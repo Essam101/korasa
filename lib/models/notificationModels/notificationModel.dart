@@ -13,7 +13,7 @@ class NotificationModel {
 
   String topic;
   Data data;
-  Notification notification;
+  Notifiy notification;
 
   factory NotificationModel.fromRawJson(String str) => NotificationModel.fromJson(json.decode(str));
 
@@ -22,7 +22,7 @@ class NotificationModel {
   factory NotificationModel.fromJson(Map<String, dynamic> json) => NotificationModel(
         topic: json["topic"],
         data: Data.fromJson(json["data"]),
-        notification: Notification.fromJson(json["notification"]),
+        notification: Notifiy.fromJson(json["notification"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -56,8 +56,8 @@ class Data {
       };
 }
 
-class Notification {
-  Notification({
+class Notifiy {
+  Notifiy({
     required this.title,
     required this.body,
   });
@@ -65,11 +65,11 @@ class Notification {
   String title;
   String body;
 
-  factory Notification.fromRawJson(String str) => Notification.fromJson(json.decode(str));
+  factory Notifiy.fromRawJson(String str) => Notifiy.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Notification.fromJson(Map<String, dynamic> json) => Notification(
+  factory Notifiy.fromJson(Map<String, dynamic> json) => Notifiy(
         title: json["title"],
         body: json["body"],
       );

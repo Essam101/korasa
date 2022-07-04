@@ -1,11 +1,35 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shop/core/instances.dart';
 
 import '../firebase_options.dart';
 
 class CloudMessaging {
   Instances instances = new Instances();
+  AndroidNotificationChannel channel = const AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    importance: Importance.high,
+  );
+
+  showNotification({required RemoteMessage remoteMessage}) {
+    RemoteNotification? notification = remoteMessage.notification;
+    new FlutterLocalNotificationsPlugin().show(
+      notification.hashCode,
+      notification?.title,
+      notification?.body,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+          // TODO add a proper drawable resource to android, for now using
+          //      one that already exists in example app.
+          icon: 'launch_background',
+        ),
+      ),
+    );
+  }
 
 // for only ios and web
   requestPermission() async {
@@ -18,12 +42,5 @@ class CloudMessaging {
       provisional: false,
       sound: true,
     );
-  }
-
-  Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    print("Handling a background message: ${message.messageId}");
   }
 }

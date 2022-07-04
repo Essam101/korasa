@@ -12,21 +12,23 @@ import 'package:shop/core/cloud_messaging.dart';
 import 'package:shop/core/darkTheme.dart';
 import 'package:shop/core/routes.dart';
 import 'package:shop/core/theme.dart';
-import 'package:shop/screens/sign_in/state_management/sign_in_state.dart';
 import 'package:shop/screens/splash/splash_screen.dart';
 import 'package:shop/services/services.dart';
-import 'package:shop/services/store_services.dart';
 
 import 'core/esayLoadingConfig.dart';
-import 'core/size_config.dart';
 import 'firebase_options.dart';
-import 'screens/home/home_screen.dart';
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
+}
 
 void main() async {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
-
-    FirebaseMessaging.onBackgroundMessage(new CloudMessaging().firebaseMessagingBackgroundHandler);
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     await GetStorage.init();
     runApp(EasyDynamicThemeWidget(
