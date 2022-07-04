@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/core/enums.dart';
 import 'package:shop/core/extensions/system_feedback.dart';

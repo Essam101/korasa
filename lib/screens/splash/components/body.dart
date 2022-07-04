@@ -82,18 +82,18 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                     Spacer(flex: 3),
-                    DefaultButton(
-                      text: "Continue",
-                      press: () {
-                        Navigator.pushNamed(context, SignInScreen.routeName);
-                      },
-                    ),
-                    Text("${EasyDynamicTheme.of(context).themeMode}"),
-                    ElevatedButton(
-                        onPressed: () {
-                          EasyDynamicTheme.of(context).changeTheme();
-                        },
-                        child: Text("Change")),
+                    // DefaultButton(
+                    //   text: "Continue",
+                    //   press: () {
+                    //     Navigator.pushNamed(context, SignInScreen.routeName);
+                    //   },
+                    // ),
+                    // Text("${EasyDynamicTheme.of(context).themeMode}"),
+                    // ElevatedButton(
+                    //     onPressed: () {
+                    //       EasyDynamicTheme.of(context).changeTheme();
+                    //     },
+                    //     child: Text("Change")),
                     Spacer(),
                   ],
                 ),
