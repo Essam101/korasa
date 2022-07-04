@@ -14,9 +14,9 @@ class CustomerServices {
 
   CustomerServices() {
     _customerModelRef = _db.instance.collection(CollectionsNames.customers).withConverter<CustomerModel>(
-      fromFirestore: (snapshot, _) => CustomerModel.fromJson(snapshot.data()!),
-      toFirestore: (store, _) => store.toJson(),
-    );
+          fromFirestore: (snapshot, _) => CustomerModel.fromJson(snapshot.data()!),
+          toFirestore: (store, _) => store.toJson(),
+        );
     _customerRemote = new CustomerRemote(_customerModelRef);
   }
 
@@ -69,7 +69,7 @@ class CustomerServices {
     } catch (e) {
       print(e);
     }
-    return null
+    return null;
   }
 
   Future<CustomerModel?> updateCustomer({required CustomerModel model}) async {
@@ -96,9 +96,7 @@ class CustomerServices {
       });
       _customerModelRef.doc(customer.id).delete();
       _customerLocal.deleteCachedCustomer(customerId: customerId);
-      _customerLocal.deleteCachedStoreCustomers(storeId: customer
-          .data()
-          .storeId);
+      _customerLocal.deleteCachedStoreCustomers(storeId: customer.data().storeId);
       return true;
     } on FirebaseFirestore catch (e) {
       print(e);
