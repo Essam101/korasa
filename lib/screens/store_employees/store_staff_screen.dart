@@ -3,27 +3,27 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:shop/core/size_config.dart';
-import 'package:shop/screens/store_staff/components/header.dart';
-import 'package:shop/screens/store_staff/state_management/store_staff_state.dart';
+import 'package:shop/screens/store_employees/components/header.dart';
+import 'package:shop/screens/store_employees/state_management/store_employees_state.dart';
 
 import '../customer/components/loading.dart';
 import 'components/worker.dart';
 
-class StoreStaffScreen extends StatefulWidget {
+class StoreEmployeesScreen extends StatefulWidget {
   static String routeName = "/storeStaff";
 
-  const StoreStaffScreen({Key? key}) : super(key: key);
+  const StoreEmployeesScreen({Key? key}) : super(key: key);
 
   @override
-  State<StoreStaffScreen> createState() => _StoreStaffScreenState();
+  State<StoreEmployeesScreen> createState() => _StoreEmployeesScreenState();
 }
 
-class _StoreStaffScreenState extends State<StoreStaffScreen> {
+class _StoreEmployeesScreenState extends State<StoreEmployeesScreen> {
   @override
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<StoreStaffState>(context, listen: false).getWorkers();
+      await Provider.of<StoreEmployeesState>(context, listen: false).getWorkers();
     });
   }
 
@@ -37,7 +37,7 @@ class _StoreStaffScreenState extends State<StoreStaffScreen> {
             children: [
               Header(),
               SizedBox(height: getProportionateScreenWidth(10)),
-              for (var i in Provider.of<StoreStaffState>(context, listen: true).userModel) Worker(userModel: i),
+              for (var i in Provider.of<StoreEmployeesState>(context, listen: true).userModel) Worker(userModel: i),
               Loading()
             ],
           ),

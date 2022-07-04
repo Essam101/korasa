@@ -11,7 +11,7 @@ import 'package:shop/models/customerModel.dart';
 import 'package:shop/models/userModel.dart';
 import 'package:shop/screens/customer/state_management/customre_state.dart';
 
-import '../state_management/store_staff_state.dart';
+import '../state_management/store_employees_state.dart';
 
 class AddStaffForm extends StatefulWidget {
   const AddStaffForm({Key? key}) : super(key: key);
@@ -65,7 +65,7 @@ class _AddStaffFormState extends State<AddStaffForm> {
               text: "Add Customer",
               press: () async {
                 if (_formKey.currentState!.validate()) {
-                  Provider.of<StoreStaffState>(context, listen: false)
+                  Provider.of<StoreEmployeesState>(context, listen: false)
                       .createWorker(
                           model: new UserModel(
                         userId: CollectionsNames.users.generateId(),

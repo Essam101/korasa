@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/screens/customer/components/add_customer_form.dart';
+import 'package:shop/screens/customer/components/search_field.dart';
 import 'package:shop/screens/home/components/icon_btn_with_counter.dart';
-import 'package:shop/screens/store_staff/components/search_field.dart';
 
 class Header extends StatelessWidget {
   const Header({
@@ -13,8 +13,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+      padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -25,12 +24,7 @@ class Header extends StatelessWidget {
                 showBarModalBottomSheet<void>(
                   context: context,
                   builder: (BuildContext context) {
-                    return AddCustomerForm(
-                        customerId: "",
-                        customerName: "",
-                        note: "",
-                        creationDate: DateTime.now().toString(),
-                        storeId: "");
+                    return AddCustomerForm(customerId: "", customerName: "", note: "", creationDate: DateTime.now().toString(), storeId: "");
                   },
                 );
               }),

@@ -4,7 +4,7 @@ import 'package:shop/models/userModel.dart';
 import 'package:shop/services/service_base.dart';
 import 'package:shop/services/users/user_services.dart';
 
-class StoreStaffState extends ServiceBase {
+class StoreEmployeesState extends ServiceBase {
   List<UserModel> userModel = [];
 
   getWorkers() async {

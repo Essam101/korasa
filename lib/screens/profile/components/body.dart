@@ -3,7 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/screens/profile/state_management/profile_state.dart';
 import 'package:shop/screens/splash/splash_screen.dart';
-import 'package:shop/screens/store_staff/store_staff_screen.dart';
+import 'package:shop/screens/store_employees/store_staff_screen.dart';
 
 import 'profile_menu.dart';
 import 'profile_pic.dart';
@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Store Staff",
             icon: "assets/icons/User Icon.svg",
-            press: () => {Navigator.pushNamed(context, StoreStaffScreen.routeName)},
+            press: () => {Navigator.pushNamed(context, StoreEmployeesScreen.routeName)},
           ),
           ProfileMenu(
             text: "Notifications",

@@ -22,7 +22,7 @@ class CustomerState extends ServiceBase {
     bool result = true;
     "Loading".showLoading(alertType: AlertType.Loading);
 
-    if (model.customerId.isNotEmpty&&  storeId.isNotEmpty) {
+    if (model.customerId.isNotEmpty && storeId.isNotEmpty) {
       // Update
       await new CustomerServices().updateCustomer(model: model);
       await getCustomers();
@@ -53,6 +53,7 @@ class CustomerState extends ServiceBase {
   clear() {
     super.clear();
     customersModel.clear();
+    customerModel = null;
     notifyListeners();
   }
 }

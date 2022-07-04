@@ -7,16 +7,9 @@ import 'package:shop/screens/navigation/state_management/navigation_state.dart';
 import 'package:shop/screens/profile/state_management/profile_state.dart';
 import 'package:shop/screens/sign_in/state_management/sign_in_state.dart';
 import 'package:shop/screens/sign_up/state_management/sign_up_state.dart';
-import 'package:shop/screens/splash/splash_screen.dart';
 import 'package:shop/screens/splash/state_management/splash_state.dart';
-import 'package:shop/screens/store_staff/state_management/store_staff_state.dart';
-import 'package:shop/services/customers/customer_services.dart';
+import 'package:shop/screens/store_employees/state_management/store_employees_state.dart';
 import 'package:shop/services/pages/page_services.dart';
-import 'package:shop/services/users/user_services.dart';
-
-import '../screens/complete_store/complete_store_screen.dart';
-import 'auth_services.dart';
-import 'store/store_services.dart';
 
 //                await Provider.of<AuthServices>(context, listen: false) ;
 class Services {
@@ -48,7 +41,7 @@ class Services {
         create: (context) => new NavigationState(),
       ),
       ChangeNotifierProvider(
-        create: (context) => new StoreStaffState(),
+        create: (context) => new StoreEmployeesState(),
       ),
       ChangeNotifierProvider(
         create: (context) => new SplashState(),

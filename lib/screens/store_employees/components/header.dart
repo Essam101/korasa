@@ -5,8 +5,8 @@ import 'package:shop/screens/cart/cart_screen.dart';
 
 import 'package:shop/core/size_config.dart';
 import 'package:shop/screens/home/components/icon_btn_with_counter.dart';
-import 'package:shop/screens/store_staff/components/add_staff_form.dart';
-import 'package:shop/screens/store_staff/components/search_field.dart';
+import 'package:shop/screens/store_employees/components/add_staff_form.dart';
+import 'package:shop/screens/store_employees/components/search_field.dart';
 
 class Header extends StatelessWidget {
   const Header({
