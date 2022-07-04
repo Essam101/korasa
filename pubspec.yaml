@@ -13,7 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  http: ^0.13.4
   cupertino_icons: ^1.0.3
   flutter_svg: ^0.22.0
   provider: ^6.0.0
