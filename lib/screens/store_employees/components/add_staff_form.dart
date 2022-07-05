@@ -80,38 +80,41 @@ class _AddStaffFormState extends State<AddStaffForm> {
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
-        child: Column(
-          children: [
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildNameFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildEmailFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildPasswordFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildConformPassFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            FormError(errors: errors),
-            SizedBox(height: getProportionateScreenHeight(40)),
-            DefaultButton(
-              text: (empId.isNotEmpty? "Update" : " Add") + " Employee",
-              press: () async {
-                if (_formKey.currentState!.validate()) {
-                  Provider.of<StoreEmployeesState>(context, listen: false)
-                      .UpdateOrCreateWorker(
-                          model: new UserModel(
-                        userId: empId.isNotEmpty ? empId : "",
-                        name: name,
-                        email: email,
-                        storeId: storeId,
-                        password: password,
-                        role: roleType.emp.name,
-                      ))
-                      .then((value) => {if (value) Navigator.pop(context)});
-                }
-              },
-            ),
-          ],
+        child: Padding(
+          padding: const  EdgeInsets.only(left: 8.0,right: 8.0),
+          child: Column(
+            children: [
+              SizedBox(height: getProportionateScreenHeight(30)),
+              buildNameFormField(),
+              SizedBox(height: getProportionateScreenHeight(30)),
+              buildEmailFormField(),
+              SizedBox(height: getProportionateScreenHeight(30)),
+              buildPasswordFormField(),
+              SizedBox(height: getProportionateScreenHeight(30)),
+              buildConformPassFormField(),
+              SizedBox(height: getProportionateScreenHeight(30)),
+              FormError(errors: errors),
+              SizedBox(height: getProportionateScreenHeight(40)),
+              DefaultButton(
+                text: (empId.isNotEmpty? "Update" : " Add") + " Employee",
+                press: () async {
+                  if (_formKey.currentState!.validate()) {
+                    Provider.of<StoreEmployeesState>(context, listen: false)
+                        .UpdateOrCreateWorker(
+                            model: new UserModel(
+                          userId: empId.isNotEmpty ? empId : "",
+                          name: name,
+                          email: email,
+                          storeId: storeId,
+                          password: password,
+                          role: roleType.emp.name,
+                        ))
+                        .then((value) => {if (value) Navigator.pop(context)});
+                  }
+                },
+              ),
+            ],
+          ),
         ));
   }
 

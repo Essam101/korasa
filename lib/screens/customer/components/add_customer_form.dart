@@ -71,32 +71,36 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
-        child: Column(
-          children: [
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildCustomerNameField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildCustomerNotesField(),
-            FormError(errors: errors),
-            SizedBox(height: getProportionateScreenHeight(40)),
-            DefaultButton(
-              text:(customerId.isNotEmpty ? " Update"  : "Add")  + " Customer",
-              press: () async {
-                if (_formKey.currentState!.validate()) {
-                  Provider.of<CustomerState>(context, listen: false)
-                      .updateOrCreateCustomer(
-                          model: new CustomerModel(
-                              creationDate: new DateTime.now().toString(),
-                              customerId:
-                                  customerId.isNotEmpty ? customerId : "",
-                              name: customerName,
-                              notes: customerNotes,
-                              storeId: storeId))
-                      .then((value) => {if (value) Navigator.pop(context)});
-                }
-              },
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0,right: 8.0),
+          child: Column(
+
+            children: [
+              SizedBox(height: getProportionateScreenHeight(30)),
+              buildCustomerNameField(),
+              SizedBox(height: getProportionateScreenHeight(30)),
+              buildCustomerNotesField(),
+              FormError(errors: errors),
+              SizedBox(height: getProportionateScreenHeight(40)),
+              DefaultButton(
+                text:(customerId.isNotEmpty ? " Update"  : "Add")  + " Customer",
+                press: () async {
+                  if (_formKey.currentState!.validate()) {
+                    Provider.of<CustomerState>(context, listen: false)
+                        .updateOrCreateCustomer(
+                            model: new CustomerModel(
+                                creationDate: new DateTime.now().toString(),
+                                customerId:
+                                    customerId.isNotEmpty ? customerId : "",
+                                name: customerName,
+                                notes: customerNotes,
+                                storeId: storeId))
+                        .then((value) => {if (value) Navigator.pop(context)});
+                  }
+                },
+              ),
+            ],
+          ),
         ));
   }
 
