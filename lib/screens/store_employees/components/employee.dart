@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'package:shop/core/size_config.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shop/models/userModel.dart';
+
+import 'add_staff_form.dart';
 
 class Employee extends StatelessWidget {
   final UserModel userModel;
@@ -14,7 +15,9 @@ class Employee extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Color(0xFFF5F6F9), borderRadius: BorderRadius.all(Radius.circular(10))),
+      decoration: BoxDecoration(
+          color: Color(0xFFF5F6F9),
+          borderRadius: BorderRadius.all(Radius.circular(10))),
       margin: EdgeInsets.all(5),
       child: Column(
         children: [
@@ -32,6 +35,19 @@ class Employee extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: OutlinedButton.icon(
                   onPressed: () {
+                    showBarModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AddStaffForm(
+                          empId: userModel.userId,
+                          storeId: userModel.storeId,
+                          password: userModel.password,
+                          email: userModel.email,
+                          empName: userModel.name,
+                          role: roleType.emp.name,
+                        );
+                      },
+                    );
                     // Respond to button press
                   },
                   icon: Icon(Icons.edit, size: 18),
