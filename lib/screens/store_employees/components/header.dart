@@ -28,7 +28,7 @@ class Header extends StatelessWidget {
                 showBarModalBottomSheet<void>(
                   context: context,
                   builder: (BuildContext context) {
-                    return AddStaffForm(empId: null,empName: "",email: "",password: "",storeId: "",role: roleType.emp.name,);
+                    return AddStaffForm(empId: "",empName: "",email: "",password: "",storeId: "",role: roleType.emp.name,);
                   },
                 );
               }),

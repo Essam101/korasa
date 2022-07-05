@@ -58,6 +58,30 @@ class UserRemote {
     }
     return [];
   }
+  Future<List<UserModel>> getStoreEmployees({required String storeId}) async {
+    try {
+      List<QueryDocumentSnapshot<UserModel>> stores = await userModelRef.where('storeId', isEqualTo: storeId ).where('role', isEqualTo: "emp").get().then((snapshot) {
+      // List<QueryDocumentSnapshot<UserModel>> stores = await userModelRef.where('storeId', isEqualT: storeId ) .get().then((snapshot) {
+        return snapshot.docs;
+      });
+      List<UserModel> _stores = [];
+      stores.forEach((element) {
+        _stores.add(new UserModel(
+            userId: element.data().userId,
+            email: element.data().email,
+            password: element.data().password,
+            name: element.data().name,
+            role: element.data().role,
+            storeId: element.data().storeId));
+      });
+      return _stores;
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+    return [];
+  }
 
   Future<List<UserModel>> getAllUsers() async {
     try {

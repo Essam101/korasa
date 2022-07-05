@@ -13,7 +13,7 @@ class StoreEmployeesState extends ServiceBase {
   getWorkers() async {
     this.isLoading = true;
     if (storeId.isNotEmpty)
-      usersModel = await new UserServices().getStoreUsers(storeId: storeId);
+      usersModel = await new UserServices().getStoreEmployees(storeId: storeId);
     isLoading = false;
     notifyListeners();
   }
