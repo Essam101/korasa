@@ -23,7 +23,7 @@ class Body extends StatelessWidget {
             press: () => {},
           ),
           ProfileMenu(
-            text: "Store Staff",
+            text: "Store Employees",
             icon: "assets/icons/User Icon.svg",
             press: () => {Navigator.pushNamed(context, StoreEmployeesScreen.routeName)},
           ),
