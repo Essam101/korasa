@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shop/core/constants.dart';
+import 'package:shop/models/userModel.dart';
 import 'package:shop/screens/cart/cart_screen.dart';
 
 import 'package:shop/core/size_config.dart';
@@ -27,7 +28,7 @@ class Header extends StatelessWidget {
                 showBarModalBottomSheet<void>(
                   context: context,
                   builder: (BuildContext context) {
-                    return AddStaffForm();
+                    return AddStaffForm(empId: "",empName: "",email: "",password: "",storeId: "",role: roleType.emp.name,);
                   },
                 );
               }),

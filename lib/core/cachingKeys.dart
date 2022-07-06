@@ -9,6 +9,7 @@ extension CachingKeys on String {
 
   static const user = "user";
   static const storeUsers = "storeUsers";
+  static const storeEmployees = "storeEmployees";
   static const allUsers = "AllUsers";
 
   static const customer = "customer";

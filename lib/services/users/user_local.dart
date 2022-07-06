@@ -49,6 +49,15 @@ class UserLocal {
     }
   }
 
+  Future<List<UserModel>>? getCashStoreEmployees({required String storeId}) {
+    final jsonStores = localStorage.read(CachingKeys.storeEmployees.addIdToKey(id: storeId));
+    if (jsonStores != null && jsonStores.length != 0) {
+      return Future.value(userModelFromJson(jsonStores));
+    } else {
+      return null;
+    }
+  }
+
   Future<List<UserModel>>? getCashAllUsers() {
     final jsonStores = localStorage.read(CachingKeys.allUsers);
     if (jsonStores != null && jsonStores.length != 0) {
@@ -66,6 +75,10 @@ class UserLocal {
     localStorage.remove(CachingKeys.storeUsers.addIdToKey(id: storeId));
   }
 
+
+  deleteCachedStoreEmployees({required String storeId}) {
+    localStorage.remove(CachingKeys.storeUsers.addIdToKey(id: storeId));
+  }
 // deleteCachedAllUsers() {
 //   for (int i = 0; i < localStorage.getKeys().length; i++) {
 //     if (localStorage.getKeys()[i].toString().contains(CachingKeys.user)) {

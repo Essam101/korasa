@@ -12,7 +12,7 @@ String userModelToJson(List<UserModel> data) => json.encode(List<dynamic>.from(d
 class UserModel {
   UserModel({required this.userId, required this.name, required this.role, required this.storeId, required this.email, required this.password});
 
-  late final String userId;
+  late  String userId;
   late final String name;
   late final String role;
   late String storeId;

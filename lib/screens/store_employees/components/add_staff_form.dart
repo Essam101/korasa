@@ -3,32 +3,64 @@ import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
 import 'package:shop/components/form_error.dart';
-import 'package:shop/core/collectionsNames.dart';
 import 'package:shop/core/constants.dart';
-import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/core/size_config.dart';
-import 'package:shop/models/customerModel.dart';
 import 'package:shop/models/userModel.dart';
-import 'package:shop/screens/customer/state_management/customre_state.dart';
 
 import '../state_management/store_employees_state.dart';
 
 class AddStaffForm extends StatefulWidget {
-  const AddStaffForm({Key? key}) : super(key: key);
+  final String? empId;
+  final String? empName;
+  final String? role;
+  final String? storeId;
+  final String? email;
+  final String? password;
+
+  const AddStaffForm({
+    Key? key,
+    this.empId,
+    this.empName,
+    this.storeId,
+    this.role,
+    this.email,
+    this.password,
+  }) : super(key: key);
 
   @override
   State<AddStaffForm> createState() => _AddStaffFormState();
 }
 
 class _AddStaffFormState extends State<AddStaffForm> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.empId != null ) {
+      empId = widget.empId!;
+      email = widget.email!;
+      password = widget.password!;
+      name = widget.empName!;
+      storeId = widget.storeId!;
+      role = widget.role!;
+    }
+  }
+
   final _formKey = GlobalKey<FormState>();
   final List<String> errors = [];
 
-  late String email = "";
-  late String conform_password = "";
-  late int role = 0;
-  late String password = "";
+  late String empId= "";
+  late String email= "";
+
+  late String conform_password= "";
+
+  late String role= "";
+
+  late String password= "";
+
   late String name = "";
+
+  late String storeId= "";
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -48,44 +80,48 @@ class _AddStaffFormState extends State<AddStaffForm> {
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
-        child: Column(
-          children: [
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildNameFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildEmailFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildPasswordFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildConformPassFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            FormError(errors: errors),
-            SizedBox(height: getProportionateScreenHeight(40)),
-            DefaultButton(
-              text: "Add Customer",
-              press: () async {
-                if (_formKey.currentState!.validate()) {
-                  Provider.of<StoreEmployeesState>(context, listen: false)
-                      .createWorker(
-                          model: new UserModel(
-                        userId: CollectionsNames.users.generateId(),
-                        name: name,
-                        email: email,
-                        storeId: '',
-                        password: password,
-                        role: roleType.emp.name,
-                      ))
-                      .then((value) => {if (value) Navigator.pop(context)});
-                }
-              },
-            ),
-          ],
+        child: Padding(
+          padding: const  EdgeInsets.only(left: 8.0,right: 8.0),
+          child: Column(
+            children: [
+              SizedBox(height: getProportionateScreenHeight(30)),
+              buildNameFormField(),
+              SizedBox(height: getProportionateScreenHeight(30)),
+              buildEmailFormField(),
+              SizedBox(height: getProportionateScreenHeight(30)),
+              buildPasswordFormField(),
+              SizedBox(height: getProportionateScreenHeight(30)),
+              buildConformPassFormField(),
+              SizedBox(height: getProportionateScreenHeight(30)),
+              FormError(errors: errors),
+              SizedBox(height: getProportionateScreenHeight(40)),
+              DefaultButton(
+                text: (empId.isNotEmpty? "Update" : " Add") + " Employee",
+                press: () async {
+                  if (_formKey.currentState!.validate()) {
+                    Provider.of<StoreEmployeesState>(context, listen: false)
+                        .UpdateOrCreateWorker(
+                            model: new UserModel(
+                          userId: empId.isNotEmpty ? empId : "",
+                          name: name,
+                          email: email,
+                          storeId: storeId,
+                          password: password,
+                          role: roleType.emp.name,
+                        ))
+                        .then((value) => {if (value) Navigator.pop(context)});
+                  }
+                },
+              ),
+            ],
+          ),
         ));
   }
 
   TextFormField buildConformPassFormField() {
     return TextFormField(
       obscureText: true,
+      initialValue: password,
       onSaved: (newValue) {
         if (newValue != null) {
           conform_password = newValue;
@@ -123,6 +159,7 @@ class _AddStaffFormState extends State<AddStaffForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
+      initialValue: password,
       onSaved: (newValue) {
         if (newValue != null) {
           password = newValue;
@@ -160,6 +197,7 @@ class _AddStaffFormState extends State<AddStaffForm> {
   TextFormField buildNameFormField() {
     return TextFormField(
       keyboardType: TextInputType.name,
+      initialValue: name,
       onSaved: (newValue) {
         if (newValue != null) {
           name = newValue;
@@ -194,6 +232,7 @@ class _AddStaffFormState extends State<AddStaffForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
+      initialValue: email,
       onSaved: (newValue) {
         if (newValue != null) {
           email = newValue;

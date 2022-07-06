@@ -80,6 +80,24 @@ class UserServices {
     }
     return usersModel;
   }
+  Future<List<UserModel>> getStoreEmployees({required String storeId}) async {
+    List<UserModel> employeesModel = <UserModel>[];
+    try {
+      var _empList = await _userLocal.getCashStoreEmployees(storeId: storeId);
+      if (_empList != null && _empList.length != 0) {
+        employeesModel = _empList;
+      } else {
+        var storeUsers = await _userRemote.getStoreEmployees(storeId: storeId);
+        employeesModel = storeUsers;
+        await _userLocal.cachingStoreUsers(storeId: storeId, storeUsers: employeesModel);
+      }
+    } on FirebaseFirestore catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+    return employeesModel;
+  }
 
   Future<List<UserModel>?> getAllUsers() async {
     List<UserModel> usersModel = <UserModel>[];
@@ -107,6 +125,7 @@ class UserServices {
       await _userModelRef.add(model);
       _userLocal.deleteCachedUser();
       _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
+      _userLocal.deleteCachedStoreEmployees(storeId: model.storeId);
       userModel = await getUser(userId: model.userId);
     } on FirebaseFirestore catch (e) {
       print(e);
@@ -123,6 +142,8 @@ class UserServices {
       });
       _userModelRef.doc(user.id).update(model.toJson());
       _userLocal.deleteCachedUser();
+      _userLocal.deleteCachedStoreUsers(storeId: model. storeId);
+      _userLocal.deleteCachedStoreEmployees(storeId:model. storeId);
       //  if (model.storeId != null) _userLocal.deleteCachedStoreUsers(storeId: model.storeId);
       // _userLocal.deleteCachedAllUsers();
       await getUser(userId: model.userId);
@@ -141,6 +162,7 @@ class UserServices {
       _userModelRef.doc(user.id).delete();
       _userLocal.deleteCachedUser();
       _userLocal.deleteCachedStoreUsers(storeId: storeId);
+      _userLocal.deleteCachedStoreEmployees(storeId: storeId);
       // _userLocal.deleteCachedAllUsers();
     } on FirebaseFirestore catch (e) {
       print(e);
