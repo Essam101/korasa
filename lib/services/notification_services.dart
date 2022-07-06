@@ -20,6 +20,8 @@ class NotificationServices {
   }
 
   Future<void> sendPushNotification() async {
+    await _instances.messaging.subscribeToTopic('test');
+
     var data = jsonEncode({
       "notification": {"body": "This week's edition is now available.", "title": "NewsMagazine.com"},
       "priority": "normal",
@@ -31,8 +33,11 @@ class NotificationServices {
       },
       "to": "/topics/test"
     });
+
     try {
-      await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'), headers: cloudMessaging.header(), body: data);
+      await http
+          .post(Uri.parse('https://fcm.googleapis.com/fcm/send'), headers: cloudMessaging.header(), body: data)
+          .then((value) => {print(jsonEncode(value.body))});
       print('FCM request for device sent!');
     } catch (e) {
       print(e);

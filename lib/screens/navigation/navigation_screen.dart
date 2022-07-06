@@ -1,12 +1,7 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/core/constants.dart';
-import 'package:shop/screens/home/home_screen.dart';
-import 'package:shop/screens/profile/profile_screen.dart';
 import 'package:shop/services/notification_services.dart';
 
 import 'state_management/navigation_state.dart';
@@ -29,12 +24,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   test() async {
     NotificationServices notificationServices = new NotificationServices();
-
     await notificationServices.subscribeToTopic(topicName: 'test');
+
     notificationServices.getInitialMessage(action: () {
       print("Test getInitialMessage");
     });
-
     notificationServices.onMessage(action: () {
       print("Test onMessage");
     });
