@@ -1,11 +1,8 @@
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shop/core/cloud_messaging.dart';
 import 'package:shop/core/instances.dart';
-import 'package:shop/models/notificationModels/notificationModel.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationServices {
   Instances _instances = new Instances();

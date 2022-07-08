@@ -1,4 +1,3 @@
-import 'package:shop/core/collectionsNames.dart';
 
 extension CachingKeys on String {
   static const store = "store";

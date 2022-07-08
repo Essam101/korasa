@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/models/userModel.dart';
-import 'package:shop/services/service_base.dart';
 
 class UserRemote {
   final userModelRef;

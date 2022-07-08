@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/core/cloud_messaging.dart';
 import 'package:shop/core/darkTheme.dart';
 import 'package:shop/core/routes.dart';
 import 'package:shop/core/theme.dart';

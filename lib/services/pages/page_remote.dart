@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shop/models/customerModel.dart';
 import 'package:shop/models/pageModel.dart';
-import 'package:shop/services/service_base.dart';
 
 class PageRemote {
   final pageModelRef;

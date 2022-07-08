@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:shop/screens/cart/cart_screen.dart';
 import 'package:shop/screens/complete_store/complete_store_screen.dart';
-import 'package:shop/screens/complete_store/state_management/complete_store_state.dart';
 import 'package:shop/screens/customer/customer_screen.dart';
 import 'package:shop/screens/details/details_screen.dart';
 import 'package:shop/screens/forgot_password/forgot_password_screen.dart';
@@ -11,7 +10,6 @@ import 'package:shop/screens/navigation/navigation_screen.dart';
 import 'package:shop/screens/otp/otp_screen.dart';
 import 'package:shop/screens/profile/profile_screen.dart';
 import 'package:shop/screens/sign_in/sign_in_screen.dart';
-import 'package:shop/screens/sign_in/state_management/sign_in_state.dart';
 import 'package:shop/screens/sign_up/sign_up_screen.dart';
 import 'package:shop/screens/splash/splash_screen.dart';
 import 'package:shop/screens/store_employees/store_staff_screen.dart';

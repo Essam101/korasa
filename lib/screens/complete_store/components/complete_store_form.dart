@@ -9,7 +9,6 @@ import 'package:shop/core/extensions/generateId.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/models/storeModel.dart';
 import 'package:shop/screens/complete_store/state_management/complete_store_state.dart';
-import 'package:shop/screens/home/home_screen.dart';
 import 'package:shop/screens/navigation/navigation_screen.dart';
 
 import '../../../core/constants.dart';

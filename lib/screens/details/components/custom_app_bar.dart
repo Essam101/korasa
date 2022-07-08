@@ -8,8 +8,8 @@ class CustomAppBar extends StatelessWidget {
 
   CustomAppBar({required this.rating});
 
-  @override
-  // AppBar().preferredSize.height provide us the height that appy on our app bar
+  // @override
+  // AppBar().preferredSize.height provide us the height that apply on our app bar
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 
   @override

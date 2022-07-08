@@ -14,7 +14,7 @@ class Customer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Color(0xFFF5F6F9),
+          color: Color(0xFF82CAF0),
           borderRadius: BorderRadius.all(Radius.circular(10))),
       margin: EdgeInsets.all(5),
       child: Column(

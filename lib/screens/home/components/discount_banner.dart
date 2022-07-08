@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:shop/core/size_config.dart';
 
-import '../../../components/default_button.dart';
-import '../../sign_up/sign_up_screen.dart';
 
 class DiscountBanner extends StatelessWidget {
   const DiscountBanner({

@@ -4,7 +4,6 @@ import 'package:shop/core/instances.dart';
 import 'package:shop/models/customerModel.dart';
 import 'package:shop/services/customers/customer_local.dart';
 import 'package:shop/services/customers/customer_remote.dart';
-import 'package:shop/services/service_base.dart';
 
 class CustomerServices {
   Instances _db = new Instances();

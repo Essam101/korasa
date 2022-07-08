@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/default_button.dart';
@@ -12,8 +10,6 @@ import 'package:shop/core/size_config.dart';
 import 'package:shop/models/userModel.dart';
 import 'package:shop/screens/complete_store/complete_store_screen.dart';
 import 'package:shop/screens/sign_up/state_management/sign_up_state.dart';
-import 'package:shop/services/auth_services.dart';
-import 'package:shop/services/users/user_services.dart';
 
 import '../../../core/constants.dart';
 

@@ -3,13 +3,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/custom_surfix_icon.dart';
 import 'package:shop/components/form_error.dart';
-import 'package:shop/core/keyboard.dart';
 import 'package:shop/core/size_config.dart';
 import 'package:shop/models/userModel.dart';
 import 'package:shop/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop/screens/login_success/login_success_screen.dart';
 import 'package:shop/screens/sign_in/state_management/sign_in_state.dart';
-import 'package:shop/services/auth_services.dart';
 
 import '../../../components/default_button.dart';
 import '../../../core/constants.dart';

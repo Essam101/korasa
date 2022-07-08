@@ -1,7 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get.dart';
 import 'package:shop/core/enums.dart';
 import 'package:shop/core/extensions/system_feedback.dart';
 import 'package:shop/models/userModel.dart';
